@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FiCheckCircle, FiMic, FiTarget, FiCalendar, FiMessageCircle, FiMoon, FiPlus } from 'react-icons/fi'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { motion } from 'framer-motion'
 
 export default function HomePage() {
   return (
