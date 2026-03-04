@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import DashboardLayout from '@/components/layout/DashboardLayout'
-import { FiCheckCircle, FiClock, FiTarget, FiUsers, FiPlus, FiCheck } from 'react-icons/fi'
+import { FiCheckCircle, FiClock, FiTarget, FiUsers, FiPlus, FiCheck, FiMessageCircle } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { taskAPI, opportunityAPI, teamAPI, calendarAPI } from '@/lib/api'
+import { cn } from '@/lib/utils'
 
 export default function Dashboard() {
   const router = useRouter()
@@ -55,7 +56,7 @@ export default function Dashboard() {
         router.push('/login')
         return
       }
-      
+
       // Fetch today's tasks
       const tasksRes = await calendarAPI.getTodayTasks()
       setTodayTasks(tasksRes.data?.tasks || tasksRes.data || [])
@@ -99,9 +100,9 @@ export default function Dashboard() {
   const toggleTask = async (taskId) => {
     try {
       await taskAPI.complete(taskId)
-      setTodayTasks(todayTasks.map(task => 
-        (task._id === taskId || task.id === taskId) 
-          ? { ...task, completed: !task.completed, status: task.completed ? 'pending' : 'completed' } 
+      setTodayTasks(todayTasks.map(task =>
+        (task._id === taskId || task.id === taskId)
+          ? { ...task, completed: !task.completed, status: task.completed ? 'pending' : 'completed' }
           : task
       ))
       toast.success('Task status updated!')
@@ -113,206 +114,151 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        {/* Welcome Header */}
+      <div className="space-y-12 max-w-6xl mx-auto">
+        {/* Welcome Header - Premium & Minimal */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4"
+          className="flex flex-col md:flex-row md:items-center justify-between gap-6"
         >
-          {/* User Avatar */}
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
-            {userName.charAt(0).toUpperCase()}
+          <div className="flex items-center gap-6">
+            {/* User Avatar - Clay Circle */}
+            <div className="w-20 h-20 rounded-[2rem] bg-white dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-sky-400 font-black text-3xl shadow-xl shadow-blue-500/10 border border-gray-100 dark:border-slate-700 clay-card border-none">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p className="text-[10px] font-black tracking-[0.2em] text-blue-500 uppercase mb-1">
+                {currentTime.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()} • {currentTime.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }).toUpperCase()}
+              </p>
+              <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter leading-none">
+                {getGreeting().toUpperCase()}, {userName.split(' ')[0].toUpperCase()}
+              </h1>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {getGreeting()}, {userName}!
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
-              {currentTime.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-            </p>
+          <div className="flex gap-3">
+            <Link href="/tasks" className="btn-clay btn-clay-primary px-8 py-3.5 text-xs tracking-widest uppercase">
+              New Action
+            </Link>
           </div>
         </motion.div>
 
-        {/* Today's Tasks Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Today's Tasks</h2>
-            <Link
-              href="/tasks"
-              className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium"
-            >
-              View All
-            </Link>
-          </div>
-
-          <div className="space-y-3">
-            {todayTasks.length === 0 ? (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                <FiCheckCircle className="mx-auto mb-2" size={48} />
-                <p>No tasks for today. You're all caught up! 🎉</p>
-              </div>
-            ) : (
-              todayTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <button
-                    onClick={() => toggleTask(task.id)}
-                    className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
-                      task.completed
-                        ? 'bg-blue-600 border-blue-600'
-                        : 'border-gray-300 dark:border-gray-600 hover:border-blue-600'
-                    }`}
-                  >
-                    {task.completed && <FiCheck className="text-white" size={16} />}
-                  </button>
-                  <div className="flex-1">
-                    <p className={`font-medium ${task.completed ? 'line-through text-gray-400' : 'text-gray-900 dark:text-white'}`}>
-                      {task.title}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{task.due}</p>
-                  </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    task.priority === 'high'
-                      ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
-                      : task.priority === 'medium'
-                      ? 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400'
-                      : 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
-                  }`}>
-                    {task.priority}
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
-        </motion.div>
-
-        {/* Upcoming Deadlines Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Upcoming Deadlines</h2>
-            <Link
-              href="/calendar"
-              className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium"
-            >
-              View All
-            </Link>
-          </div>
-
-          <div className="space-y-3">
-            {upcomingDeadlines.map((deadline) => (
-              <div
-                key={deadline.id}
-                className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Today's Tasks Section - Clay Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            className="clay-card bg-white dark:bg-slate-800 border-none"
+          >
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight italic">TODAY'S FLOW</h2>
+              <Link
+                href="/tasks"
+                className="text-[10px] font-black text-blue-500 tracking-widest uppercase hover:underline"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                    <FiClock className="text-white" size={20} />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-white">{deadline.title}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{deadline.date}</p>
-                  </div>
-                </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  deadline.priority === 'high'
-                    ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400'
-                    : 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400'
-                }`}>
-                  {deadline.priority}
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+                View Full Stack
+              </Link>
+            </div>
 
-        {/* Quick Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Opportunities */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Link href="/opportunities" className="block">
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-gray-900 dark:text-white">Opportunities</h3>
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                    <FiTarget className="text-white" size={20} />
-                  </div>
+            <div className="space-y-4">
+              {todayTasks.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Everything is completed</p>
                 </div>
-                <div className="space-y-2">
-                  {savedOpportunities.map((opp) => (
-                    <div key={opp.id} className="flex items-center justify-between text-sm">
-                      <span className="text-gray-700 dark:text-gray-300">{opp.title}</span>
-                      <span className="text-gray-500 dark:text-gray-400">{opp.date}</span>
+              ) : (
+                todayTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="flex items-center gap-5 p-4 rounded-[1.5rem] bg-[#F8F9FC] dark:bg-slate-900/50 inner-shadow transition-all group"
+                  >
+                    <button
+                      onClick={() => toggleTask(task.id)}
+                      className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all ${task.completed
+                          ? 'bg-blue-600 shadow-lg shadow-blue-500/20'
+                          : 'bg-white dark:bg-slate-800 border-none shadow-sm'
+                        }`}
+                    >
+                      {task.completed && <FiCheck className="text-white" size={14} />}
+                    </button>
+                    <div className="flex-1">
+                      <p className={`text-base font-bold tracking-tight ${task.completed ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
+                        {task.title}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </Link>
+                    <span className="text-[10px] font-black text-gray-400 group-hover:text-blue-500 transition-colors">
+                      {task.priority?.toUpperCase() || 'NORMAL'}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
           </motion.div>
 
-          {/* Team Updates */}
+          {/* Upcoming Section */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="clay-card bg-white dark:bg-slate-800 border-none"
           >
-            <Link href="/teams" className="block">
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-800 p-6 hover:shadow-xl transition-all">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-gray-900 dark:text-white">Team Updates</h3>
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-                    <FiUsers className="text-white" size={20} />
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight italic">UPCOMING</h2>
+              <Link href="/calendar" className="text-[10px] font-black text-blue-500 tracking-widest uppercase">
+                Timeline
+              </Link>
+            </div>
+
+            <div className="space-y-4">
+              {upcomingDeadlines.slice(0, 4).map((deadline) => (
+                <div
+                  key={deadline.id}
+                  className="flex items-center justify-between p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-slate-900 flex items-center justify-center text-blue-600 dark:text-sky-400 shadow-sm">
+                      <FiClock size={18} />
+                    </div>
+                    <div>
+                      <p className="text-base font-bold text-gray-800 dark:text-gray-200 tracking-tight">{deadline.title}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{deadline.date}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  {teamUpdates.map((update) => (
-                    <div key={update.id} className="flex items-center justify-between text-sm">
-                      <span className="text-gray-700 dark:text-gray-300">{update.text}</span>
-                      <span className="text-gray-500 dark:text-gray-400">{update.time}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Link>
+              ))}
+            </div>
           </motion.div>
+        </div>
 
-          {/* AI Assistant Quick Access */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Link href="/ai-assistant" className="block">
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold">AI Assistant</h3>
-                  <div className="text-3xl">🤖</div>
+        {/* Bottom Row - Minimalist Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { title: 'OPPORTUNITIES', count: savedOpportunities.length, color: 'text-purple-500', href: '/opportunities', icon: FiTarget },
+            { title: 'TEAM UPDATES', count: teamUpdates.length, color: 'text-emerald-500', href: '/teams', icon: FiUsers },
+            { title: 'AI ASSISTANT', desc: 'READY TO PLAN', color: 'text-blue-500', href: '/ai-assistant', icon: FiMessageCircle },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + i * 0.1 }}
+            >
+              <Link href={stat.href} className="block group">
+                <div className="clay-card bg-white dark:bg-slate-800 border-none group-hover:-translate-y-2">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className={cn("w-10 h-10 rounded-xl bg-gray-50 dark:bg-slate-900 flex items-center justify-center", stat.color)}>
+                      <stat.icon size={20} />
+                    </div>
+                    <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">{stat.title}</span>
+                  </div>
+                  {stat.count !== undefined ? (
+                    <p className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter">{stat.count}</p>
+                  ) : (
+                    <p className="text-sm font-black text-blue-500 tracking-widest uppercase">{stat.desc}</p>
+                  )}
                 </div>
-                <p className="text-sm text-blue-100 mb-3">
-                  Your personal productivity companion
-                </p>
-                <button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium py-2 px-4 rounded-xl transition-all">
-                  Chat Now
-                </button>
-              </div>
-            </Link>
-          </motion.div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </DashboardLayout>

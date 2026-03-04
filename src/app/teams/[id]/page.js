@@ -13,6 +13,8 @@ import TaskAcceptDialog from '@/components/teams/TaskAcceptDialog'
 import TaskActionDialog from '@/components/teams/TaskActionDialog'
 import { teamAPI } from '@/lib/api'
 import toast from 'react-hot-toast'
+import TeamChat from '@/components/teams/TeamChat'
+import { cn } from '@/lib/utils'
 
 export default function TeamDashboardPage() {
   const router = useRouter()
@@ -22,7 +24,7 @@ export default function TeamDashboardPage() {
   const [team, setTeam] = useState(null)
   const [loading, setLoading] = useState(true)
   const [selectedTask, setSelectedTask] = useState(null)
-  const [activeTab, setActiveTab] = useState('tasks') // tasks, members, analytics
+  const [activeTab, setActiveTab] = useState('chat') // chat, tasks, members, analytics
   const [taskFilter, setTaskFilter] = useState('all') // all, pending, in_progress, completed
   const [showInviteModal, setShowInviteModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -30,14 +32,14 @@ export default function TeamDashboardPage() {
   const [deleting, setDeleting] = useState(false)
 
   const [currentUserId, setCurrentUserId] = useState(null)
-  
+
   // Check if current user is a leader (original leader, co-leader, or member with leader role)
   const isLeader = team && currentUserId && (
     team.leader_id === currentUserId ||
     team.co_leaders?.includes(currentUserId) ||
     team.members?.some(m => m.user_id === currentUserId && m.role === 'leader')
   )
-  
+
   const [showInviteLinkModal, setShowInviteLinkModal] = useState(false)
   const inviteLink = team?.invite_link || (team?.invite_token ? `${typeof window !== 'undefined' ? window.location.origin : ''}/teams/join/${team.invite_token}` : null)
 
@@ -46,7 +48,7 @@ export default function TeamDashboardPage() {
     try {
       // First check if user_id is directly stored
       let userId = localStorage.getItem('user_id')
-      
+
       // If not, try to extract from user object
       if (!userId) {
         const userStr = localStorage.getItem('user')
@@ -59,7 +61,7 @@ export default function TeamDashboardPage() {
           }
         }
       }
-      
+
       console.log('Current user_id:', userId)
       setCurrentUserId(userId)
     } catch (e) {
@@ -94,19 +96,19 @@ export default function TeamDashboardPage() {
 
   const getFilteredTasks = () => {
     if (!team?.tasks) return []
-    
+
     // Safety filter: Members should only see tasks assigned to them
     // Leaders/co-leaders see all tasks (already filtered by backend, but double-check)
     let visibleTasks = team.tasks
-    
+
     if (!isLeader && currentUserId) {
       // Members: Only see tasks assigned to them (submit_task type, not collect_task)
-      visibleTasks = team.tasks.filter(t => 
-        String(t.assigned_to) === String(currentUserId) && 
+      visibleTasks = team.tasks.filter(t =>
+        String(t.assigned_to) === String(currentUserId) &&
         t.task_type !== 'collect_task'
       )
     }
-    
+
     // Apply status filter
     if (taskFilter === 'all') return visibleTasks
     return visibleTasks.filter(t => t.status === taskFilter)
@@ -114,20 +116,20 @@ export default function TeamDashboardPage() {
 
   const getTaskStats = () => {
     const tasks = team?.tasks || []
-    
+
     // For members: only count their own tasks
     // For leaders: count all member tasks (submit_task type)
     let visibleTasks = tasks
     if (!isLeader && currentUserId) {
-      visibleTasks = tasks.filter(t => 
-        String(t.assigned_to) === String(currentUserId) && 
+      visibleTasks = tasks.filter(t =>
+        String(t.assigned_to) === String(currentUserId) &&
         t.task_type !== 'collect_task'
       )
     } else {
       // Leaders: only count SUBMIT_TASK (member tasks), not COLLECT_TASK (leader tasks)
       visibleTasks = tasks.filter(t => t.task_type !== 'collect_task')
     }
-    
+
     return {
       total: visibleTasks.length,
       pending: visibleTasks.filter(t => t.status === 'pending').length,
@@ -165,12 +167,12 @@ export default function TeamDashboardPage() {
     const now = new Date()
     const diff = date - now
     const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-    
+
     if (days < 0) return '⚠️ Overdue'
     if (days === 0) return '🔥 Today'
     if (days === 1) return '⏰ Tomorrow'
     if (days < 7) return `📅 ${days} days left`
-    
+
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   }
 
@@ -207,69 +209,65 @@ export default function TeamDashboardPage() {
   return (
     <DashboardLayout>
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-10">
         <button
           onClick={() => router.push('/teams')}
-          className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mb-4"
+          className="flex items-center gap-2 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mb-6 text-[10px] font-black tracking-widest uppercase"
         >
-          <FiArrowLeft size={20} />
-          <span>Back to Teams</span>
+          <FiArrowLeft size={16} />
+          <span>BACK TO HUB</span>
         </button>
 
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <div className="bg-white dark:bg-slate-800 clay-card rounded-[2.5rem] p-8 sm:p-10 border-none relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8 relative z-10">
             <div className="flex-1">
-              <h1 className="text-2xl sm:text-3xl font-bold mb-2">{team.name}</h1>
-              {team.description && (
-                <p className="text-blue-100 mb-4">{team.description}</p>
-              )}
-              <div className="flex flex-wrap items-center gap-3 text-sm">
-                <span className="flex items-center gap-1">
-                  <FiUsers size={16} />
-                  {team.members?.length || 0} members
-                </span>
-                <span className="flex items-center gap-1">
-                  <FiCheckCircle size={16} />
-                  {stats.completed} completed
-                </span>
+              <div className="flex items-center gap-3 mb-4">
+                <h1 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tracking-tighter uppercase italic">{team.name}</h1>
                 {isLeader && (
-                  <span className="px-2 py-1 bg-white/20 rounded-lg font-semibold">
-                    👑 Team Leader
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-black rounded-lg uppercase tracking-widest">
+                    LEADER
                   </span>
                 )}
               </div>
+              {team.description && (
+                <p className="text-sm font-medium text-gray-500 max-w-2xl mb-6">{team.description}</p>
+              )}
+              <div className="flex flex-wrap items-center gap-6 text-[10px] font-black uppercase tracking-[0.15em] text-gray-400">
+                <span className="flex items-center gap-2">
+                  <FiUsers size={14} className="text-blue-500" />
+                  {team.members?.length || 0} Members
+                </span>
+                <span className="flex items-center gap-2">
+                  <FiCheckCircle size={14} className="text-green-500" />
+                  {stats.completed} DONE
+                </span>
+              </div>
             </div>
-            
-            {/* Action Buttons - Show for leaders */}
-            <div className="flex gap-2">
-              {isLeader ? (
+
+            <div className="flex gap-3">
+              {isLeader && (
                 <>
                   <button
                     onClick={() => {
                       if (inviteLink) {
                         navigator.clipboard.writeText(inviteLink)
-                        toast.success('Invite link copied!')
+                        toast.success('Link Saved')
                       }
                     }}
-                    className="flex items-center gap-2 bg-white/20 text-white px-3 py-2.5 rounded-xl font-semibold hover:bg-white/30 transition-colors"
+                    className="w-12 h-12 flex items-center justify-center bg-gray-50 dark:bg-slate-700 text-gray-500 dark:text-gray-300 rounded-2xl inner-shadow hover:shadow-md transition-all"
                     title="Copy invite link"
                   >
                     <FiLink size={18} />
-                    <span className="hidden sm:inline">Share</span>
                   </button>
                   <button
                     onClick={() => router.push(`/teams/${teamId}/assign-task`)}
-                    className="flex items-center gap-2 bg-white text-blue-600 px-4 py-2.5 rounded-xl font-semibold hover:bg-blue-50 transition-colors shadow-lg"
+                    className="btn-clay btn-clay-primary px-8 py-3.5 text-xs tracking-widest uppercase"
                   >
-                    <FiPlus size={20} />
-                    <span className="hidden sm:inline">Assign Task</span>
-                    <span className="sm:hidden">Task</span>
+                    Add Action
                   </button>
                 </>
-              ) : (
-                <span className="px-3 py-2 bg-white/10 rounded-xl text-sm">
-                  Member
-                </span>
               )}
             </div>
           </div>
@@ -277,92 +275,64 @@ export default function TeamDashboardPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-              <FiFileText className="text-blue-600 dark:text-blue-400" size={20} />
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-10">
+        {[
+          { label: 'TOTAL', val: stats.total, icon: FiFileText, col: 'blue' },
+          { label: 'ACTIVE', val: stats.in_progress, icon: FiClock, col: 'yellow' },
+          { label: 'DONE', val: stats.completed, icon: FiCheckCircle, col: 'green' },
+          { label: 'PENDING', val: stats.pending, icon: FiAlertCircle, col: 'red' }
+        ].map((s, i) => (
+          <motion.div
+            key={s.label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className="bg-white dark:bg-slate-800 rounded-[1.75rem] p-5 shadow-sm clay-card border-none"
+          >
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "w-12 h-12 rounded-2xl flex items-center justify-center inner-shadow",
+                s.col === 'blue' ? "bg-blue-50 text-blue-500" :
+                  s.col === 'yellow' ? "bg-amber-50 text-amber-500" :
+                    s.col === 'green' ? "bg-green-50 text-green-500" :
+                      "bg-red-50 text-red-500"
+              )}>
+                <s.icon size={20} />
+              </div>
+              <div>
+                <div className="text-2xl font-black text-gray-900 dark:text-white tracking-tighter">{s.val}</div>
+                <div className="text-[10px] font-black text-gray-400 tracking-widest uppercase">{s.label}</div>
+              </div>
             </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</div>
-              <div className="text-xs text-gray-600 dark:text-gray-400">Total</div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
-              <FiClock className="text-yellow-600 dark:text-yellow-400" size={20} />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.in_progress}</div>
-              <div className="text-xs text-gray-600 dark:text-gray-400">Active</div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-              <FiCheckCircle className="text-green-600 dark:text-green-400" size={20} />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.completed}</div>
-              <div className="text-xs text-gray-600 dark:text-gray-400">Done</div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-              <FiAlertCircle className="text-red-600 dark:text-red-400" size={20} />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.pending}</div>
-              <div className="text-xs text-gray-600 dark:text-gray-400">Pending</div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        ))}
       </div>
 
       {/* Tabs */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm mb-6 overflow-hidden">
-        <div className="flex border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
-          {['tasks', 'members', 'analytics'].map((tab) => (
+      <div className="bg-white dark:bg-slate-800 rounded-[2rem] shadow-sm mb-10 overflow-hidden clay-card border-none p-2">
+        <div className="flex bg-[#F8F9FC] dark:bg-slate-900/50 p-1.5 rounded-[1.5rem] overflow-x-auto inner-shadow">
+          {['chat', 'tasks', 'members', 'analytics'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 min-w-[100px] px-4 py-3 sm:py-4 font-semibold capitalize transition-colors ${
+              className={cn(
+                "flex-1 min-w-[100px] px-6 py-3 text-[10px] font-black tracking-widest uppercase transition-all rounded-xl",
                 activeTab === tab
-                  ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
-                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-              }`}
+                  ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-sky-400 shadow-md"
+                  : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+              )}
             >
               {tab}
             </button>
           ))}
         </div>
+
+        {/* Chat Tab */}
+        {activeTab === 'chat' && (
+          <div className="p-4 sm:p-6">
+            <TeamChat teamId={teamId} currentUserId={currentUserId} />
+          </div>
+        )}
 
         {/* Tasks Tab */}
         {activeTab === 'tasks' && (
@@ -373,11 +343,10 @@ export default function TeamDashboardPage() {
                 <button
                   key={filter}
                   onClick={() => setTaskFilter(filter)}
-                  className={`px-4 py-2 rounded-lg font-medium capitalize transition-colors ${
-                    taskFilter === filter
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                  }`}
+                  className={`px-4 py-2 rounded-lg font-medium capitalize transition-colors ${taskFilter === filter
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    }`}
                 >
                   {filter.replace('_', ' ')}
                 </button>
@@ -398,38 +367,40 @@ export default function TeamDashboardPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
+                    className="clay-card border-none bg-white dark:bg-slate-800 p-6 hover:-translate-y-1 transition-all cursor-pointer group"
                     onClick={() => setSelectedTask(task)}
                   >
-                    <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-start justify-between gap-4 mb-4">
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-1 truncate">
+                        <h4 className="text-lg font-black text-gray-900 dark:text-white mb-2 truncate group-hover:text-blue-500 transition-colors">
                           {task.title}
                         </h4>
                         {task.description && (
-                          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                          <p className="text-xs font-medium text-gray-500 line-clamp-2 leading-relaxed">
                             {task.description}
                           </p>
                         )}
                       </div>
-                      <span className={`px-2 py-1 rounded-lg text-xs font-semibold flex-shrink-0 ${getPriorityColor(task.priority)}`}>
+                      <span className={cn("px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-widest", getPriorityColor(task.priority))}>
                         {task.priority?.toUpperCase() || 'MED'}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                      <span className={`px-2 py-1 rounded ${getStatusColor(task.status)}`}>
+                    <div className="flex flex-wrap items-center gap-4 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                      <span className={cn("px-3 py-1 rounded-lg inner-shadow", getStatusColor(task.status))}>
                         {task.status?.replace('_', ' ').toUpperCase()}
                       </span>
-                      <span>👤 {task.assigned_to_name}</span>
+                      <span className="flex items-center gap-1.5"><FiUser size={12} /> {task.assigned_to_name}</span>
                       {task.deadline && (
-                        <span>{formatDate(task.deadline)}</span>
+                        <span className="flex items-center gap-1.5"><FiClock size={12} /> {formatDate(task.deadline)}</span>
                       )}
                       {task.progress_percentage > 0 && (
-                        <span className="flex items-center gap-1">
-                          <FiTrendingUp size={12} />
-                          {task.progress_percentage}%
-                        </span>
+                        <div className="flex-1 flex items-center gap-3 ml-2">
+                          <div className="flex-1 h-1.5 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-blue-500 rounded-full" style={{ width: `${task.progress_percentage}%` }}></div>
+                          </div>
+                          <span className="text-blue-500 italic">{task.progress_percentage}%</span>
+                        </div>
                       )}
                     </div>
                   </motion.div>
@@ -443,12 +414,12 @@ export default function TeamDashboardPage() {
         {activeTab === 'members' && (
           <div className="p-4 sm:p-6">
             {/* Team Leaders Section */}
-            <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-              <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Team Leaders</h4>
-              <div className="flex flex-wrap gap-2">
+            <div className="mb-10 p-6 bg-blue-50/50 dark:bg-blue-900/10 rounded-[2rem] border-none clay-card">
+              <h4 className="text-[10px] font-black tracking-widest text-blue-800 dark:text-blue-300 uppercase mb-4">Command Center</h4>
+              <div className="flex flex-wrap gap-3">
                 {team.members?.filter(m => m.role === 'leader').map(leader => (
-                  <span key={leader.user_id} className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 rounded-lg text-sm">
-                    👑 {leader.name}
+                  <span key={leader.user_id} className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-300 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-sm">
+                    {leader.name}
                   </span>
                 ))}
               </div>
@@ -457,10 +428,9 @@ export default function TeamDashboardPage() {
             {isLeader && (
               <button
                 onClick={() => setShowInviteModal(true)}
-                className="w-full mb-4 flex items-center justify-center gap-2 bg-blue-500 text-white px-4 py-3 rounded-xl font-semibold hover:bg-blue-600 transition-colors"
+                className="w-full mb-8 btn-clay btn-clay-primary py-4 text-xs tracking-widest uppercase"
               >
-                <FiPlus size={20} />
-                Invite More Members
+                Assemble More Members
               </button>
             )}
 
@@ -471,27 +441,28 @@ export default function TeamDashboardPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl relative"
+                  className="clay-card border-none bg-white dark:bg-slate-800 p-6 hover:-translate-y-1 transition-all cursor-pointer group"
                 >
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0 italic shadow-lg shadow-blue-500/20">
                     {member.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-gray-900 dark:text-white truncate">
+                    <div className="text-base font-black text-gray-900 dark:text-white tracking-tight">
                       {member.name}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                    <div className="text-[10px] font-black text-gray-400 tracking-widest uppercase">
                       {member.email}
                     </div>
                   </div>
-                  
+
                   {/* Role Badge */}
-                  <span className={`px-3 py-1 text-xs font-semibold rounded-lg flex-shrink-0 ${
-                    member.role === 'leader' 
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
-                      : 'bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-300'
-                  }`}>
-                    {member.role === 'leader' ? '👑 Leader' : 'Member'}
+                  <span className={cn(
+                    "px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all",
+                    member.role === 'leader'
+                      ? "bg-blue-600 text-white shadow-md"
+                      : "bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-gray-300"
+                  )}>
+                    {member.role === 'leader' ? 'COMMAND' : 'OPERATIVE'}
                   </span>
 
                   {/* Leader Actions Menu */}
@@ -503,7 +474,7 @@ export default function TeamDashboardPage() {
                       >
                         <FiMoreVertical size={18} />
                       </button>
-                      
+
                       {showMemberActions === member.user_id && (
                         <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-10 overflow-hidden">
                           {member.role !== 'leader' && (
@@ -593,7 +564,7 @@ export default function TeamDashboardPage() {
               onUpdate={fetchTeam}
             />
           )}
-          
+
           {/* Show Action dialog for accepted/submitted/completed tasks */}
           {(selectedTask.status !== 'pending' || isLeader) && (
             <TaskActionDialog
@@ -615,7 +586,7 @@ export default function TeamDashboardPage() {
 
       {/* Invite Modal */}
       {showInviteModal && (
-        <InviteModal 
+        <InviteModal
           teamId={teamId}
           inviteLink={inviteLink}
           onClose={() => setShowInviteModal(false)}
@@ -699,7 +670,7 @@ function InviteModal({ teamId, inviteLink, onClose, onInvited }) {
         className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-lg w-full"
       >
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Invite Members</h3>
-        
+
         {/* Invite Link */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

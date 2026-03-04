@@ -43,43 +43,46 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border-none">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-5">
         <div className="flex items-center justify-between">
-          {/* Logo - Soft Text */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">AlertyAI</span>
+          {/* Logo - Bold & Minimal */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+              <span className="text-white font-black text-xl italic">A</span>
+            </div>
+            <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white">AlertyAI</span>
           </Link>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300"
+                className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-all text-gray-500 dark:text-gray-400"
                 aria-label="Toggle theme"
               >
-                {theme === 'dark' ? <FiSun size={20} /> : <FiMoon size={20} />}
+                {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
               </button>
             )}
 
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-6">
               {isAuthenticated ? (
                 <>
-                  <Link href="/dashboard" className="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-blue-600 transition-colors">
-                    Dashboard
+                  <Link href="/dashboard" className="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors">
+                    DASHBOARD
                   </Link>
-                  <button onClick={handleLogout} className="p-2 text-gray-600 dark:text-gray-300 hover:text-red-500 transition-colors" title="Logout">
-                    <FiLogOut size={20} />
+                  <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center rounded-2xl bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-100 transition-colors" title="Logout">
+                    <FiLogOut size={18} />
                   </button>
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-blue-600 transition-colors">
-                    Log in
+                  <Link href="/login" className="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors tracking-widest uppercase">
+                    Login
                   </Link>
-                  <Link href="/register" className="btn-primary">
-                    Get Started
+                  <Link href="/register" className="btn-clay btn-clay-primary px-8 py-3.5 shadow-xl shadow-blue-500/25">
+                    Start Now
                   </Link>
                 </>
               )}

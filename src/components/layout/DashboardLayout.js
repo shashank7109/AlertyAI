@@ -10,18 +10,18 @@ export default function DashboardLayout({ children }) {
   const { sidebarOpen } = useUIStore()
 
   return (
-    <div className="min-h-screen pt-20 bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen pt-24 bg-[#F8F9FC] dark:bg-[#0F172A]">
       <Sidebar />
-      
+
       <div
         className={cn(
-          'transition-all duration-300',
-          sidebarOpen ? 'lg:ml-80' : 'lg:ml-0'
+          'transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]',
+          sidebarOpen ? 'lg:ml-72' : 'lg:ml-0'
         )}
       >
         <Navbar />
-        
-        <main className="p-6 lg:p-8 animate-fadeIn">
+
+        <main className="p-6 md:p-10 max-w-[1600px] mx-auto fade-in">
           {children}
         </main>
       </div>

@@ -41,29 +41,30 @@ export default function Sidebar() {
         )}
       </AnimatePresence>
 
-      {/* Sidebar - Soft & Minimal */}
+      {/* Sidebar - Clay & Minimal */}
       <motion.aside
         initial={false}
         animate={{
           x: sidebarOpen ? 0 : -320,
         }}
-        transition={{ type: 'tween', duration: 0.2 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className={cn(
           'fixed left-0 top-0 h-screen w-72 z-50 pt-16',
-          'bg-white dark:bg-[#1C1C1E] border-r border-gray-100 dark:border-gray-800',
-          'flex flex-col shadow-sm'
+          'bg-white dark:bg-[#1E293B]',
+          'flex flex-col shadow-2xl border-none',
+          'shadow-[10px_0_30px_-10px_rgba(0,0,0,0.05)]'
         )}
       >
         {/* Header - Simple */}
-        <div className="p-6">
+        <div className="p-8">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">AlertyAI</span>
+            <span className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">AlertyAI</span>
           </Link>
-          <p className="text-xs font-semibold mt-1 text-gray-400 dark:text-gray-500 tracking-wider">Your Second Brain</p>
+          <p className="text-[10px] font-bold mt-1 text-blue-500 uppercase tracking-[0.2em]">Second Brain</p>
         </div>
 
-        {/* Navigation - Soft List */}
-        <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-1">
+        {/* Navigation - Clay List */}
+        <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
           {menuItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon
@@ -78,25 +79,25 @@ export default function Sidebar() {
                   }
                 }}
                 className={cn(
-                  'sidebar-item group',
+                  'nav-item',
                   isActive && 'active'
                 )}
               >
                 <Icon className={cn(
-                  'w-5 h-5 transition-none',
-                  isActive ? 'text-blue-600 dark:text-blue-500' : 'text-gray-400 dark:text-gray-500'
+                  'w-5 h-5',
+                  isActive ? 'text-blue-600 dark:text-sky-400' : 'text-gray-400'
                 )} />
-                <span className="text-[15px] font-medium tracking-wide">{item.name}</span>
+                <span className="text-[14px] font-semibold">{item.name}</span>
               </Link>
             )
           })}
         </nav>
 
-        {/* Action Button - Pill shape via globals */}
-        <div className="p-6 border-t border-gray-50 dark:border-gray-800">
+        {/* Action Button - Clay Pill */}
+        <div className="p-6">
           <Link
             href="/ai-assistant"
-            className="btn-primary w-full text-center"
+            className="btn-clay btn-clay-primary w-full py-4 text-sm"
           >
             Ask Assistant
           </Link>

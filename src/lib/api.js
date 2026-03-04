@@ -53,11 +53,11 @@ export const authAPI = {
     })
   },
   register: (userData) => api.post('/auth/register', userData),
-  verifyOtp: (email, otp) => api.post('/auth/verify-otp', null, { 
-    params: { email, otp } 
+  verifyOtp: (email, otp) => api.post('/auth/verify-otp', null, {
+    params: { email, otp }
   }),
-  resendOtp: (email) => api.post('/auth/resend-otp', null, { 
-    params: { email } 
+  resendOtp: (email) => api.post('/auth/resend-otp', null, {
+    params: { email }
   }),
   // Google OAuth endpoints
   googleAuthUrl: () => `${API_URL}/api/oauth/google/login`,
@@ -116,18 +116,18 @@ export const opportunityAPI = {
 export const aiAPI = {
   // Chat
   chat: (message) => api.post('/v2/chat', null, { params: { message } }),
-  
+
   // Weekly plan
   getWeeklyPlan: () => api.get('/v2/tasks/weekly-plan'),
-  
+
   // Task analysis
   analyzeTask: (taskId) => api.post(`/v2/tasks/${taskId}/breakdown`),
-  
+
   // Text extraction
-  extractFromText: (text) => api.post('/v2/tasks/from-text', null, { 
-    params: { content: text, language: 'en' } 
+  extractFromText: (text) => api.post('/v2/tasks/from-text', null, {
+    params: { content: text, language: 'en' }
   }),
-  
+
   // Image extraction (extract only, don't create task)
   extractFromImage: (imageFile, language = 'en') => {
     const formData = new FormData()
@@ -138,7 +138,7 @@ export const aiAPI = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
-  
+
   // Suggestions (basic analytics from dashboard data)
   getSuggestions: () => api.get('/tasks'), // Use task list instead
 }
@@ -146,11 +146,11 @@ export const aiAPI = {
 // AI V2 APIs - Advanced AI Features
 export const aiV2API = {
   // Task creation from text/voice
-  createTaskFromText: (content, language = 'en') => 
-    api.post('/v2/tasks/from-text', null, { 
-      params: { content, language } 
+  createTaskFromText: (content, language = 'en') =>
+    api.post('/v2/tasks/from-text', null, {
+      params: { content, language }
     }),
-  
+
   // Task creation from screenshot with OCR
   createTaskFromScreenshot: (imageFile, language = 'en') => {
     const formData = new FormData()
@@ -160,7 +160,7 @@ export const aiV2API = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
-  
+
   // Voice input (multilingual)
   createTaskFromVoice: (audioFile, language = 'en') => {
     const formData = new FormData()
@@ -170,34 +170,34 @@ export const aiV2API = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
-  
+
   // Batch task creation
   batchCreateTasks: (contents, language = 'en') =>
     api.post('/v2/tasks/batch', { contents, language }),
-  
+
   // Task breakdown
-  breakdownTask: (taskId) => 
+  breakdownTask: (taskId) =>
     api.post(`/v2/tasks/${taskId}/breakdown`),
-  
+
   // Weekly plan
-  getWeeklyPlan: () => 
+  getWeeklyPlan: () =>
     api.get('/v2/tasks/weekly-plan'),
-  
+
   // Later Box
   saveLaterBox: (content, url = null, file_path = null) =>
     api.post('/v2/later-box', null, {
       params: { content, url, file_path }
     }),
-  
+
   convertLaterBoxToTask: (itemId) =>
     api.post(`/v2/later-box/${itemId}/convert-to-task`),
-  
+
   // Opportunities
   extractOpportunity: (content) =>
     api.post('/v2/opportunities/extract', null, {
       params: { content }
     }),
-  
+
   extractOpportunityFromScreenshot: (imageFile) => {
     const formData = new FormData()
     formData.append('image', imageFile)
@@ -205,20 +205,20 @@ export const aiV2API = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
-  
+
   // Team
   createTeamTask: (teamId, taskTitle, description) =>
     api.post(`/v2/teams/${teamId}/tasks`, null, {
       params: { team_id: teamId, task_title: taskTitle, description }
     }),
-  
+
   getTeamAnalytics: (teamId) =>
     api.get(`/v2/teams/${teamId}/analytics`),
-  
+
   // AI Chat
   aiChat: (message) =>
     api.post('/v2/chat', null, { params: { message } }),
-  
+
   // Health check
   healthCheck: () =>
     api.get('/v2/health')
@@ -226,8 +226,8 @@ export const aiV2API = {
 
 // Calendar APIs
 export const calendarAPI = {
-  getEvents: (startDate, endDate) => api.get('/calendar/events', { 
-    params: { startDate, endDate } 
+  getEvents: (startDate, endDate) => api.get('/calendar/events', {
+    params: { startDate, endDate }
   }),
   getTodayTasks: () => api.get('/calendar/today'),
   getUpcoming: () => api.get('/calendar/upcoming'),
@@ -241,16 +241,16 @@ export const reminderAPI = {
   getById: (id) => api.get(`/reminders/${id}`),
   update: (id, data) => api.patch(`/reminders/${id}`, data),
   delete: (id) => api.delete(`/reminders/${id}`),
-  
+
   // Devices
   registerDevice: (data) => api.post('/reminders/devices/register', data),
   getDevices: () => api.get('/reminders/devices'),
   unregisterDevice: (deviceId) => api.delete(`/reminders/devices/${deviceId}`),
-  
+
   // Preferences
   getPreferences: () => api.get('/reminders/preferences'),
   updatePreferences: (data) => api.post('/reminders/preferences', data),
-  
+
   // Logs
   getLogs: (params) => api.get('/reminders/logs', { params }),
 }
@@ -263,35 +263,35 @@ export const teamAPI = {
   create: (data) => api.post('/teams', data),
   update: (id, data) => api.put(`/teams/${id}`, data),
   delete: (id) => api.delete(`/teams/${id}`),
-  
+
   // Members
-  inviteMembers: (teamId, emails, phones) => 
+  inviteMembers: (teamId, emails, phones) =>
     api.post(`/teams/${teamId}/members/invite`, { emails, phones }),
   joinTeam: (inviteToken) => api.post(`/teams/join/${inviteToken}`),
-  removeMember: (teamId, userId) => 
+  removeMember: (teamId, userId) =>
     api.delete(`/teams/${teamId}/members/${userId}`),
   promoteToLeader: (teamId, userId) =>
     api.patch(`/teams/${teamId}/members/${userId}/role`, { role: 'leader' }),
   demoteToMember: (teamId, userId) =>
     api.patch(`/teams/${teamId}/members/${userId}/role`, { role: 'member' }),
-  
+
   // Pending invitations (for invited users)
   getMyPendingInvitations: () => api.get('/teams/invitations/pending'),
   acceptInvitation: (invitationId) => api.post(`/teams/invitations/${invitationId}/accept`),
   declineInvitation: (invitationId) => api.post(`/teams/invitations/${invitationId}/decline`),
-  
+
   // Tasks
   getPendingTasks: () => api.get('/teams/tasks/pending'),
   createTask: (teamId, data) => api.post(`/teams/${teamId}/tasks`, data),
-  acceptTask: (teamId, taskId) => 
+  acceptTask: (teamId, taskId) =>
     api.post(`/teams/${teamId}/tasks/${taskId}/accept`),
-  rejectTask: (teamId, taskId, reason) => 
+  rejectTask: (teamId, taskId, reason) =>
     api.post(`/teams/${teamId}/tasks/${taskId}/reject`, { reason }),
-  updateProgress: (teamId, taskId, percentage, note) => 
+  updateProgress: (teamId, taskId, percentage, note) =>
     api.patch(`/teams/${teamId}/tasks/${taskId}/progress`, { percentage, note }),
-  addComment: (teamId, taskId, text) => 
+  addComment: (teamId, taskId, text) =>
     api.post(`/teams/${teamId}/tasks/${taskId}/comments`, { text }),
-  completeTask: (teamId, taskId) => 
+  completeTask: (teamId, taskId) =>
     api.post(`/teams/${teamId}/tasks/${taskId}/complete`),
   submitTask: (teamId, taskId, note = "", files = []) => {
     const formData = new FormData();
@@ -308,30 +308,42 @@ export const teamAPI = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
-  
+
   // AI
   getAISuggestions: (teamId) => api.get(`/teams/${teamId}/ai-suggestions`),
-  getAISummary: (teamId, period = 'daily') => 
+  getAISummary: (teamId, period = 'daily') =>
     api.get(`/teams/${teamId}/ai-summary?period=${period}`),
-  getTaskBreakdown: (teamId, taskId) => 
+  getTaskBreakdown: (teamId, taskId) =>
     api.post(`/teams/${teamId}/tasks/${taskId}/ai-breakdown`),
-  
+
   // Analytics
   getAnalytics: (teamId) => api.get(`/teams/${teamId}/analytics`),
+
+  // Chat
+  getChatHistory: (orgId) => {
+    const token = localStorage.getItem('token')
+    return api.get(`/chat/history/${orgId}`, { params: { token } })
+  },
+  getMentionSuggestions: (orgId) => api.get(`/chat/mentions/${orgId}`),
+  getChatWSUrl: (orgId) => {
+    const token = localStorage.getItem('token')
+    const wsBase = API_URL.replace(/^http/, 'ws')
+    return `${wsBase}/api/chat/ws/chat/${orgId}?token=${token}`
+  },
 }
 
 // Admin APIs (only accessible by smaran.ai07@gmail.com)
 export const adminAPI = {
   // Users
-  getAllUsers: (skip = 0, limit = 100) => 
+  getAllUsers: (skip = 0, limit = 100) =>
     api.get('/admin/users', { params: { skip, limit } }),
-  getUserById: (userId) => 
+  getUserById: (userId) =>
     api.get(`/admin/users/${userId}`),
-  deleteUser: (userId) => 
+  deleteUser: (userId) =>
     api.delete(`/admin/users/${userId}`),
-  
+
   // Stats
-  getStats: () => 
+  getStats: () =>
     api.get('/admin/stats'),
 }
 

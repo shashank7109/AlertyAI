@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import DashboardLayout from '@/components/layout/DashboardLayout'
-import { FiUser, FiBell, FiGlobe, FiMoon, FiSun, FiShield } from 'react-icons/fi'
+import { FiUser, FiBell, FiGlobe, FiMoon, FiSun, FiShield, FiCheck } from 'react-icons/fi'
 import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import toast from 'react-hot-toast'
+import { cn } from '@/lib/utils'
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme()
@@ -24,59 +25,62 @@ export default function SettingsPage() {
   })
 
   const handleSave = () => {
-    toast.success('Settings saved successfully!')
+    toast.success('Settings Saved')
   }
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="max-w-4xl mx-auto space-y-10 pb-20">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold gradient-text font-display">Settings ⚙️</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            Manage your account and preferences
+        <div className="mb-12">
+          <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter uppercase italic">Control Center</h1>
+          <p className="text-xs font-black text-gray-400 tracking-[0.2em] uppercase mt-2">
+            Configure your workspace experience
           </p>
         </div>
 
         {/* Settings Sections */}
-        <div className="space-y-6">
+        <div className="grid gap-8">
           {/* Profile Settings */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="card p-6"
+            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
-                <FiUser className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 inner-shadow">
+                <FiUser size={24} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                Profile Information
-              </h2>
+              <div>
+                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+                  Identity
+                </h2>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Personal profile details</p>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Name
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">
+                  Full Name
                 </label>
                 <input
                   type="text"
                   value={settings.name}
                   onChange={(e) => setSettings({ ...settings, name: e.target.value })}
-                  className="input"
+                  className="w-full px-6 py-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Email
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">
+                  Email Address
                 </label>
                 <input
                   type="email"
                   value={settings.email}
                   onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                  className="input"
+                  className="w-full px-6 py-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none"
                 />
               </div>
             </div>
@@ -87,46 +91,44 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="card p-6"
+            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-                <FiMoon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 inner-shadow">
+                <FiMoon size={24} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                Appearance
-              </h2>
+              <div>
+                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+                  Visuals
+                </h2>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Customize your theme</p>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                  Theme
-                </label>
-                <div className="grid grid-cols-3 gap-3">
-                  {[
-                    { value: 'light', label: 'Light', icon: FiSun },
-                    { value: 'dark', label: 'Dark', icon: FiMoon },
-                    { value: 'system', label: 'System', icon: FiShield },
-                  ].map((option) => {
-                    const Icon = option.icon
-                    return (
-                      <button
-                        key={option.value}
-                        onClick={() => setTheme(option.value)}
-                        className={`p-4 rounded-xl border-2 transition-all ${
-                          theme === option.value
-                            ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                            : 'border-gray-300 dark:border-gray-600 hover:border-primary-300'
-                        }`}
-                      >
-                        <Icon className="w-6 h-6 mx-auto mb-2" />
-                        <p className="text-sm font-medium">{option.label}</p>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[
+                { value: 'light', label: 'BRIGHT', icon: FiSun },
+                { value: 'dark', label: 'NIGHT', icon: FiMoon },
+                { value: 'system', label: 'AUTO', icon: FiShield },
+              ].map((option) => {
+                const Icon = option.icon
+                const isActive = theme === option.value
+                return (
+                  <button
+                    key={option.value}
+                    onClick={() => setTheme(option.value)}
+                    className={cn(
+                      "p-8 rounded-[2rem] border-none transition-all flex flex-col items-center gap-4 group",
+                      isActive
+                        ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20 scale-105"
+                        : "bg-gray-50 dark:bg-slate-900/50 text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-900 inner-shadow"
+                    )}
+                  >
+                    <Icon className={cn("w-8 h-8", isActive ? "text-white" : "text-gray-400 group-hover:text-blue-500")} />
+                    <span className="text-[11px] font-black tracking-widest uppercase">{option.label}</span>
+                  </button>
+                )
+              })}
             </div>
           </motion.div>
 
@@ -135,43 +137,49 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="card p-6"
+            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
-                <FiBell className="w-6 h-6 text-green-600 dark:text-green-400" />
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 inner-shadow">
+                <FiBell size={24} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                Notifications
-              </h2>
+              <div>
+                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+                  Alerts
+                </h2>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Manage signal preferences</p>
+              </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { key: 'taskReminders', label: 'Task Reminders', description: 'Get notified about upcoming tasks' },
-                { key: 'deadlines', label: 'Deadline Alerts', description: 'Never miss a deadline' },
-                { key: 'teamUpdates', label: 'Team Updates', description: 'Stay updated with your team' },
-                { key: 'aiSuggestions', label: 'AI Suggestions', description: 'Get smart productivity tips' },
-                { key: 'email', label: 'Email Notifications', description: 'Receive notifications via email' },
-                { key: 'push', label: 'Push Notifications', description: 'Browser push notifications' },
+                { key: 'taskReminders', label: 'Action Alerts', description: 'Upcoming task signals' },
+                { key: 'deadlines', label: 'Deadline Watch', description: 'Critical time warnings' },
+                { key: 'teamUpdates', label: 'Comm Channel', description: 'Team collaboration pings' },
+                { key: 'aiSuggestions', label: 'AI Strategy', description: 'Smart intelligence tips' },
+                { key: 'email', label: 'Direct Relay', description: 'Email notification stream' },
+                { key: 'push', label: 'Neural Link', description: 'In-browser transmissions' },
               ].map((option) => (
-                <div key={option.key} className="flex items-start justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                <div key={option.key} className="flex items-center justify-between p-6 bg-gray-50 dark:bg-slate-900/50 rounded-2xl inner-shadow">
                   <div className="flex-1">
-                    <h3 className="font-medium text-gray-900 dark:text-gray-100">{option.label}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{option.description}</p>
+                    <h3 className="text-[11px] font-black text-gray-900 dark:text-white uppercase tracking-widest">{option.label}</h3>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase opacity-60">{option.description}</p>
                   </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={settings.notifications[option.key]}
-                      onChange={(e) => setSettings({
-                        ...settings,
-                        notifications: { ...settings.notifications, [option.key]: e.target.checked }
-                      })}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-600"></div>
-                  </label>
+                  <button
+                    onClick={() => setSettings({
+                      ...settings,
+                      notifications: { ...settings.notifications, [option.key]: !settings.notifications[option.key] }
+                    })}
+                    className={cn(
+                      "w-12 h-6 rounded-full transition-all relative",
+                      settings.notifications[option.key] ? "bg-green-500" : "bg-gray-300 dark:bg-slate-700"
+                    )}
+                  >
+                    <div className={cn(
+                      "absolute top-1 w-4 h-4 bg-white rounded-full transition-all shadow-sm",
+                      settings.notifications[option.key] ? "left-7" : "left-1"
+                    )}></div>
+                  </button>
                 </div>
               ))}
             </div>
@@ -182,25 +190,28 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="card p-6"
+            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center">
-                <FiGlobe className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 inner-shadow">
+                <FiGlobe size={24} />
               </div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-                Language & Region
-              </h2>
+              <div>
+                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+                  Localization
+                </h2>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Regional input language</p>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Voice Input Language
+            <div className="space-y-2 max-w-sm">
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">
+                Voice Relay Language
               </label>
               <select
                 value={settings.language}
                 onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                className="input"
+                className="w-full px-6 py-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none appearance-none"
               >
                 <option value="en">English</option>
                 <option value="hi">हिंदी (Hindi)</option>
@@ -213,9 +224,12 @@ export default function SettingsPage() {
           </motion.div>
 
           {/* Save Button */}
-          <div className="flex justify-end">
-            <button onClick={handleSave} className="btn-neon">
-              Save Changes
+          <div className="flex justify-end pt-6">
+            <button
+              onClick={handleSave}
+              className="btn-clay btn-clay-primary px-12 py-5 text-sm tracking-widest uppercase"
+            >
+              Update Core
             </button>
           </div>
         </div>

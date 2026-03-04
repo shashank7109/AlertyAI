@@ -7,85 +7,91 @@ import Footer from '@/components/layout/Footer'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#F2F2F6] dark:bg-black">
+    <div className="min-h-screen bg-[#F8F9FC] dark:bg-[#0F172A] selection:bg-blue-100 dark:selection:bg-blue-900/40">
       <Navbar />
 
       {/* ── Hero ─────────────────────────────── */}
-      <section className="pt-28 pb-10 px-5 text-center">
-        <div className="max-w-lg mx-auto">
-          <p className="text-sm font-semibold text-blue-500 mb-3 tracking-wide">
-            Your AI second brain
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white mb-4 leading-tight">
-            Never forget.<br />
-            <span className="text-blue-500">Always achieve.</span>
+      <section className="pt-40 pb-20 px-6 text-center">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-black tracking-[0.2em] uppercase mb-8"
+          >
+            Digital Second Brain
+          </motion.div>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-gray-900 dark:text-white mb-8 leading-[0.95]">
+            NEVER FORGET.<br />
+            <span className="text-blue-600 dark:text-sky-400">ALWAYS ACHIEVE.</span>
           </h1>
-          <p className="text-base text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
-            AlertyAI keeps your tasks, reminders, and goals organised — built for daily use on mobile.
+          <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-12 max-w-xl mx-auto font-medium">
+            A minimalist workspace for your tasks, reminders, and professional goals. Built to feel as light as air.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link href="/register" className="w-full sm:w-auto px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition-colors text-sm">
-              Get Started — It's Free
-            </Link>
-            <Link href="/login" className="w-full sm:w-auto px-6 py-3 bg-white dark:bg-[#2C2C2E] text-gray-700 dark:text-gray-200 font-semibold rounded-full border border-gray-200 dark:border-gray-700 text-sm transition-colors hover:bg-gray-50 dark:hover:bg-[#3A3A3C]">
-              Log in
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/register" className="btn-clay btn-clay-primary px-10 py-5 text-base shadow-2xl shadow-blue-500/20">
+              CREATE YOUR FREE BRAIN
             </Link>
           </div>
         </div>
       </section>
 
       {/* ── Live Preview ─────────────────────── */}
-      <section className="px-5 pb-10">
-        <div className="max-w-sm mx-auto bg-white dark:bg-[#1C1C1E] rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+      <section className="px-6 pb-20">
+        <div className="max-w-md mx-auto clay-card bg-white dark:bg-slate-800 p-8 border-none overflow-hidden scale-105">
           {/* Header */}
-          <div className="px-5 pt-5 pb-3 flex justify-between items-center">
-            <span className="font-semibold text-gray-800 dark:text-gray-100 text-sm">Today</span>
-            <span className="text-xs text-gray-400">3 tasks</span>
+          <div className="mb-8 flex justify-between items-center">
+            <span className="font-black text-gray-900 dark:text-white text-xl tracking-tight">Today</span>
+            <div className="px-3 py-1 bg-gray-100 dark:bg-slate-700 rounded-lg text-[10px] font-black uppercase text-gray-500">3 ACTIVE</div>
           </div>
           {/* Tasks */}
-          <div className="px-5 space-y-3 pb-3">
+          <div className="space-y-4 mb-8">
             {[
-              { label: 'Buy groceries', done: true, tag: null },
-              { label: 'Call mom', done: false, tag: 'High', tagColor: 'text-red-500 bg-red-50 dark:bg-red-900/20' },
-              { label: 'Prepare slides', done: false, tag: 'Tomorrow', tagColor: 'text-gray-400 bg-gray-100 dark:bg-gray-800' },
+              { label: 'Review product strategy', done: true },
+              { label: 'Sync with design team @10am', done: false, priority: 'URGENT' },
+              { label: 'Weekly retrospective', done: false },
             ].map((t, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-gray-800 last:border-0">
-                <div className="flex items-center gap-3">
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${t.done ? 'bg-blue-500 border-blue-500' : 'border-gray-300 dark:border-gray-600'}`}>
-                    {t.done && <FiCheckCircle className="text-white" size={12} />}
+              <div key={i} className="flex items-center justify-between group">
+                <div className="flex items-center gap-4">
+                  <div className={`w-6 h-6 rounded-xl border-none flex items-center justify-center transition-all ${t.done ? 'bg-blue-600 shadow-lg shadow-blue-500/30' : 'bg-gray-100 dark:bg-slate-700 inner-shadow'}`}>
+                    {t.done && <FiCheckCircle className="text-white" size={14} />}
                   </div>
-                  <span className={`text-sm ${t.done ? 'line-through text-gray-400' : 'text-gray-800 dark:text-gray-200'}`}>{t.label}</span>
+                  <span className={`text-base font-bold tracking-tight ${t.done ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-200'}`}>{t.label}</span>
                 </div>
-                {t.tag && <span className={`text-xs font-medium px-2 py-0.5 rounded-md ${t.tagColor}`}>{t.tag}</span>}
+                {t.priority && <span className="text-[10px] font-black text-red-500 bg-red-50 dark:bg-red-500/10 px-2 py-1 rounded-md">{t.priority}</span>}
               </div>
             ))}
           </div>
-          {/* Add button */}
-          <div className="px-5 py-4 flex justify-end">
-            <div className="w-11 h-11 bg-blue-500 rounded-full flex items-center justify-center shadow-md">
-              <FiPlus className="text-white" size={20} />
+          {/* Action button */}
+          <div className="flex justify-end">
+            <div className="w-14 h-14 btn-clay btn-clay-primary rounded-[1.25rem] flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <FiPlus className="text-white" size={24} />
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Features ─────────────────────────── */}
-      <section className="px-5 py-10">
-        <div className="max-w-lg mx-auto">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Everything you need</h2>
-          <div className="grid grid-cols-2 gap-4">
+      <section className="px-6 py-20 bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-16">
+            <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter">ESSENTIALS</h2>
+            <div className="w-12 h-1.5 bg-blue-600 mt-2 rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: FiCheckCircle, title: 'Tasks', desc: 'Clean, fast, organised.' },
-              { icon: FiMic, title: 'Voice Input', desc: 'Speak to add tasks.' },
-              { icon: FiTarget, title: 'Smart Alerts', desc: 'Never miss a deadline.' },
-              { icon: FiMoon, title: 'Dark Mode', desc: 'Easy on the eyes.' },
-              { icon: FiCalendar, title: 'Calendar', desc: 'See your week at a glance.' },
-              { icon: FiMessageCircle, title: 'AI Chat', desc: 'Your built-in assistant.' },
+              { icon: FiCheckCircle, title: 'TASKS', desc: 'Minimalist organization system designed for high performance.' },
+              { icon: FiMic, title: 'VOICE-ONLY', desc: 'Capture thoughts instantly without lifting a finger.' },
+              { icon: FiTarget, title: 'GOALS', desc: 'Visual milestones to keep your long-term vision clear.' },
+              { icon: FiMoon, title: 'NIGHT OWL', desc: 'Perfectly balanced dark mode for focus-heavy sessions.' },
+              { icon: FiCalendar, title: 'PLANNER', desc: 'A bird’s-eye view of your upcoming commitments.' },
+              { icon: FiMessageCircle, title: 'ASSISTANT', desc: 'Your personal AI sidekick for planning and reasoning.' },
             ].map((f, i) => (
-              <div key={i} className="bg-white dark:bg-[#1C1C1E] rounded-2xl p-4 border border-gray-100 dark:border-gray-800">
-                <f.icon className="text-blue-500 mb-3" size={22} />
-                <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-1">{f.title}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{f.desc}</p>
+              <div key={i} className="clay-card hover:-translate-y-2 group">
+                <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-blue-50 dark:bg-slate-700 text-blue-600 dark:text-sky-400 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                  <f.icon size={24} />
+                </div>
+                <h3 className="text-lg font-black text-gray-900 dark:text-white mb-2 tracking-tight">{f.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -93,12 +99,12 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA ──────────────────────────────── */}
-      <section className="px-5 py-10">
-        <div className="max-w-lg mx-auto bg-gray-900 dark:bg-[#1C1C1E] rounded-3xl px-8 py-10 text-center">
-          <h2 className="text-2xl font-bold text-white mb-2">Start with AlertyAI</h2>
-          <p className="text-gray-400 text-sm mb-6">Free forever. No credit card.</p>
-          <Link href="/register" className="inline-block px-8 py-3 bg-white text-gray-900 font-semibold rounded-full text-sm hover:bg-gray-100 transition-colors">
-            Create Account
+      <section className="px-6 py-32 text-center">
+        <div className="max-w-3xl mx-auto clay-card bg-gray-900 dark:bg-slate-800 p-16 border-none shadow-blue-500/10">
+          <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter">READY TO UPGRADE?</h2>
+          <p className="text-gray-400 text-lg mb-10 font-bold tracking-tight">Free forever. Minimalist by design.</p>
+          <Link href="/register" className="btn-clay bg-white text-gray-900 px-12 py-5 text-base hover:scale-105 active:scale-95">
+            JOIN 10,000+ THINKERS
           </Link>
         </div>
       </section>
