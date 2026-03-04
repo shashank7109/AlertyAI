@@ -1,0 +1,84 @@
+
+> alertyai_frontend@1.0.0 lint
+> eslint
+
+
+D:\Smaran\smranai_frontend\src\app\admin\page.js
+  25:6  warning  React Hook useEffect has a missing dependency: 'checkAuthAndLoad'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Smaran\smranai_frontend\src\app\calendar\page.js
+  20:6  warning  React Hook useEffect has a missing dependency: 'fetchEventsAndTasks'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Smaran\smranai_frontend\src\app\dashboard\page.js
+   46:6   warning  React Hook useEffect has missing dependencies: 'fetchDashboardData' and 'router'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  145:82  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                       react/no-unescaped-entities
+  158:43  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                       react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\laterbox\page.js
+  26:6  warning  React Hook useEffect has missing dependencies: 'fetchItems' and 'router'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Smaran\smranai_frontend\src\app\login\page.js
+  302:16  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\onboarding\page.js
+   17:13  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  130:14  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\opportunities\page.js
+  35:6  warning  React Hook useEffect has missing dependencies: 'fetchOpportunities' and 'router'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Smaran\smranai_frontend\src\app\register\page.js
+  238:21  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  283:23  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\reminders\page.js
+  105:23  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  105:55  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\tasks\page.js
+   84:6    warning  React Hook useEffect has missing dependencies: 'fetchTasks' and 'router'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+   92:6    warning  React Hook useEffect has a missing dependency: 'fetchTasks'. Either include it or remove the dependency array                 react-hooks/exhaustive-deps
+  478:118  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                               react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\teams\[id]\assign-task\page.js
+  32:6  warning  React Hook useEffect has a missing dependency: 'fetchTeam'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\Smaran\smranai_frontend\src\app\teams\[id]\page.js
+   74:6   warning  React Hook useEffect has a missing dependency: 'fetchTeam'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  636:44  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                               react/no-unescaped-entities
+  636:56  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                               react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\app\teams\join\[token]\page.js
+  59:16  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\components\layout\Navbar.js
+  20:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  18 |
+  19 |   useEffect(() => {
+> 20 |     setMounted(true)
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |
+  22 |     const token = localStorage.getItem('token')
+  23 |     const userData = localStorage.getItem('user')  react-hooks/set-state-in-effect
+
+D:\Smaran\smranai_frontend\src\components\modals\TeamModal.js
+  155:18  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\components\teams\TaskAcceptDialog.js
+  211:40  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\components\teams\TaskActionDialog.js
+  465:60  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Smaran\smranai_frontend\src\lib\firebase.js
+  102:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+Γ£û 27 problems (17 errors, 10 warnings)
+
