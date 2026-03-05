@@ -56,7 +56,7 @@ export default function JoinTeamPage() {
             Join Team
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            You've been invited to join a team on Smaran AI
+            You've been invited to join a team on AlertyAI
           </p>
         </div>
 

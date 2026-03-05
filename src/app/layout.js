@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  title: 'Smaran AI - Your personal assistant',
+  title: 'AlertyAI - Your personal assistant',
   description: 'AI-powered task management, reminders, and team collaboration platform',
   keywords: 'AI, task management, productivity, team collaboration, voice tasks',
 }

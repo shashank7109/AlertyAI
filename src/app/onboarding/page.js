@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 
 const steps = [
   {
-    title: 'Welcome to Smaran AI! 👋',
+    title: 'Welcome to AlertyAI! 👋',
     description: 'Your personal AI-powered productivity companion',
     content: (
       <div className="text-center space-y-6">
@@ -33,11 +33,10 @@ const steps = [
           <button
             key={option.value}
             onClick={() => setData({ ...data, userType: option.value })}
-            className={`p-6 rounded-xl border-2 transition-all ${
-              data.userType === option.value
+            className={`p-6 rounded-xl border-2 transition-all ${data.userType === option.value
                 ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
                 : 'border-gray-300 dark:border-gray-600 hover:border-primary-300'
-            }`}
+              }`}
           >
             <div className="text-4xl mb-2">{option.icon}</div>
             <div className="font-semibold">{option.label}</div>
@@ -62,11 +61,10 @@ const steps = [
           <button
             key={option.value}
             onClick={() => setData({ ...data, language: option.value })}
-            className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
-              data.language === option.value
+            className={`w-full p-4 rounded-xl border-2 transition-all text-left ${data.language === option.value
                 ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
                 : 'border-gray-300 dark:border-gray-600 hover:border-primary-300'
-            }`}
+              }`}
           >
             <div className="flex items-center justify-between">
               <span className="font-medium">{option.label}</span>
@@ -94,11 +92,10 @@ const steps = [
             <button
               key={option.key}
               onClick={() => setData({ ...data, notifications: { ...data.notifications, [option.key]: !data.notifications[option.key] } })}
-              className={`p-4 rounded-xl border-2 transition-all text-left ${
-                data.notifications[option.key]
+              className={`p-4 rounded-xl border-2 transition-all text-left ${data.notifications[option.key]
                   ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
                   : 'border-gray-300 dark:border-gray-600'
-              }`}
+                }`}
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl">{option.icon}</span>
@@ -127,7 +124,7 @@ const steps = [
       <div className="text-center space-y-6">
         <div className="text-9xl animate-float">✨</div>
         <p className="text-xl text-gray-600 dark:text-gray-400">
-          You're all set to start your productivity journey with Smaran AI!
+          You're all set to start your productivity journey with AlertyAI!
         </p>
         <div className="grid grid-cols-3 gap-4 mt-8">
           <div className="p-4 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
@@ -167,7 +164,7 @@ export default function OnboardingPage() {
       setCurrentStep(currentStep + 1)
     } else {
       // Save preferences and redirect to dashboard
-      toast.success('Welcome to Smaran AI!')
+      toast.success('Welcome to AlertyAI!')
       router.push('/dashboard')
     }
   }
