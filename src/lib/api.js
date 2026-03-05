@@ -332,7 +332,7 @@ export const teamAPI = {
   },
 }
 
-// Admin APIs (only accessible by smaran.ai07@gmail.com)
+// Admin APIs (only accessible by alertyai.07@gmail.com)
 export const adminAPI = {
   // Users
   getAllUsers: (skip = 0, limit = 100) =>

@@ -11,8 +11,13 @@ export default function Footer() {
       <div className="max-w-lg mx-auto px-5 py-10">
         {/* Brand */}
         <div className="mb-6">
-          <span className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight italic">AlertyAI</span>
-          <p className="text-sm text-text-secondary mt-1">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-8 h-8 rounded-lg bg-white dark:bg-zinc-900 flex items-center justify-center shadow-lg shadow-primary/10 overflow-hidden p-1 border border-border/50">
+              <img src="/logo.png" alt="AlertyAI" className="w-full h-full object-contain" />
+            </div>
+            <span className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight italic">AlertyAI</span>
+          </div>
+          <p className="text-sm text-text-secondary">
             Your personal assistant for a clear mind.
           </p>
         </div>
@@ -45,6 +50,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </footer >
   )
 }

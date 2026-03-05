@@ -19,6 +19,10 @@ export const metadata = {
   title: 'AlertyAI - Your personal assistant',
   description: 'AI-powered task management, reminders, and team collaboration platform',
   keywords: 'AI, task management, productivity, team collaboration, voice tasks',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
 }
 
 export default function RootLayout({ children }) {

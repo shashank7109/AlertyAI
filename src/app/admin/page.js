@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { adminAPI } from '@/lib/api'
 
-const ADMIN_EMAIL = 'smaran.ai07@gmail.com'
+const ADMIN_EMAIL = 'alertyai.07@gmail.com'
 
 export default function AdminPage() {
   const router = useRouter()
@@ -70,7 +70,7 @@ export default function AdminPage() {
     try {
       const skip = newSkip !== null ? newSkip : pagination.skip
       const limit = newLimit !== null ? newLimit : pagination.limit
-      
+
       const response = await adminAPI.getAllUsers(skip, limit)
       if (response.data.success) {
         setUsers(response.data.users)
@@ -137,7 +137,7 @@ export default function AdminPage() {
         } : null,
         userId: userId
       })
-      
+
       // Handle different error types
       if (!error.response) {
         // Network error or no response
@@ -395,11 +395,10 @@ export default function AdminPage() {
                         <button
                           onClick={() => handleDeleteUser(user.id, user.email)}
                           disabled={deletingUserId === user.id || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()}
-                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition ${
-                            deletingUserId === user.id || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition ${deletingUserId === user.id || user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
                               ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                               : 'bg-red-100 text-red-700 hover:bg-red-200'
-                          }`}
+                            }`}
                         >
                           {deletingUserId === user.id ? (
                             <>

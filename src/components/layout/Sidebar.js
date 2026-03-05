@@ -57,7 +57,10 @@ export default function Sidebar() {
       >
         {/* Header - Simple */}
         <div className="p-8">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2 group">
+            <div className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-lg shadow-primary/10 group-hover:scale-105 transition-transform overflow-hidden p-1.5 border border-border/50">
+              <img src="/logo.png" alt="AlertyAI" className="w-full h-full object-contain" />
+            </div>
             <span className="text-2xl font-black tracking-tight text-on-surface">AlertyAI</span>
           </Link>
           <p className="text-[10px] font-bold mt-1 text-primary uppercase tracking-[0.2em]">Assistant</p>
