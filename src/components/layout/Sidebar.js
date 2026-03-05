@@ -50,17 +50,17 @@ export default function Sidebar() {
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className={cn(
           'fixed left-0 top-0 h-screen w-72 z-50 pt-16',
-          'bg-white dark:bg-[#1E293B]',
+          'bg-surface dark:bg-background',
           'flex flex-col shadow-2xl border-none',
-          'shadow-[10px_0_30px_-10px_rgba(0,0,0,0.05)]'
+          'shadow-[10px_0_30px_-10px_rgba(0,0,0,0.1)]'
         )}
       >
         {/* Header - Simple */}
         <div className="p-8">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">AlertyAI</span>
+            <span className="text-2xl font-black tracking-tight text-on-surface">AlertyAI</span>
           </Link>
-          <p className="text-[10px] font-bold mt-1 text-blue-500 uppercase tracking-[0.2em]">Second Brain</p>
+          <p className="text-[10px] font-bold mt-1 text-primary uppercase tracking-[0.2em]">Assistant</p>
         </div>
 
         {/* Navigation - Clay List */}
@@ -85,7 +85,7 @@ export default function Sidebar() {
               >
                 <Icon className={cn(
                   'w-5 h-5',
-                  isActive ? 'text-blue-600 dark:text-sky-400' : 'text-gray-400'
+                  isActive ? 'text-primary' : 'text-text-secondary'
                 )} />
                 <span className="text-[14px] font-semibold">{item.name}</span>
               </Link>

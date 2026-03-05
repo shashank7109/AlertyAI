@@ -7,42 +7,41 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-white dark:bg-[#1C1C1E] border-t border-gray-100 dark:border-gray-800">
+    <footer className="bg-background dark:bg-background border-t border-border">
       <div className="max-w-lg mx-auto px-5 py-10">
         {/* Brand */}
         <div className="mb-6">
-          <span className="text-xl font-bold text-gray-900 dark:text-white">AlertyAI</span>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Your AI-powered daily planner &amp; reminder app.
+          <span className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight italic">AlertyAI</span>
+          <p className="text-sm text-text-secondary mt-1">
+            Your personal assistant for a clear mind.
           </p>
         </div>
 
         {/* Links */}
         <div className="grid grid-cols-2 gap-4 mb-8 text-sm">
           <div className="space-y-3">
-            <p className="font-semibold text-gray-700 dark:text-gray-300 text-xs uppercase tracking-wider mb-1">Product</p>
-            <Link href="/dashboard" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Dashboard</Link>
-            <Link href="/tasks" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Tasks</Link>
-            <Link href="/reminders" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Reminders</Link>
-            <Link href="/ai-assistant" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">AI Assistant</Link>
+            <p className="font-bold text-on-surface text-[10px] uppercase tracking-widest mb-1">Product</p>
+            <Link href="/dashboard" className="block text-text-secondary hover:text-primary transition-colors">Home</Link>
+            <Link href="/tasks" className="block text-text-secondary hover:text-primary transition-colors">Tasks</Link>
+            <Link href="/reminders" className="block text-text-secondary hover:text-primary transition-colors">Reminders</Link>
+            <Link href="/ai-assistant" className="block text-text-secondary hover:text-primary transition-colors">Assistant</Link>
           </div>
           <div className="space-y-3">
-            <p className="font-semibold text-gray-700 dark:text-gray-300 text-xs uppercase tracking-wider mb-1">Support</p>
-            <Link href="/help" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Help Center</Link>
-            <Link href="/privacy" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Terms of Service</Link>
-            <a href="mailto:support@alertyai.com" className="block text-gray-500 dark:text-gray-400 hover:text-blue-500 transition-colors">Contact</a>
+            <p className="font-bold text-on-surface text-[10px] uppercase tracking-widest mb-1">Support</p>
+            <Link href="/help" className="block text-text-secondary hover:text-primary transition-colors">Help</Link>
+            <Link href="/privacy" className="block text-text-secondary hover:text-primary transition-colors">Privacy</Link>
+            <Link href="/terms" className="block text-text-secondary hover:text-primary transition-colors">Terms</Link>
           </div>
         </div>
 
         {/* Social + Copyright */}
-        <div className="flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-6">
-          <p className="text-xs text-gray-400">© {year} AlertyAI</p>
+        <div className="flex items-center justify-between border-t border-border pt-6">
+          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">© {year} AlertyAI</p>
           <div className="flex items-center gap-3">
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors"><FiTwitter size={18} /></a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors"><FiGithub size={18} /></a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors"><FiLinkedin size={18} /></a>
-            <a href="mailto:support@alertyai.com" className="text-gray-400 hover:text-blue-500 transition-colors"><FiMail size={18} /></a>
+            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiTwitter size={16} /></a>
+            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiGithub size={16} /></a>
+            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiLinkedin size={16} /></a>
+            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiMail size={16} /></a>
           </div>
         </div>
       </div>

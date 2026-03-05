@@ -33,7 +33,7 @@ export default function AIAssistantPage() {
 
   const handleSendMessage = async (e) => {
     e.preventDefault()
-    
+
     if (!inputMessage.trim() || loading) return
 
     const userMessage = {
@@ -49,7 +49,7 @@ export default function AIAssistantPage() {
 
     try {
       const response = await aiAPI.chat(inputMessage)
-      
+
       // Check if a task was created
       if (response.data.task_created && response.data.task) {
         const task = response.data.task
@@ -58,7 +58,7 @@ export default function AIAssistantPage() {
           icon: '🎉',
         })
       }
-      
+
       const aiMessage = {
         id: messages.length + 2,
         role: 'assistant',
@@ -85,19 +85,19 @@ export default function AIAssistantPage() {
 
   const generateMockResponse = (query) => {
     const lowerQuery = query.toLowerCase()
-    
+
     if (lowerQuery.includes('task') || lowerQuery.includes('todo')) {
       return "I can help you manage your tasks! You can:\n\n1. Add a new task by clicking the + button\n2. Use voice commands to create tasks\n3. Break down large tasks into subtasks\n4. Set priorities and deadlines\n\nWould you like me to create a task for you?"
     }
-    
+
     if (lowerQuery.includes('plan') || lowerQuery.includes('schedule')) {
       return "I'd be happy to help you create a plan! Based on your current tasks:\n\n📅 This Week:\n• Complete Project Report (High Priority)\n• Team Meeting on Wednesday\n• Buy Groceries (Low Priority)\n\nWould you like me to create a detailed weekly schedule?"
     }
-    
+
     if (lowerQuery.includes('team') || lowerQuery.includes('collaborate')) {
       return "For team collaboration, I can help you:\n\n👥 Team Management:\n• Create new teams\n• Assign tasks to members\n• Track team progress\n• Send reminders to members\n\nWhat team would you like to work with?"
     }
-    
+
     return "I understand you're asking about: " + query + "\n\nI can help you with:\n• Task management\n• Creating weekly plans\n• Team collaboration\n• Opportunity tracking\n• Smart reminders\n\nWhat would you like to know more about?"
   }
 
@@ -115,7 +115,7 @@ export default function AIAssistantPage() {
 
   return (
     <DashboardLayout>
-      <div className="h-[calc(100vh-120px)] md:h-[calc(100vh-200px)] flex flex-col bg-white dark:bg-gray-900 rounded-xl md:rounded-2xl shadow-lg overflow-hidden">
+      <div className="h-[calc(100vh-120px)] md:h-[calc(100vh-200px)] flex flex-col bg-surface dark:bg-background rounded-xl md:rounded-2xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 bg-gradient-to-r from-blue-500/10 to-purple-500/10">
           <div className="flex items-center gap-3 md:gap-4">
@@ -126,7 +126,7 @@ export default function AIAssistantPage() {
               <div className="absolute -bottom-1 -right-1 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
             </div>
             <div>
-              <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white">AI Assistant</h1>
+              <h1 className="text-lg md:text-2xl font-bold text-on-surface">AI Assistant</h1>
               <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                 Your intelligent productivity companion
               </p>
@@ -155,14 +155,13 @@ export default function AIAssistantPage() {
                     </div>
                   )}
                   <div
-                    className={`p-3 md:p-4 rounded-2xl shadow-sm ${
-                      message.role === 'user'
+                    className={`p-3 md:p-4 rounded-2xl shadow-sm ${message.role === 'user'
                         ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-tr-sm'
                         : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-tl-sm border border-gray-200 dark:border-gray-700'
-                    }`}
+                      }`}
                   >
                     <p className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">{message.content}</p>
-                    
+
                     {/* Show task creation confirmation */}
                     {message.taskCreated && message.task && (
                       <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
@@ -202,7 +201,7 @@ export default function AIAssistantPage() {
               </motion.div>
             ))}
           </AnimatePresence>
-          
+
           {loading && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -218,12 +217,12 @@ export default function AIAssistantPage() {
               </div>
             </motion.div>
           )}
-          
+
           <div ref={messagesEndRef} />
         </div>
 
         {/* Quick Actions */}
-        <div className="px-3 md:px-6 py-2 md:py-3 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <div className="px-3 md:px-6 py-2 md:py-3 border-t border-border bg-surface dark:bg-background">
           <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
             {quickActions.map((action, index) => (
               <button
@@ -244,16 +243,15 @@ export default function AIAssistantPage() {
             <button
               type="button"
               onClick={handleVoiceInput}
-              className={`p-2 md:p-3 rounded-xl transition-all flex-shrink-0 ${
-                isRecording
+              className={`p-2 md:p-3 rounded-xl transition-all flex-shrink-0 ${isRecording
                   ? 'bg-red-500 text-white animate-pulse'
-                  : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
-              }`}
+                  : 'bg-surface-hover/50 text-text-secondary hover:text-primary transition-colors'
+                }`}
             >
               <FiMic className="w-4 h-4 md:w-5 md:h-5" />
             </button>
-            
-            <div className="flex-1 flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 bg-gray-100 dark:bg-gray-800 rounded-xl focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-purple-500">
+
+            <div className="flex-1 flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 bg-surface-hover/50 rounded-xl focus-within:ring-2 focus-within:ring-primary">
               <input
                 type="text"
                 value={inputMessage}
@@ -269,7 +267,7 @@ export default function AIAssistantPage() {
                 <FiPaperclip className="w-4 h-4 md:w-5 md:h-5 text-gray-500" />
               </button>
             </div>
-            
+
             <button
               type="submit"
               disabled={!inputMessage.trim() || loading}

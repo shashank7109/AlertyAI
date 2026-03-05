@@ -28,10 +28,10 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
     : null
 
   // Get comments and files from linked submit task (for collect tasks) or current task
-  const displayComments = isCollectTask && linkedSubmitTask 
+  const displayComments = isCollectTask && linkedSubmitTask
     ? (linkedSubmitTask.comments || [])
     : (task.comments || [])
-  
+
   const displayFiles = isCollectTask && linkedSubmitTask
     ? (linkedSubmitTask.files || [])
     : (task.files || [])
@@ -104,16 +104,16 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
       const url = new URL(file.file_url)
       const pathParts = url.pathname.split('/')
       const fileIndex = pathParts.indexOf('files')
-      
+
       if (fileIndex === -1 || pathParts.length < fileIndex + 4) {
         toast.error('Invalid file URL')
         return
       }
-      
+
       const teamId = pathParts[fileIndex + 1]
       const taskId = pathParts[fileIndex + 2]
       const filename = pathParts[fileIndex + 3]
-      
+
       // Fetch file with authentication
       const response = await api.get(
         `/teams/files/${teamId}/${taskId}/${filename}`,
@@ -121,7 +121,7 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
           responseType: 'blob'
         }
       )
-      
+
       // Create blob URL and trigger download
       const blob = new Blob([response.data])
       const blobUrl = window.URL.createObjectURL(blob)
@@ -132,7 +132,7 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
       link.click()
       document.body.removeChild(link)
       window.URL.revokeObjectURL(blobUrl)
-      
+
       toast.success('File downloaded successfully')
     } catch (error) {
       console.error('Error downloading file:', error)
@@ -177,17 +177,17 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
 
   // Determine dialog title and content based on status
   const getDialogTitle = () => {
-    if (isPending) return 'New Task Assigned'
-    if (isAccepted && !isLeader) return 'Task in Progress'
-    if ((isPendingReview || isSubmitted) && isLeader && isCollectTask) return 'Task Submitted - Ready to Collect'
+    if (isPending) return 'New Task'
+    if (isAccepted && !isLeader) return 'Task Progress'
+    if ((isPendingReview || isSubmitted) && isLeader && isCollectTask) return 'Task Review'
     if (isCompleted) return 'Task Completed'
     return 'Task Details'
   }
 
   const getDialogSubtitle = () => {
-    if (isPending) return 'Please review and respond'
-    if (isAccepted && !isLeader) return 'Work on this task and submit when done'
-    if ((isPendingReview || isSubmitted) && isLeader && isCollectTask) return 'Member has submitted this task. Please review and collect.'
+    if (isPending) return 'Please review and accept'
+    if (isAccepted && !isLeader) return 'Work on this task and complete when done'
+    if ((isPendingReview || isSubmitted) && isLeader && isCollectTask) return 'Please review and complete.'
     if (isCompleted) return 'This task has been completed'
     return 'View task details'
   }
@@ -206,28 +206,22 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
+          className="bg-surface dark:bg-background rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
         >
           {/* Header */}
-          <div className={`sticky top-0 p-6 rounded-t-2xl ${
-            isPending ? 'bg-gradient-to-r from-blue-500 to-indigo-600' :
-            isAccepted ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
-            (isPendingReview || isSubmitted) ? 'bg-gradient-to-r from-purple-500 to-pink-600' :
-            isCompleted ? 'bg-gradient-to-r from-gray-500 to-gray-600' :
-            'bg-gradient-to-r from-blue-500 to-indigo-600'
-          }`}>
+          <div className="sticky top-0 p-6 rounded-t-2xl bg-surface border-b border-border">
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-white mb-1">
+                <h2 className="text-2xl font-heading font-bold text-on-surface mb-1">
                   {getDialogTitle()}
                 </h2>
-                <p className="text-white/90 text-sm">
+                <p className="text-text-secondary text-sm">
                   {getDialogSubtitle()}
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="text-white/80 hover:text-white transition-colors"
+                className="text-text-secondary hover:text-on-surface transition-colors"
               >
                 <FiX size={24} />
               </button>
@@ -238,11 +232,11 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
           <div className="p-6 space-y-6">
             {/* Task Title */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-xl font-bold text-on-surface mb-2">
                 {task.title}
               </h3>
               {task.description && (
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p className="text-text-secondary leading-relaxed">
                   {task.description}
                 </p>
               )}
@@ -254,8 +248,8 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                 {task.status?.replace('_', ' ').toUpperCase()}
               </span>
               {isCollectTask && (
-                <span className="px-3 py-1 rounded-lg text-sm font-semibold bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                  COLLECT TASK
+                <span className="px-3 py-1 rounded-lg text-sm font-semibold bg-primary-soft text-primary">
+                  TEAM TASK
                 </span>
               )}
             </div>
@@ -281,8 +275,8 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                     <FiUser className="text-purple-600 dark:text-purple-400" size={20} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs text-gray-500 dark:text-gray-400">Submitted by</div>
-                    <div className="font-semibold text-gray-900 dark:text-white truncate">
+                    <div className="text-xs text-text-secondary">Submitted by</div>
+                    <div className="font-semibold text-on-surface truncate">
                       {task.assigned_to_name}
                     </div>
                   </div>
@@ -295,8 +289,8 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                   <FiUser className="text-purple-600 dark:text-purple-400" size={20} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs text-gray-500 dark:text-gray-400">Team</div>
-                  <div className="font-semibold text-gray-900 dark:text-white truncate">
+                  <div className="text-xs text-text-secondary">Team</div>
+                  <div className="font-semibold text-on-surface truncate">
                     {task.team_name}
                   </div>
                 </div>
@@ -323,7 +317,7 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                   <FiAlertCircle className="text-red-600 dark:text-red-400" size={20} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs text-gray-500 dark:text-gray-400">Priority</div>
+                  <div className="text-xs text-text-secondary">Priority</div>
                   <span className={`inline-block px-3 py-1 rounded-lg text-sm font-semibold ${getPriorityColor(task.priority)}`}>
                     {task.priority?.toUpperCase() || 'MEDIUM'}
                   </span>
@@ -336,9 +330,9 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
               <div className="space-y-4">
                 {/* Comments */}
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                  <h4 className="text-sm font-semibold text-on-surface mb-3 flex items-center gap-2">
                     <FiMessageSquare size={18} />
-                    <span>Submission Comments ({displayComments.length})</span>
+                    <span>Comments ({displayComments.length})</span>
                   </h4>
                   {displayComments.length > 0 ? (
                     <div className="space-y-2 max-h-60 overflow-y-auto">
@@ -349,13 +343,13 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                               {comment.user_name || 'Member'}
                             </span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
-                              {comment.created_at 
+                              {comment.created_at
                                 ? new Date(comment.created_at).toLocaleString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                  })
+                                  month: 'short',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })
                                 : ''}
                             </span>
                           </div>
@@ -391,11 +385,11 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                                 {file.filename}
                               </p>
                               <p className="text-xs text-gray-500 dark:text-gray-400">
-                                Uploaded by {file.uploaded_by_name || 'Member'} • {file.uploaded_at 
+                                Uploaded by {file.uploaded_by_name || 'Member'} • {file.uploaded_at
                                   ? new Date(file.uploaded_at).toLocaleDateString('en-US', {
-                                      month: 'short',
-                                      day: 'numeric'
-                                    })
+                                    month: 'short',
+                                    day: 'numeric'
+                                  })
                                   : ''}
                               </p>
                             </div>
@@ -427,15 +421,15 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                 exit={{ opacity: 0, height: 0 }}
                 className="space-y-3"
               >
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                  Submission Note (Optional)
+                <label className="block text-sm font-semibold text-on-surface">
+                  Notes (Optional)
                 </label>
                 <textarea
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  placeholder="Add any notes about your submission..."
+                  placeholder="Add any notes..."
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface-hover/50 text-on-surface focus:ring-2 focus:ring-primary outline-none resize-none"
                 />
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Attach Files (Optional)
@@ -485,18 +479,18 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
           </div>
 
           {/* Actions */}
-          <div className="sticky bottom-0 bg-gray-50 dark:bg-gray-900 p-6 rounded-b-2xl border-t border-gray-200 dark:border-gray-700">
+          <div className="sticky bottom-0 bg-surface dark:bg-background p-6 rounded-b-2xl border-t border-border">
             {isPending && !isLeader && (
               <div className="text-center text-sm text-gray-600 dark:text-gray-400">
                 Please accept or reject this task first
               </div>
             )}
-            
+
             {canSubmit && (
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="w-full px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-2"
+                className="w-full px-6 py-4 bg-primary text-on-primary rounded-xl font-bold shadow-lg hover:translate-y-[-2px] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
@@ -529,7 +523,7 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                 <button
                   onClick={handleCollect}
                   disabled={loading}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-2"
+                  className="w-full px-6 py-4 bg-primary text-on-primary rounded-xl font-bold shadow-lg hover:translate-y-[-2px] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -539,7 +533,7 @@ export default function TaskActionDialog({ task, onClose, onUpdate, isLeader, cu
                   ) : (
                     <>
                       <FiCheck size={20} />
-                      <span>Collect & Complete Task</span>
+                      <span>Complete Task</span>
                     </>
                   )}
                 </button>

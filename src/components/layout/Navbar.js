@@ -43,15 +43,15 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border-none">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/40 dark:bg-background/40 backdrop-blur-xl border-none">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-5">
         <div className="flex items-center justify-between">
           {/* Logo - Bold & Minimal */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-              <span className="text-white font-black text-xl italic">A</span>
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
+              <span className="text-on-primary font-bold text-xl">A</span>
             </div>
-            <span className="text-2xl font-black tracking-tighter text-gray-900 dark:text-white">AlertyAI</span>
+            <span className="text-xl font-heading font-bold tracking-tighter text-on-surface uppercase italic">AlertyAI</span>
           </Link>
 
           {/* Actions */}
@@ -59,7 +59,7 @@ export default function Navbar() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-all text-gray-500 dark:text-gray-400"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface dark:bg-surface shadow-sm border border-border hover:shadow-md transition-all text-text-secondary"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
@@ -69,20 +69,20 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-6">
               {isAuthenticated ? (
                 <>
-                  <Link href="/dashboard" className="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors">
-                    DASHBOARD
+                  <Link href="/dashboard" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
+                    Home
                   </Link>
-                  <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center rounded-2xl bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-100 transition-colors" title="Logout">
+                  <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger/20 transition-colors" title="Logout">
                     <FiLogOut size={18} />
                   </button>
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors tracking-widest uppercase">
+                  <Link href="/login" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
                     Login
                   </Link>
-                  <Link href="/register" className="btn-clay btn-clay-primary px-8 py-3.5 shadow-xl shadow-blue-500/25">
-                    Start Now
+                  <Link href="/register" className="btn-clay btn-clay-primary px-8 py-3 shadow-xl">
+                    Get Started
                   </Link>
                 </>
               )}
@@ -105,7 +105,7 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden bg-white dark:bg-[#1C1C1E]"
+              className="md:hidden overflow-hidden bg-surface dark:bg-background"
             >
               <div className="pt-6 pb-6 space-y-4 px-2">
                 <Link href="/dashboard" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>

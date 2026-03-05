@@ -136,10 +136,10 @@ export default function TeamChat({ teamId, currentUserId }) {
     }
 
     return (
-        <div className="flex flex-col h-[600px] bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden clay-card border-none">
+        <div className="flex flex-col h-[600px] bg-surface dark:bg-background rounded-[2rem] overflow-hidden clay-card border-none">
             {/* Messages Header */}
             <div className="px-6 py-4 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
-                <h3 className="font-black text-xs tracking-widest uppercase text-gray-400">Team Transmission</h3>
+                <h3 className="font-bold text-xs tracking-widest uppercase text-text-secondary">Team Activity</h3>
                 <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                     <span className="text-[10px] font-black text-green-600 uppercase tracking-widest">LIVE</span>
@@ -180,8 +180,8 @@ export default function TeamChat({ teamId, currentUserId }) {
                                 <div className={cn(
                                     "px-5 py-3 rounded-2xl text-sm font-medium shadow-sm",
                                     isMe
-                                        ? "bg-blue-600 text-white rounded-tr-none"
-                                        : "bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-100 rounded-tl-none"
+                                        ? "bg-primary text-on-primary rounded-tr-none"
+                                        : "bg-surface-hover/50 text-on-surface rounded-tl-none"
                                 )}>
                                     {msg.text}
                                 </div>
@@ -199,7 +199,7 @@ export default function TeamChat({ teamId, currentUserId }) {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
-                            className="absolute bottom-full left-4 mb-2 w-64 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-slate-700 overflow-hidden z-20"
+                            className="absolute bottom-full left-4 mb-2 w-64 bg-surface dark:bg-zinc-900 rounded-2xl shadow-2xl border border-border overflow-hidden z-20"
                         >
                             <div className="px-4 py-2 bg-gray-50 dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 text-[10px] font-black uppercase tracking-widest text-gray-400">
                                 Mention Member
@@ -230,8 +230,8 @@ export default function TeamChat({ teamId, currentUserId }) {
                             type="text"
                             value={inputText}
                             onChange={handleInputChange}
-                            placeholder="TYPE A MESSAGE..."
-                            className="w-full pl-6 pr-12 py-4 bg-gray-50 dark:bg-slate-800/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none"
+                            placeholder="Type a message..."
+                            className="w-full pl-6 pr-12 py-4 bg-surface-hover/50 rounded-2xl text-[13px] font-medium focus:ring-2 focus:ring-primary outline-none transition-all inner-shadow border-none"
                         />
                         <button
                             type="button"
@@ -243,7 +243,7 @@ export default function TeamChat({ teamId, currentUserId }) {
                     <button
                         type="submit"
                         disabled={!inputText.trim()}
-                        className="w-14 h-14 bg-blue-600 text-white rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:scale-100"
+                        className="w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                     >
                         <FiSend size={20} />
                     </button>

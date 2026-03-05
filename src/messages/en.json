@@ -8,7 +8,7 @@
     "dashboard": "Dashboard"
   },
   "hero": {
-    "tagline": "Your AI-Powered Second Brain",
+    "tagline": "Your personal AI assistant",
     "title": "Never Forget.",
     "titleHighlight": "Always Achieve.",
     "subtitle": "Smaran AI is your intelligent companion for managing tasks, tracking opportunities, and collaborating with teams. Powered by AI, designed for everyone.",
@@ -67,7 +67,7 @@
     "noCard": "No credit card required • Free forever"
   },
   "footer": {
-    "tagline": "Your AI-powered second brain for tasks, opportunities, and team collaboration.",
+    "tagline": "Your personal assistant for tasks, opportunities, and team collaboration.",
     "product": "Product",
     "company": "Company",
     "support": "Support",
@@ -94,7 +94,7 @@
   },
   "register": {
     "title": "Create Account",
-    "subtitle": "Join your AI Second Brain",
+    "subtitle": "Get Started with AlertyAI",
     "fullName": "Full Name",
     "email": "Email",
     "password": "Password",
@@ -120,4 +120,3 @@
     "language": "Language"
   }
 }
-

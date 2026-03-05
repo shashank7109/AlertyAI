@@ -33,9 +33,9 @@ export default function SettingsPage() {
       <div className="max-w-4xl mx-auto space-y-10 pb-20">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter uppercase italic">Control Center</h1>
-          <p className="text-xs font-black text-gray-400 tracking-[0.2em] uppercase mt-2">
-            Configure your workspace experience
+          <h1 className="text-4xl font-heading font-bold text-on-surface tracking-tighter uppercase">Settings</h1>
+          <p className="text-xs font-bold text-text-secondary tracking-widest uppercase mt-2">
+            Configure your workspace
           </p>
         </div>
 
@@ -45,30 +45,30 @@ export default function SettingsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
+            className="clay-card border-none bg-surface dark:bg-surface p-8 sm:p-10 rounded-[2.5rem]"
           >
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 inner-shadow">
+              <div className="w-14 h-14 rounded-2xl bg-primary-soft dark:bg-zinc-900 flex items-center justify-center text-primary dark:text-white inner-shadow">
                 <FiUser size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
-                  Identity
+                <h2 className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight">
+                  Profile
                 </h2>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Personal profile details</p>
+                <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Personal details</p>
               </div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">
+                <label className="text-[10px] font-black text-text-secondary uppercase tracking-widest ml-1">
                   Full Name
                 </label>
                 <input
                   type="text"
                   value={settings.name}
                   onChange={(e) => setSettings({ ...settings, name: e.target.value })}
-                  className="w-full px-6 py-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none"
+                  className="w-full px-6 py-4 bg-surface-hover/30 dark:bg-zinc-900/40 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-primary outline-none transition-all inner-shadow border-none"
                 />
               </div>
 
@@ -80,7 +80,7 @@ export default function SettingsPage() {
                   type="email"
                   value={settings.email}
                   onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                  className="w-full px-6 py-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none"
+                  className="w-full px-6 py-4 bg-surface-hover/30 dark:bg-zinc-900/40 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-primary outline-none transition-all inner-shadow border-none"
                 />
               </div>
             </div>
@@ -91,24 +91,24 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
+            className="clay-card border-none bg-surface dark:bg-surface p-8 sm:p-10 rounded-[2.5rem]"
           >
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 inner-shadow">
+              <div className="w-14 h-14 rounded-2xl bg-primary-soft dark:bg-zinc-900 flex items-center justify-center text-primary dark:text-white inner-shadow">
                 <FiMoon size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
-                  Visuals
+                <h2 className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight">
+                  Appearance
                 </h2>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Customize your theme</p>
+                <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Customize your theme</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
-                { value: 'light', label: 'BRIGHT', icon: FiSun },
-                { value: 'dark', label: 'NIGHT', icon: FiMoon },
+                { value: 'light', label: 'LIGHT', icon: FiSun },
+                { value: 'dark', label: 'DARK', icon: FiMoon },
                 { value: 'system', label: 'AUTO', icon: FiShield },
               ].map((option) => {
                 const Icon = option.icon
@@ -120,12 +120,12 @@ export default function SettingsPage() {
                     className={cn(
                       "p-8 rounded-[2rem] border-none transition-all flex flex-col items-center gap-4 group",
                       isActive
-                        ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20 scale-105"
-                        : "bg-gray-50 dark:bg-slate-900/50 text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-900 inner-shadow"
+                        ? "bg-primary text-on-primary shadow-xl scale-105"
+                        : "bg-surface-hover/50 text-text-secondary hover:bg-surface-hover inner-shadow"
                     )}
                   >
-                    <Icon className={cn("w-8 h-8", isActive ? "text-white" : "text-gray-400 group-hover:text-blue-500")} />
-                    <span className="text-[11px] font-black tracking-widest uppercase">{option.label}</span>
+                    <Icon className={cn("w-8 h-8", isActive ? "text-on-primary" : "text-text-secondary group-hover:text-primary")} />
+                    <span className="text-[11px] font-bold tracking-widest uppercase">{option.label}</span>
                   </button>
                 )
               })}
@@ -137,33 +137,33 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
+            className="clay-card border-none bg-surface dark:bg-surface p-8 sm:p-10 rounded-[2.5rem]"
           >
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 inner-shadow">
+              <div className="w-14 h-14 rounded-2xl bg-primary-soft dark:bg-zinc-900 flex items-center justify-center text-primary dark:text-white inner-shadow">
                 <FiBell size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
-                  Alerts
+                <h2 className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight">
+                  Notifications
                 </h2>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Manage signal preferences</p>
+                <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">Manage your alerts</p>
               </div>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { key: 'taskReminders', label: 'Action Alerts', description: 'Upcoming task signals' },
-                { key: 'deadlines', label: 'Deadline Watch', description: 'Critical time warnings' },
-                { key: 'teamUpdates', label: 'Comm Channel', description: 'Team collaboration pings' },
-                { key: 'aiSuggestions', label: 'AI Strategy', description: 'Smart intelligence tips' },
-                { key: 'email', label: 'Direct Relay', description: 'Email notification stream' },
-                { key: 'push', label: 'Neural Link', description: 'In-browser transmissions' },
+                { key: 'taskReminders', label: 'Tasks', description: 'Alerts for your tasks' },
+                { key: 'deadlines', label: 'Deadlines', description: 'Critical time warnings' },
+                { key: 'teamUpdates', label: 'Team', description: 'Team activity pings' },
+                { key: 'aiSuggestions', label: 'AI Tips', description: 'Smart intelligence tips' },
+                { key: 'email', label: 'Email', description: 'Periodic snapshots' },
+                { key: 'push', label: 'Push', description: 'Real-time updates' },
               ].map((option) => (
-                <div key={option.key} className="flex items-center justify-between p-6 bg-gray-50 dark:bg-slate-900/50 rounded-2xl inner-shadow">
+                <div key={option.key} className="flex items-center justify-between p-6 bg-surface-hover/30 dark:bg-zinc-900/20 rounded-2xl inner-shadow">
                   <div className="flex-1">
-                    <h3 className="text-[11px] font-black text-gray-900 dark:text-white uppercase tracking-widest">{option.label}</h3>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase opacity-60">{option.description}</p>
+                    <h3 className="text-[11px] font-black text-on-surface uppercase tracking-widest">{option.label}</h3>
+                    <p className="text-[10px] font-bold text-text-secondary uppercase opacity-60">{option.description}</p>
                   </div>
                   <button
                     onClick={() => setSettings({
@@ -172,7 +172,7 @@ export default function SettingsPage() {
                     })}
                     className={cn(
                       "w-12 h-6 rounded-full transition-all relative",
-                      settings.notifications[option.key] ? "bg-green-500" : "bg-gray-300 dark:bg-slate-700"
+                      settings.notifications[option.key] ? "bg-green-500" : "bg-surface-hover dark:bg-zinc-800"
                     )}
                   >
                     <div className={cn(
@@ -190,14 +190,14 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="clay-card border-none bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-[2.5rem]"
+            className="clay-card border-none bg-surface dark:bg-surface p-8 sm:p-10 rounded-[2.5rem]"
           >
             <div className="flex items-center gap-4 mb-10">
-              <div className="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 inner-shadow">
+              <div className="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-950/40 flex items-center justify-center text-orange-600 dark:text-orange-400 inner-shadow">
                 <FiGlobe size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+                <h2 className="text-xl font-black text-on-surface uppercase tracking-tight">
                   Localization
                 </h2>
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Regional input language</p>
@@ -211,7 +211,7 @@ export default function SettingsPage() {
               <select
                 value={settings.language}
                 onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-slate-900/50 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none transition-all inner-shadow border-none appearance-none"
+                className="w-full px-6 py-4 bg-surface-hover/30 dark:bg-zinc-900/40 rounded-2xl text-[11px] font-black tracking-widest uppercase focus:ring-2 focus:ring-primary outline-none transition-all inner-shadow border-none appearance-none"
               >
                 <option value="en">English</option>
                 <option value="hi">हिंदी (Hindi)</option>

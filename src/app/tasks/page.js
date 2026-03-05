@@ -20,10 +20,10 @@ const CalendarDay = ({ date, tasks, isCurrentMonth, onClick }) => {
   return (
     <div
       onClick={() => onClick(date)}
-      className={`min-h-[100px] border border-gray-100 dark:border-gray-800 p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer ${!isCurrentMonth ? 'bg-gray-50/50 dark:bg-gray-900/50 text-gray-400' : 'bg-white dark:bg-gray-900'}`}
+      className={`min-h-[100px] border border-border dark:border-zinc-800 p-2 transition-colors hover:bg-surface-hover/50 dark:hover:bg-zinc-800/50 cursor-pointer ${!isCurrentMonth ? 'bg-surface-hover/20 dark:bg-zinc-950/50 text-text-secondary' : 'bg-surface dark:bg-zinc-900/40'}`}
     >
       <div className="flex justify-between items-start mb-2">
-        <span className={`text-sm font-semibold ${date.toDateString() === new Date().toDateString() ? 'bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center' : ''}`}>
+        <span className={`text-sm font-semibold ${date.toDateString() === new Date().toDateString() ? 'bg-primary text-on-primary w-6 h-6 rounded-full flex items-center justify-center' : ''}`}>
           {date.getDate()}
         </span>
         {tasks.length > 0 && (
@@ -265,21 +265,21 @@ export default function TasksPage() {
         exit={{ opacity: 0, scale: 0.95 }}
         className={cn(
           "group relative flex flex-col sm:flex-row gap-5 p-5 rounded-[1.75rem] transition-all hover:-translate-y-1 clay-card border-none",
-          isCollectTaskType ? "bg-blue-50/50 dark:bg-blue-900/10" : "bg-white dark:bg-slate-800"
+          isCollectTaskType ? "bg-primary-soft/50 dark:bg-zinc-800/40" : "bg-surface dark:bg-zinc-900/40"
         )}
         onClick={() => handleEditTask(task)}
       >
-        {isCollectTaskType && <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-l-xl" />}
+        {isCollectTaskType && <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-xl" />}
 
         <div className="flex items-center gap-5 flex-1">
           <button
             onClick={(e) => { e.stopPropagation(); toggleTaskCompletion(taskId); }}
             className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all ${isCompleted
-                ? 'bg-blue-600 shadow-lg shadow-blue-500/20'
-                : 'bg-gray-100 dark:bg-slate-700 inner-shadow'
+              ? 'bg-primary shadow-lg'
+              : 'bg-background border border-border inner-shadow'
               }`}
           >
-            {isCompleted && <FiCheck className="text-white" size={14} />}
+            {isCompleted && <FiCheck className="text-on-primary" size={14} />}
           </button>
 
           <div className="flex-1">
@@ -287,7 +287,7 @@ export default function TasksPage() {
               <h3 className={`text-base font-bold tracking-tight ${isCompleted ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
                 {displayTitle}
               </h3>
-              {isCollectTaskType && <span className="text-[10px] font-black px-2 py-0.5 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded uppercase tracking-widest">COLLECT</span>}
+              {isCollectTaskType && <span className="text-[10px] font-bold px-2 py-0.5 bg-primary-soft text-primary rounded uppercase tracking-widest">ASSIGNED</span>}
             </div>
 
             <div className="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest text-gray-400">
@@ -316,21 +316,21 @@ export default function TasksPage() {
           {/* Header Area */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div>
-              <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter uppercase italic">TASK STACK</h1>
-              <p className="text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase mt-1">Manage your professional workflow</p>
+              <h1 className="text-4xl font-heading font-bold text-on-surface tracking-tighter uppercase">Tasks</h1>
+              <p className="text-[10px] font-bold tracking-[0.2em] text-text-secondary uppercase mt-1">Manage your work</p>
             </div>
 
             <div className="flex items-center gap-4">
               <ImageUploadButton onTaskExtracted={handleTaskExtracted} />
               <button
                 onClick={handleAddTask}
-                className="btn-clay btn-clay-primary px-8 py-3.5 text-xs tracking-widest uppercase"
+                className="btn-clay btn-clay-primary px-8 py-3 text-xs tracking-widest uppercase mb-4"
               >
-                New Action
+                Add Task
               </button>
               <button
                 onClick={() => setShowActivityLog(!showActivityLog)}
-                className="w-11 h-11 flex items-center justify-center text-gray-500 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-all"
+                className="w-11 h-11 flex items-center justify-center text-text-secondary bg-surface dark:bg-zinc-900 rounded-2xl shadow-sm border border-border hover:shadow-md transition-all"
               >
                 <FiActivity size={18} />
               </button>
@@ -338,10 +338,10 @@ export default function TasksPage() {
           </div>
 
           {/* View Switcher & Filters */}
-          <div className="clay-card border-none bg-white dark:bg-slate-800 p-2 mb-10 flex flex-col sm:flex-row gap-6 items-center justify-between">
+          <div className="clay-card border-none bg-surface dark:bg-surface p-2 mb-10 flex flex-col sm:flex-row gap-6 items-center justify-between">
 
             {/* View Tabs */}
-            <div className="flex bg-[#F8F9FC] dark:bg-slate-900/50 p-1.5 rounded-[1.25rem] w-full sm:w-auto inner-shadow">
+            <div className="flex bg-surface-hover/30 dark:bg-zinc-900/50 p-1.5 rounded-[1.25rem] w-full sm:w-auto inner-shadow">
               {[
                 { id: 'list', icon: FiList, label: 'LIST' },
                 { id: 'calendar', icon: FiCalendar, label: 'SCHEDULE' },
@@ -354,10 +354,10 @@ export default function TasksPage() {
                     setFilter('all') // Reset date filters when changing view
                   }}
                   className={cn(
-                    "flex items-center gap-2 px-6 py-2 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all flex-1 sm:flex-none justify-center",
+                    "flex items-center gap-2 px-6 py-2 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all flex-1 sm:flex-none justify-center",
                     viewMode === view.id
-                      ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-sky-400 shadow-md"
-                      : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                      ? "bg-surface text-primary shadow-md"
+                      : "text-text-secondary hover:text-primary"
                   )}
                 >
                   <view.icon size={14} /> {view.label}
@@ -384,8 +384,8 @@ export default function TasksPage() {
                       key={f}
                       onClick={() => setFilter(f)}
                       className={`px-3 py-1 rounded-md text-xs font-medium capitalize transition-colors ${filter === f
-                          ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                          : 'text-gray-500'
+                        ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                        : 'text-gray-500'
                         }`}
                     >
                       {f}
@@ -424,7 +424,7 @@ export default function TasksPage() {
                 <motion.div
                   key="calendar"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm"
+                  className="bg-surface dark:bg-zinc-900/20 rounded-xl border border-border overflow-hidden shadow-sm"
                 >
                   <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
                     <h2 className="font-semibold text-lg">

@@ -31,8 +31,8 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
         description: task.description || '',
         priority: task.priority || 'medium',
         category: task.category || 'Work',
-        dueDate: task.dueDate || '',
-        dueTime: task.dueTime || '',
+        dueDate: task.dueDate || (task.due_date ? task.due_date.split('T')[0] : ''),
+        dueTime: task.dueTime || (task.due_date && task.due_date.includes('T') ? task.due_date.split('T')[1].slice(0, 5) : ''),
         subtasks: task.subtasks || [],
       })
     } else if (extractedData) {
@@ -70,7 +70,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!formData.title.trim()) {
       toast.error('Please enter a task title')
       return
@@ -160,10 +160,10 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
 
     try {
       toast.loading('Extracting task information from image...', { id: 'extract' })
-      
+
       // Extract data only (doesn't create task yet)
       const response = await aiAPI.extractFromImage(file)
-      
+
       // Backend returns: {success: true, extracted: true, task_data: {...}, message: "..."}
       if (response.data.success && response.data.task_data) {
         const taskData = response.data.task_data
@@ -173,10 +173,8 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
           description: taskData.description || '',
           priority: (taskData.priority || 'medium').toLowerCase(),
           category: taskData.category || formData.category,
-          dueDate: taskData.deadline || taskData.date ? 
-            (taskData.deadline || taskData.date).split('T')[0] : '',
-          dueTime: taskData.deadline || taskData.time ? 
-            (taskData.deadline ? new Date(taskData.deadline).toTimeString().slice(0, 5) : taskData.time) : '',
+          dueDate: taskData.deadline ? taskData.deadline.split('T')[0] : (taskData.date || ''),
+          dueTime: taskData.deadline && taskData.deadline.includes('T') ? taskData.deadline.split('T')[1].slice(0, 5) : (taskData.time || ''),
           subtasks: taskData.subtasks || [],
         })
 
@@ -200,12 +198,12 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
+          className="bg-surface dark:bg-background rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between p-6 border-b border-border">
+            <h2 className="text-2xl font-bold text-on-surface">
               {task ? 'Edit Task' : 'Add New Task'}
             </h2>
             <button
@@ -293,15 +291,14 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
                     key={priority}
                     type="button"
                     onClick={() => setFormData({ ...formData, priority })}
-                    className={`py-3 px-4 rounded-xl font-medium transition-all ${
-                      formData.priority === priority
-                        ? priority === 'high'
-                          ? 'bg-red-600 text-white'
-                          : priority === 'medium'
+                    className={`py-3 px-4 rounded-xl font-medium transition-all ${formData.priority === priority
+                      ? priority === 'high'
+                        ? 'bg-red-600 text-white'
+                        : priority === 'medium'
                           ? 'bg-yellow-500 text-white'
                           : 'bg-green-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-                    }`}
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
+                      }`}
                   >
                     {priority.charAt(0).toUpperCase() + priority.slice(1)}
                   </button>
@@ -320,12 +317,12 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
                 <button
                   type="button"
                   onClick={toggleImageUpload}
-                  className="w-full text-left text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="w-full text-left text-sm font-semibold text-on-surface mb-2 flex items-center gap-2 hover:text-primary transition-colors"
                 >
-                  <FiImage size={16} />
-                  Upload Image (PNG, JPG, etc.)
+                  <FiImage className="text-primary" size={16} />
+                  Upload Image
                 </button>
-                
+
                 {showImageUpload && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -372,12 +369,12 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
                 <button
                   type="button"
                   onClick={toggleVoiceInput}
-                  className="w-full text-left text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="w-full text-left text-sm font-semibold text-on-surface mb-2 flex items-center gap-2 hover:text-primary transition-colors"
                 >
-                  <FiMic size={16} />
+                  <FiMic className="text-primary" size={16} />
                   Voice Input
                 </button>
-                
+
                 {showVoiceInput && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -388,9 +385,8 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
                       <button
                         type="button"
                         onClick={handleVoiceInput}
-                        className={`w-24 h-24 mx-auto rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all ${
-                          isRecording ? 'animate-pulse' : ''
-                        }`}
+                        className={`w-24 h-24 mx-auto rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all ${isRecording ? 'animate-pulse' : ''
+                          }`}
                       >
                         <FiMic className="text-white" size={40} />
                       </button>
@@ -433,10 +429,10 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
                     {formData.subtasks.map((subtask, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                        className="flex items-center gap-2 p-2 bg-surface-hover/50 rounded-lg"
                       >
-                        <FiCheck className="text-gray-400 flex-shrink-0" size={16} />
-                        <span className="flex-1 text-sm text-gray-700 dark:text-gray-300">
+                        <FiCheck className="text-primary flex-shrink-0" size={16} />
+                        <span className="flex-1 text-sm text-on-surface">
                           {subtask}
                         </span>
                         <button
@@ -512,6 +508,6 @@ export default function TaskModal({ isOpen, task, onClose, onSave, extractedData
           </form>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence >
   )
 }

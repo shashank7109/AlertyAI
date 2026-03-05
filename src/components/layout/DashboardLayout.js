@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }) {
   const { sidebarOpen } = useUIStore()
 
   return (
-    <div className="min-h-screen pt-24 bg-[#F8F9FC] dark:bg-[#0F172A]">
+    <div className="min-h-screen pt-24 bg-background dark:bg-background">
       <Sidebar />
 
       <div

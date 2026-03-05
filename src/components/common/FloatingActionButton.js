@@ -183,7 +183,7 @@ export default function FloatingActionButton() {
                   exit={{ opacity: 0, scale: 0.8, x: 20 }}
                   transition={{ type: 'spring', damping: 20, stiffness: 300, delay: index * 0.05 }}
                   onClick={() => handleAction(action.action)}
-                  className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded-[1.25rem] shadow-xl hover:shadow-2xl transition-all px-5 py-3.5 group border-none clay-card"
+                  className="flex items-center gap-4 bg-surface dark:bg-zinc-900/40 rounded-[1.25rem] shadow-xl hover:shadow-2xl transition-all px-5 py-3.5 group border border-border clay-card"
                 >
                   <action.icon className={cn("transition-colors", action.color)} size={20} />
                   <span className="text-xs font-black tracking-widest text-gray-700 dark:text-gray-200 whitespace-nowrap uppercase">

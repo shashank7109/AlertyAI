@@ -123,21 +123,21 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-6">
             {/* User Avatar - Clay Circle */}
-            <div className="w-20 h-20 rounded-[2rem] bg-white dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-sky-400 font-black text-3xl shadow-xl shadow-blue-500/10 border border-gray-100 dark:border-slate-700 clay-card border-none">
+            <div className="w-20 h-20 rounded-[2rem] bg-surface-hover/50 dark:bg-zinc-900 flex items-center justify-center text-on-surface font-bold text-3xl shadow-xl border border-border clay-card">
               {userName.charAt(0).toUpperCase()}
             </div>
             <div>
-              <p className="text-[10px] font-black tracking-[0.2em] text-blue-500 uppercase mb-1">
+              <p className="text-[10px] font-bold tracking-[0.2em] text-text-secondary uppercase mb-1">
                 {currentTime.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()} • {currentTime.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }).toUpperCase()}
               </p>
-              <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter leading-none">
+              <h1 className="text-4xl font-heading font-bold text-on-surface tracking-tighter leading-none">
                 {getGreeting().toUpperCase()}, {userName.split(' ')[0].toUpperCase()}
               </h1>
             </div>
           </div>
           <div className="flex gap-3">
-            <Link href="/tasks" className="btn-clay btn-clay-primary px-8 py-3.5 text-xs tracking-widest uppercase">
-              New Action
+            <Link href="/tasks" className="btn-clay btn-clay-primary px-8 py-3 text-xs tracking-widest uppercase mb-4">
+              Add Task
             </Link>
           </div>
         </motion.div>
@@ -148,15 +148,15 @@ export default function Dashboard() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 }}
-            className="clay-card bg-white dark:bg-slate-800 border-none"
+            className="clay-card bg-surface dark:bg-surface border-none"
           >
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight italic">TODAY'S FLOW</h2>
+              <h2 className="text-xl font-heading font-bold text-on-surface tracking-tight italic uppercase">Today</h2>
               <Link
                 href="/tasks"
-                className="text-[10px] font-black text-blue-500 tracking-widest uppercase hover:underline"
+                className="text-[10px] font-bold text-text-secondary tracking-widest uppercase hover:text-primary transition-colors"
               >
-                View Full Stack
+                View All
               </Link>
             </div>
 
@@ -169,16 +169,16 @@ export default function Dashboard() {
                 todayTasks.map((task) => (
                   <div
                     key={task.id}
-                    className="flex items-center gap-5 p-4 rounded-[1.5rem] bg-[#F8F9FC] dark:bg-slate-900/50 inner-shadow transition-all group"
+                    className="flex items-center gap-5 p-4 rounded-[1.5rem] bg-surface-hover/30 dark:bg-zinc-900/30 inner-shadow transition-all group"
                   >
                     <button
                       onClick={() => toggleTask(task.id)}
-                      className={`w-7 h-7 rounded-xl flex items-center justify-center transition-all ${task.completed
-                          ? 'bg-blue-600 shadow-lg shadow-blue-500/20'
-                          : 'bg-white dark:bg-slate-800 border-none shadow-sm'
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${task.completed
+                        ? 'bg-primary shadow-lg'
+                        : 'bg-background border border-border shadow-sm'
                         }`}
                     >
-                      {task.completed && <FiCheck className="text-white" size={14} />}
+                      {task.completed && <FiCheck className="text-on-primary" size={14} />}
                     </button>
                     <div className="flex-1">
                       <p className={`text-base font-bold tracking-tight ${task.completed ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
@@ -199,11 +199,11 @@ export default function Dashboard() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="clay-card bg-white dark:bg-slate-800 border-none"
+            className="clay-card bg-surface dark:bg-surface border-none"
           >
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-black text-gray-900 dark:text-white tracking-tight italic">UPCOMING</h2>
-              <Link href="/calendar" className="text-[10px] font-black text-blue-500 tracking-widest uppercase">
+              <h2 className="text-xl font-heading font-bold text-on-surface tracking-tight italic uppercase">Upcoming</h2>
+              <Link href="/calendar" className="text-[10px] font-bold text-text-secondary tracking-widest uppercase hover:text-primary transition-colors">
                 Timeline
               </Link>
             </div>
@@ -215,7 +215,7 @@ export default function Dashboard() {
                   className="flex items-center justify-between p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-slate-900 flex items-center justify-center text-blue-600 dark:text-sky-400 shadow-sm">
+                    <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-zinc-800 flex items-center justify-center text-primary dark:text-white shadow-sm">
                       <FiClock size={18} />
                     </div>
                     <div>
@@ -243,17 +243,17 @@ export default function Dashboard() {
               transition={{ delay: 0.3 + i * 0.1 }}
             >
               <Link href={stat.href} className="block group">
-                <div className="clay-card bg-white dark:bg-slate-800 border-none group-hover:-translate-y-2">
+                <div className="clay-card bg-surface dark:bg-surface border-none group-hover:-translate-y-1 transition-transform shadow-md">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className={cn("w-10 h-10 rounded-xl bg-gray-50 dark:bg-slate-900 flex items-center justify-center", stat.color)}>
+                    <div className={cn("w-10 h-10 rounded-xl bg-primary-soft dark:bg-zinc-800 flex items-center justify-center", "text-primary dark:text-white")}>
                       <stat.icon size={20} />
                     </div>
-                    <span className="text-[10px] font-black tracking-widest uppercase text-gray-400">{stat.title}</span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-text-secondary">{stat.title}</span>
                   </div>
                   {stat.count !== undefined ? (
-                    <p className="text-3xl font-black text-gray-900 dark:text-white tracking-tighter">{stat.count}</p>
+                    <p className="text-3xl font-heading font-bold text-on-surface tracking-tighter">{stat.count}</p>
                   ) : (
-                    <p className="text-sm font-black text-blue-500 tracking-widest uppercase">{stat.desc}</p>
+                    <p className="text-sm font-bold text-primary tracking-widest uppercase">{stat.desc}</p>
                   )}
                 </div>
               </Link>
