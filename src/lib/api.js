@@ -268,6 +268,15 @@ export const teamAPI = {
   inviteMembers: (teamId, emails, phones) =>
     api.post(`/teams/${teamId}/members/invite`, { emails, phones }),
   joinTeam: (inviteToken) => api.post(`/teams/join/${inviteToken}`),
+  joinTeamByCode: (code) => {
+    const formData = new FormData();
+    formData.append('code', code);
+    return api.post(`/teams/join/code`, formData, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+  },
+  getJoinCode: (teamId) => api.get(`/teams/${teamId}/join-code`),
+  regenerateJoinCode: (teamId) => api.post(`/teams/${teamId}/join-code/regenerate`),
   removeMember: (teamId, userId) =>
     api.delete(`/teams/${teamId}/members/${userId}`),
   promoteToLeader: (teamId, userId) =>
@@ -320,15 +329,15 @@ export const teamAPI = {
   getAnalytics: (teamId) => api.get(`/teams/${teamId}/analytics`),
 
   // Chat
-  getChatHistory: (orgId) => {
+  getChatHistory: (teamId) => {
     const token = localStorage.getItem('token')
-    return api.get(`/chat/history/${orgId}`, { params: { token } })
+    return api.get(`/chat/history/${teamId}`, { params: { token } })
   },
-  getMentionSuggestions: (orgId) => api.get(`/chat/mentions/${orgId}`),
-  getChatWSUrl: (orgId) => {
+  getMentionSuggestions: (teamId) => api.get(`/chat/mentions/${teamId}`),
+  getChatWSUrl: (teamId) => {
     const token = localStorage.getItem('token')
     const wsBase = API_URL.replace(/^http/, 'ws')
-    return `${wsBase}/api/chat/ws/chat/${orgId}?token=${token}`
+    return `${wsBase}/api/chat/ws/chat/${teamId}?token=${token}`
   },
 }
 

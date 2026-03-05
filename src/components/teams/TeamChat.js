@@ -119,7 +119,7 @@ export default function TeamChat({ teamId, currentUserId }) {
         if (!inputText.trim() || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return
 
         const payload = { text: inputText.trim() }
-        wsRef.current.send(json.stringify(payload))
+        wsRef.current.send(JSON.stringify(payload))
         setInputText('')
         setShowMentions(false)
     }

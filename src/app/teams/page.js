@@ -16,6 +16,9 @@ export default function TeamsPage() {
   const [copiedTeamId, setCopiedTeamId] = useState(null)
   const [pendingInvitations, setPendingInvitations] = useState([])
   const [processingInvite, setProcessingInvite] = useState(null)
+  const [showJoinModal, setShowJoinModal] = useState(false)
+  const [joinCode, setJoinCode] = useState('')
+  const [joining, setJoining] = useState(false)
 
   useEffect(() => {
     fetchTeams()
@@ -56,6 +59,27 @@ export default function TeamsPage() {
     setProcessingInvite(null)
   }
 
+  const handleJoinTeamByCode = async (e) => {
+    e.preventDefault()
+    if (!joinCode.trim() || joinCode.length !== 6) {
+      toast.error('Please enter a valid 6-digit code')
+      return
+    }
+
+    setJoining(true)
+    try {
+      await teamAPI.joinTeamByCode(joinCode.trim())
+      toast.success('Successfully joined team!')
+      setShowJoinModal(false)
+      setJoinCode('')
+      fetchTeams()
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Failed to join team')
+    } finally {
+      setJoining(false)
+    }
+  }
+
   const fetchTeams = async () => {
     try {
       setLoading(true)
@@ -75,7 +99,7 @@ export default function TeamsPage() {
     const completed = tasks.filter(t => t.status === 'completed').length
     const pending = tasks.filter(t => t.status === 'pending').length
     const inProgress = tasks.filter(t => t.status === 'in_progress').length
-    
+
     return { total, completed, pending, inProgress }
   }
 
@@ -110,13 +134,22 @@ export default function TeamsPage() {
               Collaborate with your team members on tasks and projects
             </p>
           </div>
-          <button
-            onClick={() => router.push('/teams/create')}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-          >
-            <FiPlus size={20} />
-            <span>Create Team</span>
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => setShowJoinModal(true)}
+              className="flex items-center justify-center gap-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-medium shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+            >
+              <FiLink size={18} />
+              <span>Join via Code</span>
+            </button>
+            <button
+              onClick={() => router.push('/teams/create')}
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+            >
+              <FiPlus size={20} />
+              <span>Create Team</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -218,7 +251,7 @@ export default function TeamsPage() {
               const completionRate = stats.total > 0 ? (stats.completed / stats.total * 100).toFixed(0) : 0
               const isLeader = team.leader_id === localStorage.getItem('user_id')
               const inviteLink = team.invite_token ? `${window.location.origin}/teams/join/${team.invite_token}` : null
-              
+
               const copyInviteLink = (e) => {
                 e.stopPropagation()
                 if (inviteLink) {
@@ -228,7 +261,7 @@ export default function TeamsPage() {
                   setTimeout(() => setCopiedTeamId(null), 3000)
                 }
               }
-              
+
               return (
                 <motion.div
                   key={team.id || team._id}
@@ -278,7 +311,7 @@ export default function TeamsPage() {
                         Members
                       </div>
                     </div>
-                    
+
                     <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-2 sm:p-3 text-center">
                       <div className="flex items-center justify-center gap-1 mb-1">
                         <FiCheckCircle size={14} className="text-green-600 dark:text-green-400" />
@@ -290,7 +323,7 @@ export default function TeamsPage() {
                         Done
                       </div>
                     </div>
-                    
+
                     <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-2 sm:p-3 text-center">
                       <div className="flex items-center justify-center gap-1 mb-1">
                         <FiClock size={14} className="text-blue-600 dark:text-blue-400" />
@@ -332,11 +365,10 @@ export default function TeamsPage() {
                         {isLeader && inviteLink && (
                           <button
                             onClick={copyInviteLink}
-                            className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-colors ${
-                              copiedTeamId === (team.id || team._id)
-                                ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
-                                : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 hover:bg-blue-200'
-                            }`}
+                            className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-colors ${copiedTeamId === (team.id || team._id)
+                              ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
+                              : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 hover:bg-blue-200'
+                              }`}
                           >
                             <FiLink size={12} />
                             <span>{copiedTeamId === (team.id || team._id) ? 'Copied!' : 'Invite'}</span>
@@ -357,6 +389,53 @@ export default function TeamsPage() {
           </AnimatePresence>
         </div>
       )}
+
+      {/* Join via Code Modal */}
+      <AnimatePresence>
+        {showJoinModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-white dark:bg-gray-900 rounded-2xl p-6 sm:p-8 w-full max-w-md shadow-2xl border border-gray-100 dark:border-gray-800"
+            >
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Join Team</h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Enter the 6-digit code provided by your team leader.</p>
+
+              <form onSubmit={handleJoinTeamByCode}>
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    value={joinCode}
+                    onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
+                    placeholder="Enter 6-digit code"
+                    maxLength={6}
+                    className="w-full text-center text-2xl tracking-[0.5em] font-mono px-4 py-3 bg-gray-50 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 dark:text-white uppercase"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => { setShowJoinModal(false); setJoinCode(''); }}
+                    className="px-5 py-2.5 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={joining || joinCode.length !== 6}
+                    className="flex flex-1 sm:flex-none justify-center items-center px-6 py-2.5 rounded-xl font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {joining ? 'Joining...' : 'Join Team'}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </DashboardLayout>
   )
 }
