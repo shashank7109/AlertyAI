@@ -156,8 +156,8 @@ export default function AIAssistantPage() {
                   )}
                   <div
                     className={`p-3 md:p-4 rounded-2xl shadow-sm ${message.role === 'user'
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-tr-sm'
-                        : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-tl-sm border border-gray-200 dark:border-gray-700'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-tr-sm'
+                      : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-tl-sm border border-gray-200 dark:border-gray-700'
                       }`}
                   >
                     <p className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">{message.content}</p>
@@ -238,14 +238,14 @@ export default function AIAssistantPage() {
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSendMessage} className="p-3 md:p-6 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <form onSubmit={handleSendMessage} className="p-3 md:p-6 border-t border-border bg-surface dark:bg-background">
           <div className="flex gap-2 md:gap-3">
             <button
               type="button"
               onClick={handleVoiceInput}
               className={`p-2 md:p-3 rounded-xl transition-all flex-shrink-0 ${isRecording
-                  ? 'bg-red-500 text-white animate-pulse'
-                  : 'bg-surface-hover/50 text-text-secondary hover:text-primary transition-colors'
+                ? 'bg-red-500 text-white animate-pulse'
+                : 'bg-surface-hover/50 text-primary hover:scale-105 transition-all'
                 }`}
             >
               <FiMic className="w-4 h-4 md:w-5 md:h-5" />
