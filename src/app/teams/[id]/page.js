@@ -249,18 +249,19 @@ export default function TeamDashboardPage() {
             <div className="flex gap-3">
               {isLeader && (
                 <>
-                  <button
-                    onClick={() => {
-                      if (inviteLink) {
-                        navigator.clipboard.writeText(inviteLink)
-                        toast.success('Link Saved')
-                      }
-                    }}
-                    className="w-12 h-12 flex items-center justify-center bg-gray-50 dark:bg-slate-700 text-gray-500 dark:text-gray-300 rounded-2xl inner-shadow hover:shadow-md transition-all"
-                    title="Copy invite link"
-                  >
-                    <FiLink size={18} />
-                  </button>
+                  {team.join_code && (
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(team.join_code)
+                        toast.success(`Join code copied: ${team.join_code}`)
+                      }}
+                      className="flex items-center gap-2 px-4 h-12 bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-2xl inner-shadow hover:shadow-md transition-all font-mono font-bold tracking-widest text-sm"
+                      title="Copy join code"
+                    >
+                      <span>{team.join_code}</span>
+                      <span className="text-[10px] font-black text-gray-400 uppercase">Copy</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => router.push(`/teams/${teamId}/assign-task`)}
                     className="btn-clay btn-clay-primary px-8 py-3.5 text-xs tracking-widest uppercase"

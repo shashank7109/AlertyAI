@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { FiArrowLeft, FiUsers, FiMail, FiPhone, FiPlus, FiX } from 'react-icons/fi'
+import { FiArrowLeft } from 'react-icons/fi'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { teamAPI } from '@/lib/api'
 import toast from 'react-hot-toast'
@@ -33,12 +33,10 @@ export default function CreateTeamPage() {
     member_emails: [],
     member_phones: []
   })
-  const [emailInput, setEmailInput] = useState('')
-  const [phoneInput, setPhoneInput] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!formData.name.trim()) {
       toast.error('Please enter a team name')
       return
@@ -47,60 +45,15 @@ export default function CreateTeamPage() {
     setLoading(true)
     try {
       const response = await teamAPI.create(formData)
-      toast.success('Team created successfully!')
-      router.push(`/teams/${response.data.id || response.data._id}`)
+      const teamId = response.data?.id || response.data?._id
+      toast.success(`Team created! Share code: ${response.data?.join_code || ''}`)
+      router.push(`/teams/${teamId}`)
     } catch (error) {
       console.error('Error creating team:', error)
       toast.error(error.response?.data?.detail || 'Failed to create team')
     } finally {
       setLoading(false)
     }
-  }
-
-  const addEmail = () => {
-    const email = emailInput.trim()
-    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      if (!formData.member_emails.includes(email)) {
-        setFormData({
-          ...formData,
-          member_emails: [...formData.member_emails, email]
-        })
-        setEmailInput('')
-      } else {
-        toast.error('Email already added')
-      }
-    } else {
-      toast.error('Please enter a valid email')
-    }
-  }
-
-  const removeEmail = (email) => {
-    setFormData({
-      ...formData,
-      member_emails: formData.member_emails.filter(e => e !== email)
-    })
-  }
-
-  const addPhone = () => {
-    const phone = phoneInput.trim()
-    if (phone) {
-      if (!formData.member_phones.includes(phone)) {
-        setFormData({
-          ...formData,
-          member_phones: [...formData.member_phones, phone]
-        })
-        setPhoneInput('')
-      } else {
-        toast.error('Phone already added')
-      }
-    }
-  }
-
-  const removePhone = (phone) => {
-    setFormData({
-      ...formData,
-      member_phones: formData.member_phones.filter(p => p !== phone)
-    })
   }
 
   return (
@@ -119,7 +72,7 @@ export default function CreateTeamPage() {
             Create New Team
           </h1>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
-            Set up your team and invite members to collaborate
+            Set up your team — a join code will be generated automatically for others to join.
           </p>
         </div>
 
@@ -159,11 +112,10 @@ export default function CreateTeamPage() {
                   key={purpose.value}
                   type="button"
                   onClick={() => setFormData({ ...formData, purpose: purpose.value })}
-                  className={`p-3 rounded-xl border-2 transition-all text-left ${
-                    formData.purpose === purpose.value
+                  className={`p-3 rounded-xl border-2 transition-all text-left ${formData.purpose === purpose.value
                       ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                       : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700'
-                  }`}
+                    }`}
                 >
                   <div className="text-2xl mb-1">{purpose.emoji}</div>
                   <div className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">
@@ -194,111 +146,8 @@ export default function CreateTeamPage() {
               rows={4}
               className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
             />
-          </motion.div>
-
-          {/* Invite Members */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Invite Team Members
-            </h3>
-
-            {/* Email Invites */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <FiMail className="inline mr-2" />
-                Email Addresses
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addEmail())}
-                  placeholder="member@example.com"
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="button"
-                  onClick={addEmail}
-                  className="px-4 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors flex-shrink-0"
-                >
-                  <FiPlus size={20} />
-                </button>
-              </div>
-              
-              {formData.member_emails.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {formData.member_emails.map((email) => (
-                    <span
-                      key={email}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm"
-                    >
-                      {email}
-                      <button
-                        type="button"
-                        onClick={() => removeEmail(email)}
-                        className="hover:text-red-500"
-                      >
-                        <FiX size={16} />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Phone Invites */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <FiPhone className="inline mr-2" />
-                Phone Numbers (Optional)
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="tel"
-                  value={phoneInput}
-                  onChange={(e) => setPhoneInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addPhone())}
-                  placeholder="+919876543210"
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="button"
-                  onClick={addPhone}
-                  className="px-4 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors flex-shrink-0"
-                >
-                  <FiPlus size={20} />
-                </button>
-              </div>
-              
-              {formData.member_phones.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {formData.member_phones.map((phone) => (
-                    <span
-                      key={phone}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg text-sm"
-                    >
-                      {phone}
-                      <button
-                        type="button"
-                        onClick={() => removePhone(phone)}
-                        className="hover:text-red-500"
-                      >
-                        <FiX size={16} />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">
-              💡 Tip: You can also invite members later using the shareable invite link
+            <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+              💡 After creating your team, share the generated 6-digit join code with members so they can join.
             </p>
           </motion.div>
 
@@ -306,7 +155,7 @@ export default function CreateTeamPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.3 }}
             className="flex gap-3"
           >
             <button
@@ -329,4 +178,3 @@ export default function CreateTeamPage() {
     </DashboardLayout>
   )
 }
-

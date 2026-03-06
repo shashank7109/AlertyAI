@@ -12,52 +12,14 @@ export default function TeamsPage() {
   const router = useRouter()
   const [teams, setTeams] = useState([])
   const [loading, setLoading] = useState(true)
-  const [view, setView] = useState('grid') // grid or list
   const [copiedTeamId, setCopiedTeamId] = useState(null)
-  const [pendingInvitations, setPendingInvitations] = useState([])
-  const [processingInvite, setProcessingInvite] = useState(null)
   const [showJoinModal, setShowJoinModal] = useState(false)
   const [joinCode, setJoinCode] = useState('')
   const [joining, setJoining] = useState(false)
 
   useEffect(() => {
     fetchTeams()
-    fetchPendingInvitations()
   }, [])
-
-  const fetchPendingInvitations = async () => {
-    try {
-      const response = await teamAPI.getMyPendingInvitations()
-      setPendingInvitations(response.data || [])
-    } catch (error) {
-      console.error('Error fetching invitations:', error)
-    }
-  }
-
-  const handleAcceptInvitation = async (invitationId) => {
-    setProcessingInvite(invitationId)
-    try {
-      await teamAPI.acceptInvitation(invitationId)
-      toast.success('Joined team successfully!')
-      fetchTeams()
-      fetchPendingInvitations()
-    } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to accept invitation')
-    }
-    setProcessingInvite(null)
-  }
-
-  const handleDeclineInvitation = async (invitationId) => {
-    setProcessingInvite(invitationId)
-    try {
-      await teamAPI.declineInvitation(invitationId)
-      toast.success('Invitation declined')
-      fetchPendingInvitations()
-    } catch (error) {
-      toast.error('Failed to decline invitation')
-    }
-    setProcessingInvite(null)
-  }
 
   const handleJoinTeamByCode = async (e) => {
     e.preventDefault()
@@ -153,51 +115,7 @@ export default function TeamsPage() {
         </div>
       </div>
 
-      {/* Pending Invitations */}
-      {pendingInvitations.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border border-yellow-200 dark:border-yellow-800 rounded-2xl p-4 sm:p-6"
-        >
-          <h3 className="text-lg font-bold text-yellow-900 dark:text-yellow-100 mb-4 flex items-center gap-2">
-            📬 Pending Invitations ({pendingInvitations.length})
-          </h3>
-          <div className="space-y-3">
-            {pendingInvitations.map((invitation) => (
-              <div
-                key={invitation._id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
-              >
-                <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white">
-                    {invitation.team_name}
-                  </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Invited by {invitation.invited_by_name}
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleDeclineInvitation(invitation._id)}
-                    disabled={processingInvite === invitation._id}
-                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
-                  >
-                    Decline
-                  </button>
-                  <button
-                    onClick={() => handleAcceptInvitation(invitation._id)}
-                    disabled={processingInvite === invitation._id}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 disabled:opacity-50"
-                  >
-                    {processingInvite === invitation._id ? 'Joining...' : 'Accept'}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
+
 
       {/* Loading State */}
       {loading && (
@@ -250,14 +168,13 @@ export default function TeamsPage() {
               const stats = getTeamStats(team)
               const completionRate = stats.total > 0 ? (stats.completed / stats.total * 100).toFixed(0) : 0
               const isLeader = team.leader_id === localStorage.getItem('user_id')
-              const inviteLink = team.invite_token ? `${window.location.origin}/teams/join/${team.invite_token}` : null
 
-              const copyInviteLink = (e) => {
+              const copyJoinCode = (e) => {
                 e.stopPropagation()
-                if (inviteLink) {
-                  navigator.clipboard.writeText(inviteLink)
+                if (team.join_code) {
+                  navigator.clipboard.writeText(team.join_code)
                   setCopiedTeamId(team.id || team._id)
-                  toast.success('Invite link copied! Share it with your team members.')
+                  toast.success(`Join code copied: ${team.join_code}`)
                   setTimeout(() => setCopiedTeamId(null), 3000)
                 }
               }
@@ -362,16 +279,17 @@ export default function TeamsPage() {
                         Updated {new Date(team.updated_at).toLocaleDateString()}
                       </span>
                       <div className="flex items-center gap-2">
-                        {isLeader && inviteLink && (
+                        {isLeader && team.join_code && (
                           <button
-                            onClick={copyInviteLink}
-                            className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-colors ${copiedTeamId === (team.id || team._id)
+                            onClick={copyJoinCode}
+                            className={`flex items-center gap-1 px-2 py-1 rounded-lg font-mono transition-colors ${copiedTeamId === (team.id || team._id)
                               ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400'
                               : 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 hover:bg-blue-200'
                               }`}
                           >
-                            <FiLink size={12} />
-                            <span>{copiedTeamId === (team.id || team._id) ? 'Copied!' : 'Invite'}</span>
+                            <span className="text-xs font-bold tracking-widest">
+                              {copiedTeamId === (team.id || team._id) ? '✓ Copied' : team.join_code}
+                            </span>
                           </button>
                         )}
                         <div className="flex items-center gap-1">
