@@ -90,6 +90,65 @@ export default function TasksPage() {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
   }, [])
 
+  // --- WebSocket for Real-time Task Sync ---
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    const userStr = localStorage.getItem('user')
+    let userId = localStorage.getItem('user_id')
+
+    if (!userId && userStr) {
+      try {
+        const userObj = JSON.parse(userStr)
+        userId = userObj._id || userObj.id
+      } catch (e) { }
+    }
+
+    if (!token || !userId) return
+
+    let API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+    // Remove /api if present at the end of API_URL
+    if (API_URL.endsWith('/api')) {
+      API_URL = API_URL.slice(0, -4)
+    }
+    const wsBase = API_URL.replace('http', 'ws')
+    const wsUrl = `${wsBase}/ws/user/${userId}?token=${token}`
+
+    console.log('[Tasks WS] Connecting to:', wsUrl)
+    const ws = new WebSocket(wsUrl)
+
+    ws.onopen = () => {
+      console.log('[Tasks WS] Connected')
+    }
+
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data)
+        console.log('[Tasks WS] Message received:', data)
+        if (data.type === 'task_created' && data.task) {
+          setTasks(prev => {
+            // Avoid duplicates
+            const existingId = data.task._id || data.task.id
+            if (prev.some(t => (t._id || t.id) === existingId || t.title === data.task.title)) {
+              return prev
+            }
+            return [data.task, ...prev]
+          })
+          toast.success(`New task: ${data.task.title}`)
+        }
+      } catch (err) {
+        console.error('[Tasks WS] Error parsing message:', err)
+      }
+    }
+
+    ws.onclose = () => {
+      console.log('[Tasks WS] Disconnected')
+    }
+
+    return () => {
+      ws.close()
+    }
+  }, [])
+
   const fetchTasks = async () => {
     setLoading(true)
     try {
@@ -178,13 +237,23 @@ export default function TasksPage() {
       })
     }
 
-    // 3. Filter by Time (Only applies to List View usually, but we keep logic consistent)
-    if (filter === 'today') {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
+    // 3. Filter by Time
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    if (filter === 'past') {
+      filtered = filtered.filter(task => {
+        const taskDate = task.due_date || task.dueDate || task.deadline
+        if (!taskDate) return false
+        try {
+          const date = new Date(taskDate)
+          date.setHours(0, 0, 0, 0)
+          return date < today && !task.completed && task.status !== 'completed'
+        } catch { return false }
+      })
+    } else if (filter === 'today') {
       const tomorrow = new Date(today)
       tomorrow.setDate(tomorrow.getDate() + 1)
-
       filtered = filtered.filter(task => {
         const taskDate = task.due_date || task.dueDate || task.deadline
         if (!taskDate) return false
@@ -194,16 +263,30 @@ export default function TasksPage() {
           return date >= today && date < tomorrow
         } catch { return false }
       })
-    } else if (filter === 'upcoming') {
-      const today = new Date()
-      today.setHours(0, 0, 0, 0)
+    } else if (filter === 'weekly') {
+      const startOfWeek = new Date(today)
+      startOfWeek.setDate(today.getDate() - today.getDay())
+      const endOfWeek = new Date(startOfWeek)
+      endOfWeek.setDate(startOfWeek.getDate() + 7)
       filtered = filtered.filter(task => {
         const taskDate = task.due_date || task.dueDate || task.deadline
         if (!taskDate) return false
         try {
           const date = new Date(taskDate)
           date.setHours(0, 0, 0, 0)
-          return date > today
+          return date >= startOfWeek && date < endOfWeek
+        } catch { return false }
+      })
+    } else if (filter === 'monthly') {
+      const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+      const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+      filtered = filtered.filter(task => {
+        const taskDate = task.due_date || task.dueDate || task.deadline
+        if (!taskDate) return false
+        try {
+          const date = new Date(taskDate)
+          date.setHours(0, 0, 0, 0)
+          return date >= startOfMonth && date <= endOfMonth
         } catch { return false }
       })
     }
@@ -300,8 +383,17 @@ export default function TasksPage() {
         </div>
 
         {/* Actions - visible on hover on desktop, always on mobile if needed */}
-        <div className="opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
           <TaskActionButtons task={task} onUpdate={fetchTasks} />
+
+          {/* Explicit Edit Button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); handleEditTask(task); }}
+            className="w-10 h-10 flex items-center justify-center rounded-2xl bg-[#F8F9FC] dark:bg-slate-900/50 text-gray-400 hover:text-blue-500 hover:shadow-md transition-all inner-shadow"
+            title="Edit Task"
+          >
+            <FiEdit size={16} />
+          </button>
         </div>
       </motion.div>
     )
@@ -379,13 +471,13 @@ export default function TasksPage() {
                 </select>
                 <div className="h-4 w-px bg-gray-300 dark:bg-gray-700 self-center mx-1"></div>
                 <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-0.5">
-                  {['all', 'today', 'upcoming'].map((f) => (
+                  {['all', 'past', 'today', 'weekly', 'monthly'].map((f) => (
                     <button
                       key={f}
                       onClick={() => setFilter(f)}
                       className={`px-3 py-1 rounded-md text-xs font-medium capitalize transition-colors ${filter === f
                         ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
-                        : 'text-gray-500'
+                        : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
                         }`}
                     >
                       {f}
