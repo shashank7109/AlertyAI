@@ -69,6 +69,9 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-6">
               {isAuthenticated ? (
                 <>
+                  <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
+                    Download App
+                  </Link>
                   <Link href="/dashboard" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
                     Home
                   </Link>
@@ -78,11 +81,8 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
-                    Login
-                  </Link>
-                  <Link href="/register" className="btn-clay btn-clay-primary px-8 py-3 shadow-xl">
-                    Get Started
+                  <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
+                    Download App
                   </Link>
                 </>
               )}
@@ -111,6 +111,9 @@ export default function Navbar() {
                 <Link href="/dashboard" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
                   Dashboard
                 </Link>
+                <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="block text-lg font-medium text-primary" onClick={() => setIsMenuOpen(false)}>
+                  Download App
+                </Link>
                 <Link href="/tasks" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
                   Tasks
                 </Link>
@@ -124,12 +127,6 @@ export default function Navbar() {
                     </button>
                   ) : (
                     <>
-                      <Link href="/login" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
-                        Log in
-                      </Link>
-                      <Link href="/register" className="btn-primary w-full text-center" onClick={() => setIsMenuOpen(false)}>
-                        Get Started
-                      </Link>
                     </>
                   )}
                 </div>

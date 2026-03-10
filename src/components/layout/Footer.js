@@ -41,12 +41,14 @@ export default function Footer() {
 
         {/* Social + Copyright */}
         <div className="flex items-center justify-between border-t border-border pt-6">
-          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">© {year} AlertyAI</p>
-          <div className="flex items-center gap-3">
-            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiTwitter size={16} /></a>
-            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiGithub size={16} /></a>
-            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiLinkedin size={16} /></a>
-            <a href="#" className="text-text-secondary hover:text-primary transition-colors"><FiMail size={16} /></a>
+          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">© {year} AlertyAI • Created by Shashank Bindal</p>
+          <div className="flex items-center gap-4">
+            <a href="https://github.com/shashank7109" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary transition-colors" aria-label="GitHub">
+              <FiGithub size={18} />
+            </a>
+            <a href="https://www.linkedin.com/in/shashankbindal07/" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-[#0077b5] transition-colors" aria-label="LinkedIn">
+              <FiLinkedin size={18} />
+            </a>
           </div>
         </div>
       </div>

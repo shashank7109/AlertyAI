@@ -29,8 +29,13 @@ export default function HomePage() {
             A minimalist workspace for your tasks, reminders, and professional plans. Built to feel as light as air.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/register" className="btn-clay btn-clay-primary px-10 py-5 text-base uppercase tracking-widest">
-              Get Started For Free
+            <Link 
+              href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn-clay btn-clay-primary px-10 py-5 text-base uppercase tracking-widest transition-colors"
+            >
+              Download APK
             </Link>
           </div>
         </div>
@@ -104,8 +109,8 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto clay-card bg-primary dark:bg-surface p-16 border-none text-on-primary dark:text-on-surface shadow-2xl">
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-current mb-6 tracking-tighter uppercase">Ready To Start?</h2>
           <p className="text-current/70 text-lg mb-10 font-medium tracking-tight">Free forever. Minimalist by design.</p>
-          <Link href="/register" className="btn-clay bg-on-primary text-primary dark:bg-primary dark:text-on-primary px-12 py-5 text-base hover:scale-105 transition-transform uppercase font-bold tracking-widest">
-            Join 10,000+ Users
+          <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn-clay bg-on-primary text-primary dark:bg-primary dark:text-on-primary px-12 py-5 text-base hover:scale-105 transition-transform uppercase font-bold tracking-widest">
+            Download App Now
           </Link>
         </div>
       </section>
