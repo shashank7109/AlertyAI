@@ -12,10 +12,10 @@ export default function Footer() {
         {/* Brand */}
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-white dark:bg-zinc-900 flex items-center justify-center shadow-lg shadow-primary/10 overflow-hidden p-1 border border-border/50">
+            <div className="w-8 h-8 flex items-center justify-center overflow-hidden dark:bg-white dark:p-1 dark:rounded-lg">
               <img src="/logo.png" alt="AlertyAI" className="w-full h-full object-contain" />
             </div>
-            <span className="text-xl font-heading font-bold text-on-surface uppercase tracking-tight italic">AlertyAI</span>
+            <span className="text-xl font-heading font-semibold text-on-surface uppercase tracking-tight">AlertyAI</span>
           </div>
           <p className="text-sm text-text-secondary">
             Your personal assistant for a clear mind.

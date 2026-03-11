@@ -101,7 +101,7 @@ export default function RemindersPage() {
                     <span>📢 {reminder.channels.join(', ')}</span>
                   </div>
                   {reminder.ai_generated_message && (
-                    <p className="mt-2 text-sm italic text-gray-500">
+                    <p className="mt-2 text-sm text-gray-500">
                       "{reminder.ai_generated_message}"
                     </p>
                   )}

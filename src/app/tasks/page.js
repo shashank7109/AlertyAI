@@ -367,13 +367,13 @@ export default function TasksPage() {
 
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-1">
-              <h3 className={`text-base font-bold tracking-tight ${isCompleted ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
+              <h3 className={`text-base font-semibold tracking-tight ${isCompleted ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
                 {displayTitle}
               </h3>
-              {isCollectTaskType && <span className="text-[10px] font-bold px-2 py-0.5 bg-primary-soft text-primary rounded uppercase tracking-widest">ASSIGNED</span>}
+              {isCollectTaskType && <span className="text-[10px] font-semibold px-2 py-0.5 bg-primary-soft text-primary rounded uppercase tracking-widest">ASSIGNED</span>}
             </div>
 
-            <div className="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest text-gray-400">
+            <div className="flex items-center gap-4 text-[11px] font-semibold uppercase tracking-widest text-gray-400">
               <span className="flex items-center gap-1.5"><FiCalendar size={12} /> {formattedDate}</span>
               <span className={cn("px-2.5 py-1 rounded-lg", getPriorityColor(task.priority))}>
                 {task.priority?.toUpperCase() || 'MEDIUM'}
@@ -408,8 +408,8 @@ export default function TasksPage() {
           {/* Header Area */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
             <div>
-              <h1 className="text-4xl font-heading font-bold text-on-surface tracking-tighter uppercase">Tasks</h1>
-              <p className="text-[10px] font-bold tracking-[0.2em] text-text-secondary uppercase mt-1">Manage your work</p>
+              <h1 className="text-4xl font-heading font-semibold text-on-surface tracking-tighter uppercase">Tasks</h1>
+              <p className="text-[10px] font-semibold tracking-[0.2em] text-text-secondary uppercase mt-1">Manage your work</p>
             </div>
 
             <div className="flex items-center gap-4">

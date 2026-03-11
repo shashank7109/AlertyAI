@@ -130,7 +130,7 @@ export default function Dashboard() {
               <p className="text-[10px] font-bold tracking-[0.2em] text-text-secondary uppercase mb-1">
                 {currentTime.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()} • {currentTime.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }).toUpperCase()}
               </p>
-              <h1 className="text-4xl font-heading font-bold text-on-surface tracking-tighter leading-none">
+              <h1 className="text-4xl font-heading font-semibold text-on-surface tracking-tighter leading-none">
                 {getGreeting().toUpperCase()}, {userName.split(' ')[0].toUpperCase()}
               </h1>
             </div>
@@ -151,7 +151,7 @@ export default function Dashboard() {
             className="clay-card bg-surface dark:bg-surface border-none"
           >
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-heading font-bold text-on-surface tracking-tight italic uppercase">Today</h2>
+              <h2 className="text-xl font-heading font-semibold text-on-surface tracking-tight uppercase">Today</h2>
               <Link
                 href="/tasks"
                 className="text-[10px] font-bold text-text-secondary tracking-widest uppercase hover:text-primary transition-colors"
@@ -181,11 +181,11 @@ export default function Dashboard() {
                       {task.completed && <FiCheck className="text-on-primary" size={14} />}
                     </button>
                     <div className="flex-1">
-                      <p className={`text-base font-bold tracking-tight ${task.completed ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
+                      <p className={`text-base font-semibold tracking-tight ${task.completed ? 'line-through text-gray-300 dark:text-gray-600' : 'text-gray-800 dark:text-gray-100'}`}>
                         {task.title}
                       </p>
                     </div>
-                    <span className="text-[10px] font-black text-gray-400 group-hover:text-blue-500 transition-colors">
+                    <span className="text-[10px] font-semibold text-gray-400 group-hover:text-blue-500 transition-colors">
                       {task.priority?.toUpperCase() || 'NORMAL'}
                     </span>
                   </div>
@@ -202,7 +202,7 @@ export default function Dashboard() {
             className="clay-card bg-surface dark:bg-surface border-none"
           >
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-heading font-bold text-on-surface tracking-tight italic uppercase">Upcoming</h2>
+              <h2 className="text-xl font-heading font-semibold text-on-surface tracking-tight uppercase">Upcoming</h2>
               <Link href="/calendar" className="text-[10px] font-bold text-text-secondary tracking-widest uppercase hover:text-primary transition-colors">
                 Timeline
               </Link>
@@ -219,8 +219,8 @@ export default function Dashboard() {
                       <FiClock size={18} />
                     </div>
                     <div>
-                      <p className="text-base font-bold text-gray-800 dark:text-gray-200 tracking-tight">{deadline.title}</p>
-                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{deadline.date}</p>
+                      <p className="text-base font-semibold text-gray-800 dark:text-gray-200 tracking-tight">{deadline.title}</p>
+                      <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">{deadline.date}</p>
                     </div>
                   </div>
                 </div>
