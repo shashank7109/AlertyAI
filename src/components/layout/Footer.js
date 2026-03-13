@@ -1,57 +1,165 @@
-'use client'
-
-import Link from 'next/link'
-import { FiMail, FiTwitter, FiGithub, FiLinkedin } from 'react-icons/fi'
+"use client";
+import React from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Instagram,
+  Twitter,
+  Dribbble,
+  Globe,
+} from "lucide-react";
+import Link from "next/link";
+import { FooterBackgroundGradient, TextHoverEffect } from "@/components/ui/hover-footer";
 
 export default function Footer() {
-  const year = new Date().getFullYear()
+  // Footer link data
+  // Footer link data
+  const footerLinks = [
+    {
+      title: "Company",
+      links: [
+        { label: "About Us", href: "#" },
+        { label: "Features", href: "/#features" },
+        { label: "Careers", href: "#" },
+      ],
+    },
+    {
+      title: "Helpful Links",
+      links: [
+        { label: "FAQs", href: "/faqs" },
+        { label: "Support", href: "#" },
+        { label: "Privacy Policy", href: "/privacy" },
+        {
+          label: "Live Chat",
+          href: "#",
+          pulse: true,
+        },
+      ],
+    },
+  ];
+
+  // Contact info data
+  const contactInfo = [
+    {
+      icon: <Mail size={18} className="text-[#3ca2fa]" />,
+      text: "bindalshashank.89@gmail.com",
+      href: "mailto:bindalshashank.89@gmail.com",
+    },
+    {
+      icon: <MapPin size={18} className="text-[#3ca2fa]" />,
+      text: "Uttar Pradesh, India",
+    },
+  ];
+
+  // Social media icons
+  const socialLinks = [
+    { icon: <Twitter size={20} />, label: "Twitter", href: "#" },
+    { icon: <Instagram size={20} />, label: "Instagram", href: "#" },
+    { icon: <Facebook size={20} />, label: "Facebook", href: "#" },
+    { icon: <Globe size={20} />, label: "Globe", href: "#" },
+  ];
 
   return (
-    <footer className="bg-background dark:bg-background border-t border-border">
-      <div className="max-w-lg mx-auto px-5 py-10">
-        {/* Brand */}
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 flex items-center justify-center overflow-hidden dark:bg-white dark:p-1 dark:rounded-lg">
-              <img src="/logo.png" alt="AlertyAI" className="w-full h-full object-contain" />
+    <footer className="bg-[#0F0F11]/10 relative h-fit rounded-3xl overflow-hidden m-8">
+      <div className="max-w-7xl mx-auto p-14 z-40 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
+          {/* Brand section */}
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-[#3ca2fa] text-3xl font-extrabold uppercase tracking-tighter italic">
+                A
+              </span>
+              <span className="text-white text-3xl font-bold tracking-tighter uppercase">AlertyAI</span>
             </div>
-            <span className="text-xl font-heading font-semibold text-on-surface uppercase tracking-tight">AlertyAI</span>
+            <p className="text-sm leading-relaxed text-gray-400 font-medium">
+              AlertyAI is your minimalist workspace for tasks, reminders, and professional plans. Built to feel as light as air.
+            </p>
           </div>
-          <p className="text-sm text-text-secondary">
-            Your personal assistant for a clear mind.
+
+          {/* Footer link sections */}
+          {footerLinks.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-white text-lg font-semibold mb-6 uppercase tracking-tight">
+                {section.title}
+              </h4>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.label} className="relative">
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-[#3ca2fa] transition-colors font-medium"
+                    >
+                      {link.label}
+                    </Link>
+                    {link.pulse && (
+                      <span className="absolute top-0 right-[-10px] w-2 h-2 rounded-full bg-[#3ca2fa] animate-pulse"></span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Contact section */}
+          <div>
+            <h4 className="text-white text-lg font-semibold mb-6 uppercase tracking-tight">
+              Contact Us
+            </h4>
+            <ul className="space-y-4">
+              {contactInfo.map((item, i) => (
+                <li key={i} className="flex items-center space-x-3 text-gray-400 font-medium whitespace-nowrap">
+                  {item.icon}
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="hover:text-[#3ca2fa] transition-colors"
+                    >
+                      {item.text}
+                    </a>
+                  ) : (
+                    <span className="hover:text-[#3ca2fa] transition-colors">
+                      {item.text}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <hr className="border-t border-gray-700/30 my-8" />
+
+        {/* Footer bottom */}
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
+          {/* Social icons */}
+          <div className="flex space-x-6 text-gray-400">
+            {socialLinks.map(({ icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="hover:text-[#3ca2fa] transition-colors transform hover:scale-110 duration-200"
+              >
+                {icon}
+              </a>
+            ))}
+          </div>
+
+          {/* Copyright */}
+          <p className="text-center md:text-left text-gray-400 font-medium">
+            &copy; {new Date().getFullYear()} AlertyAI. All rights reserved.
           </p>
         </div>
-
-        {/* Links */}
-        <div className="grid grid-cols-2 gap-4 mb-8 text-sm">
-          <div className="space-y-3">
-            <p className="font-bold text-on-surface text-[10px] uppercase tracking-widest mb-1">Product</p>
-            <Link href="/dashboard" className="block text-text-secondary hover:text-primary transition-colors">Home</Link>
-            <Link href="/tasks" className="block text-text-secondary hover:text-primary transition-colors">Tasks</Link>
-            <Link href="/reminders" className="block text-text-secondary hover:text-primary transition-colors">Reminders</Link>
-            <Link href="/ai-assistant" className="block text-text-secondary hover:text-primary transition-colors">Assistant</Link>
-          </div>
-          <div className="space-y-3">
-            <p className="font-bold text-on-surface text-[10px] uppercase tracking-widest mb-1">Support</p>
-            <Link href="/help" className="block text-text-secondary hover:text-primary transition-colors">Help</Link>
-            <Link href="/privacy" className="block text-text-secondary hover:text-primary transition-colors">Privacy</Link>
-            <Link href="/terms" className="block text-text-secondary hover:text-primary transition-colors">Terms</Link>
-          </div>
-        </div>
-
-        {/* Social + Copyright */}
-        <div className="flex items-center justify-between border-t border-border pt-6">
-          <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest">© {year} AlertyAI • Created by Shashank Bindal</p>
-          <div className="flex items-center gap-4">
-            <a href="https://github.com/shashank7109" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-primary transition-colors" aria-label="GitHub">
-              <FiGithub size={18} />
-            </a>
-            <a href="https://www.linkedin.com/in/shashankbindal07/" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-[#0077b5] transition-colors" aria-label="LinkedIn">
-              <FiLinkedin size={18} />
-            </a>
-          </div>
-        </div>
       </div>
-    </footer >
-  )
+
+      {/* Text hover effect */}
+      <div className="lg:flex hidden h-[30rem] -mt-52 -mb-36">
+        <TextHoverEffect text="AlertyAI" className="z-50" />
+      </div>
+
+      <FooterBackgroundGradient />
+    </footer>
+  );
 }

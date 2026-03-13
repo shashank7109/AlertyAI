@@ -72,7 +72,7 @@ export default function Navbar() {
                   <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
                     Download App
                   </Link>
-                  <Link href="/dashboard" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
+                  <Link href="/" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
                     Home
                   </Link>
                   <button onClick={handleLogout} className="w-10 h-10 flex items-center justify-center rounded-xl bg-danger/10 text-danger hover:bg-danger/20 transition-colors" title="Logout">
@@ -108,17 +108,11 @@ export default function Navbar() {
               className="md:hidden overflow-hidden bg-surface dark:bg-background"
             >
               <div className="pt-6 pb-6 space-y-4 px-2">
-                <Link href="/dashboard" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
-                  Dashboard
+                <Link href="/" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
+                  Home
                 </Link>
                 <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="block text-lg font-medium text-primary" onClick={() => setIsMenuOpen(false)}>
                   Download App
-                </Link>
-                <Link href="/tasks" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
-                  Tasks
-                </Link>
-                <Link href="/settings" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
-                  Settings
                 </Link>
                 <div className="pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-4">
                   {isAuthenticated ? (
