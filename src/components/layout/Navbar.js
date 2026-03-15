@@ -84,6 +84,12 @@ export default function Navbar() {
                   <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
                     Download App
                   </Link>
+                  <Link href="/login" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
+                    Login
+                  </Link>
+                  <Link href="/register" className="btn-clay btn-clay-primary px-6 py-2.5 text-xs font-bold uppercase tracking-widest">
+                    Get Started
+                  </Link>
                 </>
               )}
             </div>

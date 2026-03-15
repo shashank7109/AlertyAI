@@ -3,10 +3,12 @@ import { NextResponse } from 'next/server'
 export function middleware(request) {
   const { pathname } = request.nextUrl
   
-  // Allow home page, faqs, privacy, and static files
-  if (pathname !== '/' && 
-      pathname !== '/faqs' && 
-      pathname !== '/privacy' && 
+  // Allow home page, auth, faqs, privacy, and common app routes
+  const publicPaths = ['/', '/login', '/register', '/faqs', '/privacy']
+  const appPaths = ['/dashboard', '/tasks', '/teams', '/calendar', '/settings', '/ai-assistant', '/laterbox', '/onboarding']
+  
+  if (!publicPaths.includes(pathname) && 
+      !appPaths.some(path => pathname.startsWith(path)) &&
       !pathname.startsWith('/_next') && 
       !pathname.startsWith('/api') && 
       !pathname.startsWith('/logo.png') && 

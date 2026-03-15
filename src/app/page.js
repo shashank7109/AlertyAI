@@ -30,10 +30,16 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
+              href="/register"
+              className="btn-clay btn-clay-primary px-10 py-5 text-base uppercase tracking-widest transition-colors"
+            >
+              Get Started
+            </Link>
+            <Link 
               href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="btn-clay btn-clay-primary px-10 py-5 text-base uppercase tracking-widest transition-colors"
+              className="w-full sm:w-auto px-10 py-5 text-base font-bold uppercase tracking-widest bg-surface/50 dark:bg-surface/20 hover:bg-surface dark:hover:bg-surface/30 border border-border rounded-2xl transition-all"
             >
               Download APK
             </Link>
