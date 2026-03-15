@@ -97,7 +97,7 @@ export default function Navbar() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+              className="md:hidden p-2 rounded-full hover:bg-surface-hover transition-colors text-on-surface"
             >
               {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -114,13 +114,13 @@ export default function Navbar() {
               className="md:hidden overflow-hidden bg-surface dark:bg-background"
             >
               <div className="pt-6 pb-6 space-y-4 px-2">
-                <Link href="/" className="block text-lg font-medium text-gray-800 dark:text-gray-200" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/" className="block text-lg font-medium text-on-surface" onClick={() => setIsMenuOpen(false)}>
                   Home
                 </Link>
                 <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="block text-lg font-medium text-primary" onClick={() => setIsMenuOpen(false)}>
                   Download App
                 </Link>
-                <div className="pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-4">
+                <div className="pt-6 border-t border-border flex flex-col gap-4">
                   {isAuthenticated ? (
                     <button onClick={handleLogout} className="w-full text-left text-lg font-medium text-red-500">
                       Log out

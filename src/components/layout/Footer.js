@@ -62,7 +62,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0F0F11]/10 relative h-fit rounded-3xl overflow-hidden m-8">
+    <footer className="bg-surface-hover/10 dark:bg-[#0F0F11]/40 border border-border relative h-fit rounded-3xl overflow-hidden m-8">
       <div className="max-w-7xl mx-auto p-14 z-40 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
           {/* Brand section */}
@@ -71,9 +71,9 @@ export default function Footer() {
               <span className="text-[#3ca2fa] text-3xl font-extrabold uppercase tracking-tighter italic">
                 A
               </span>
-              <span className="text-white text-3xl font-bold tracking-tighter uppercase">AlertyAI</span>
+              <span className="text-on-surface text-3xl font-bold tracking-tighter uppercase">AlertyAI</span>
             </div>
-            <p className="text-sm leading-relaxed text-gray-400 font-medium">
+            <p className="text-sm leading-relaxed text-text-secondary font-medium">
               AlertyAI is your minimalist workspace for tasks, reminders, and professional plans. Built to feel as light as air.
             </p>
           </div>
@@ -81,7 +81,7 @@ export default function Footer() {
           {/* Footer link sections */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="text-white text-lg font-semibold mb-6 uppercase tracking-tight">
+              <h4 className="text-on-surface text-lg font-semibold mb-6 uppercase tracking-tight">
                 {section.title}
               </h4>
               <ul className="space-y-3">
@@ -89,7 +89,7 @@ export default function Footer() {
                   <li key={link.label} className="relative">
                     <Link
                       href={link.href}
-                      className="text-gray-400 hover:text-[#3ca2fa] transition-colors font-medium"
+                      className="text-text-secondary hover:text-[#3ca2fa] transition-colors font-medium"
                     >
                       {link.label}
                     </Link>
@@ -104,12 +104,12 @@ export default function Footer() {
 
           {/* Contact section */}
           <div>
-            <h4 className="text-white text-lg font-semibold mb-6 uppercase tracking-tight">
+            <h4 className="text-on-surface text-lg font-semibold mb-6 uppercase tracking-tight">
               Contact Us
             </h4>
             <ul className="space-y-4">
               {contactInfo.map((item, i) => (
-                <li key={i} className="flex items-center space-x-3 text-gray-400 font-medium whitespace-nowrap">
+                <li key={i} className="flex items-center space-x-3 text-text-secondary font-medium whitespace-nowrap">
                   {item.icon}
                   {item.href ? (
                     <a
@@ -129,12 +129,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <hr className="border-t border-gray-700/30 my-8" />
+        <hr className="border-t border-border my-8" />
 
         {/* Footer bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
           {/* Social icons */}
-          <div className="flex space-x-6 text-gray-400">
+          <div className="flex space-x-6 text-text-secondary">
             {socialLinks.map(({ icon, label, href }) => (
               <a
                 key={label}
@@ -148,7 +148,7 @@ export default function Footer() {
           </div>
 
           {/* Copyright */}
-          <p className="text-center md:text-left text-gray-400 font-medium">
+          <p className="text-center md:text-left text-text-secondary font-medium">
             &copy; {new Date().getFullYear()} AlertyAI. All rights reserved.
           </p>
         </div>
