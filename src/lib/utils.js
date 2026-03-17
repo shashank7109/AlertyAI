@@ -1,7 +1,9 @@
 /**
- * Copyright (c) 2026 AlertyAI
- * SPDX-License-Identifier: MIT
+ * Copyright (c) 2026 Shashank Bindal
+ * AlertyAI Software License
  */
+
+*/
 
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
