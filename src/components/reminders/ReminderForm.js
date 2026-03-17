@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * ReminderForm Component
  * Form for creating and editing reminders
  */

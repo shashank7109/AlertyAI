@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
 import { Ubuntu, Montserrat } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'

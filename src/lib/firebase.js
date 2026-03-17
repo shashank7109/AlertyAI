@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * Firebase Configuration for Push Notifications
  * Initialize Firebase with credentials from environment variables
  */

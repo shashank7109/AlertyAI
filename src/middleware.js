@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
 import { NextResponse } from 'next/server'
 
 export function middleware(request) {

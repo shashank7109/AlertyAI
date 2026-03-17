@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 

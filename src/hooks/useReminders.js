@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * useReminders Hook
  * Manages reminder CRUD operations with React Query
  */

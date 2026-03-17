@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * useNotifications Hook
  * Handles push notification permissions, FCM token registration, and message listening
  */

@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * Reminders Page
  * Main page for managing reminders and notifications
  */

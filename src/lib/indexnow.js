@@ -1,4 +1,9 @@
 /**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
+/**
  * IndexNow Integration
  * Pings Bing and other supporting search engines to instantly index new content.
  */

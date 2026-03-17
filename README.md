@@ -222,6 +222,10 @@ npx kill-port 3000
 - [x] Dashboard complete
 - [x] All features implemented
 
+## 📜 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
 ## 🎉 Ready to Go!
 
 Your frontend is now using the latest technologies:

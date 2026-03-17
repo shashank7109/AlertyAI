@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
 export default function sitemap() {
   const baseUrl = 'https://smaranai.com'; // Replace with production domain
 

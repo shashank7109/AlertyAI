@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2026 AlertyAI
+ * SPDX-License-Identifier: MIT
+ */
+
 "use client";
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
