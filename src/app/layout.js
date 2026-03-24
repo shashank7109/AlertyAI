@@ -81,8 +81,65 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://alertyai.com/#website',
+        url: 'https://alertyai.com',
+        name: 'AlertyAI',
+        description: 'AI-powered task management, voice capture, smart reminders, and team collaboration.',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://alertyai.com/tasks?q={search_term_string}',
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://alertyai.com/#organization',
+        name: 'AlertyAI',
+        url: 'https://alertyai.com',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://alertyai.com/logo.png',
+          width: 512,
+          height: 512,
+        },
+        sameAs: [
+          'https://play.google.com/store/apps/details?id=com.alertyai.app',
+        ],
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': 'https://alertyai.com/#webapp',
+        name: 'AlertyAI',
+        url: 'https://alertyai.com',
+        applicationCategory: 'ProductivityApplication',
+        operatingSystem: 'Android, Web',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        description: 'AI-powered task management with voice capture, smart reminders, CSV schedule import, and team collaboration.',
+        featureList: [
+          'Voice-powered task capture',
+          'AI smart reminders',
+          'CSV schedule import',
+          'Team collaboration',
+          'Calendar view',
+          'Dark mode',
+        ],
+      },
+    ],
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${ubuntu.variable} ${montserrat.variable} font-sans antialiased text-on-surface`}>
         <ThemeProvider>
           {children}
