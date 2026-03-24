@@ -3,7 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
 
 import { Ubuntu, Montserrat } from 'next/font/google'
 import './globals.css'
@@ -23,28 +22,28 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  metadataBase: new URL('https://smaranai.com'), // Replace with your production domain
+  metadataBase: new URL('https://alertyai.com'),
   title: {
     default: 'AlertyAI - Your Intelligent Life Assistant',
     template: '%s | AlertyAI'
   },
-  description: 'SmaranAI (AlertyAI) is a premium AI platform for voice-powered task management, smart reminders, and seamless team collaboration.',
-  keywords: ['AI assistant', 'task management', 'voice capture', 'productivity', 'reminders', 'team collaboration', 'SmaranAI', 'AlertyAI'],
-  authors: [{ name: 'SmaranAI Team' }],
-  creator: 'SmaranAI',
+  description: 'AlertyAI is a premium AI platform for voice-powered task management, smart reminders, and seamless team collaboration. Never forget, always achieve.',
+  keywords: ['AI assistant', 'task management', 'voice capture', 'productivity', 'reminders', 'team collaboration', 'AlertyAI', 'smart planner'],
+  authors: [{ name: 'AlertyAI Team' }],
+  creator: 'AlertyAI',
   themeColor: '#0f172a',
   viewport: 'width=device-width, initial-scale=1',
   alternates: {
-    canonical: '/',
+    canonical: 'https://alertyai.com/',
   },
   openGraph: {
     title: 'AlertyAI - Your Intelligent Life Assistant',
     description: 'Master your day with AlertyAI. AI-powered task management and seamless team collaboration.',
-    url: 'https://smaranai.com',
+    url: 'https://alertyai.com',
     siteName: 'AlertyAI',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://alertyai.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'AlertyAI Social Preview',
@@ -58,7 +57,7 @@ export const metadata = {
     title: 'AlertyAI - Your Intelligent Life Assistant',
     description: 'Master your day with AlertyAI. AI-powered task management and seamless team collaboration.',
     images: ['/og-image.png'],
-    creator: '@SmaranAI', // Update with actual handle
+    creator: '@AlertyAI',
   },
   icons: {
     icon: '/logo.png',

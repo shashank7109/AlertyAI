@@ -3,12 +3,9 @@
  * AlertyAI Software License
  */
 
-*/
-
 export default function sitemap() {
-  const baseUrl = 'https://smaranai.com'; // Replace with production domain
+  const baseUrl = 'https://alertyai.com';
 
-  // Define static routes
   const routes = [
     '',
     '/dashboard',
@@ -20,11 +17,13 @@ export default function sitemap() {
     '/faqs',
     '/login',
     '/register',
+    '/ai-assistant',
+    '/opportunities',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
-    changeFrequency: 'daily',
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency: route === '' ? 'weekly' : 'monthly',
+    priority: route === '' ? 1 : route === '/dashboard' ? 0.9 : 0.7,
   }));
 
   return routes;

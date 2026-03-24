@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 export default function robots() {
   return {
     rules: {
@@ -13,11 +11,11 @@ export default function robots() {
       disallow: [
         '/admin/',
         '/api/',
-        '/settings/', // Private user settings
+        '/settings/',
         '/_next/',
         '/static/',
       ],
     },
-    sitemap: 'https://smaranai.com/sitemap.xml', // Replace with production domain
+    sitemap: 'https://alertyai.com/sitemap.xml',
   }
 }

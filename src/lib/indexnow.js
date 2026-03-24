@@ -3,16 +3,14 @@
  * AlertyAI Software License
  */
 
-*/
-
 /**
  * IndexNow Integration
  * Pings Bing and other supporting search engines to instantly index new content.
  */
 
 export async function pingIndexNow(urls) {
-  const key = process.env.INDEXNOW_KEY; // Should be stored in .env
-  const host = 'smaranai.com'; // Replace with production domain
+  const key = process.env.INDEXNOW_KEY;
+  const host = 'alertyai.com';
 
   if (!key) {
     console.warn('IndexNow key not found in environment variables. Skipping ping.');
