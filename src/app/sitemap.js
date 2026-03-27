@@ -4,27 +4,20 @@
  */
 
 export default function sitemap() {
-  const baseUrl = 'https://alertyai.com';
+  const baseUrl = 'https://alertyai.com'
 
   const routes = [
     '',
-    '/dashboard',
-    '/tasks',
-    '/reminders',
-    '/teams',
-    '/calendar',
+    '/about',
     '/privacy',
+    '/terms',
     '/faqs',
-    '/login',
-    '/register',
-    '/ai-assistant',
-    '/opportunities',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: route === '' ? 'weekly' : 'monthly',
-    priority: route === '' ? 1 : route === '/dashboard' ? 0.9 : 0.7,
-  }));
+    priority: route === '' ? 1 : 0.7,
+  }))
 
-  return routes;
+  return routes
 }

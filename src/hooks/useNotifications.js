@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 /**
  * useNotifications Hook
  * Handles push notification permissions, FCM token registration, and message listening

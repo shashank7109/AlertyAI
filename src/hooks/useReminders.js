@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 /**
  * useReminders Hook
  * Manages reminder CRUD operations with React Query

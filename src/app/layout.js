@@ -24,21 +24,19 @@ const montserrat = Montserrat({
 export const metadata = {
   metadataBase: new URL('https://alertyai.com'),
   title: {
-    default: 'AlertyAI - Your Intelligent Life Assistant',
+    default: 'AlertyAI - AI Planning for Teams',
     template: '%s | AlertyAI'
   },
-  description: 'AlertyAI is a premium AI platform for voice-powered task management, smart reminders, and seamless team collaboration. Never forget, always achieve.',
-  keywords: ['AI assistant', 'task management', 'voice capture', 'productivity', 'reminders', 'team collaboration', 'AlertyAI', 'smart planner'],
+  description: 'AlertyAI is an AI-first planning product for founders and teams: capture fast, prioritize clearly, and execute with confidence.',
+  keywords: ['AI planning', 'startup productivity', 'team execution', 'voice capture', 'task management', 'AlertyAI'],
   authors: [{ name: 'AlertyAI Team' }],
   creator: 'AlertyAI',
-  themeColor: '#0f172a',
-  viewport: 'width=device-width, initial-scale=1',
   alternates: {
     canonical: 'https://alertyai.com/',
   },
   openGraph: {
-    title: 'AlertyAI - Your Intelligent Life Assistant',
-    description: 'Master your day with AlertyAI. AI-powered task management and seamless team collaboration.',
+    title: 'AlertyAI - AI Planning for Teams',
+    description: 'Plan faster and execute better with AlertyAI. Built for startup teams and modern workflows.',
     url: 'https://alertyai.com',
     siteName: 'AlertyAI',
     images: [
@@ -54,8 +52,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AlertyAI - Your Intelligent Life Assistant',
-    description: 'Master your day with AlertyAI. AI-powered task management and seamless team collaboration.',
+    title: 'AlertyAI - AI Planning for Teams',
+    description: 'Plan faster and execute better with AlertyAI. Built for startup teams and modern workflows.',
     images: ['https://alertyai.com/logo.png'],
     creator: '@AlertyAI',
   },
@@ -80,6 +78,12 @@ export const metadata = {
   },
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0f172a',
+}
+
 export default function RootLayout({ children }) {
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -89,12 +93,7 @@ export default function RootLayout({ children }) {
         '@id': 'https://alertyai.com/#website',
         url: 'https://alertyai.com',
         name: 'AlertyAI',
-        description: 'AI-powered task management, voice capture, smart reminders, and team collaboration.',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: 'https://alertyai.com/tasks?q={search_term_string}',
-          'query-input': 'required name=search_term_string',
-        },
+        description: 'AI-first planning and execution workspace for teams.',
       },
       {
         '@type': 'Organization',
@@ -122,11 +121,10 @@ export default function RootLayout({ children }) {
         description: 'AI-powered task management with voice capture, smart reminders, CSV schedule import, and team collaboration.',
         featureList: [
           'Voice-powered task capture',
-          'AI smart reminders',
-          'CSV schedule import',
-          'Team collaboration',
-          'Calendar view',
-          'Dark mode',
+          'AI prioritization',
+          'Team execution tracking',
+          'Smart reminders',
+          'Mobile-first workflow',
         ],
       },
     ],

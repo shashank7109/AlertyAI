@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 "use client";
 
 import React from "react";
@@ -16,23 +14,23 @@ import { Plus, Minus } from "lucide-react";
 const faqs = [
   {
     question: "What is AlertyAI?",
-    answer: "AlertyAI is a minimalist, AI-powered workspace designed to help you manage tasks, reminders, and professional plans with ease. It's built to feel 'as light as air' while providing powerful organization tools."
+    answer: "AlertyAI is an AI-first planning product for founders and teams. It helps you capture work quickly, prioritize the right tasks, and execute consistently."
   },
   {
     question: "Is my data safe with AlertyAI?",
-    answer: "Yes, we prioritize your security. We use industry-standard encryption and security protocols to ensure your data is protected and private. Check out our Privacy Policy for more details."
+    answer: "Yes. We follow standard security practices, restrict production access, and continuously improve controls as we scale. See our Privacy Policy for details."
   },
   {
-    question: "How do I assign tasks to team members?",
-    answer: "If you have a team set up, you can easily assign tasks by opening the task details and selecting a team member from the 'Assigned To' dropdown. Assigned members will receive notifications immediately."
+    question: "Who is AlertyAI built for?",
+    answer: "AlertyAI is built for startup teams, operators, and creators who need fast planning with clear accountability."
   },
   {
     question: "Can I use AlertyAI on my mobile device?",
-    answer: "Absolutely! AlertyAI is designed with a responsive interface that works beautifully on all screen sizes, including smartphones and tablets. We also have an Android application available."
+    answer: "Yes. The product experience is mobile-friendly and we provide an Android app for users who prefer native workflows."
   },
   {
-    question: "Is there a free version of AlertyAI?",
-    answer: "We offer a flexible range of plans. You can start with our free tier to experience the core features, and upgrade as your needs grow to unlock more advanced AI capabilities and team features."
+    question: "How can I contact the team?",
+    answer: "You can reach us at bindalshashank.89@gmail.com for support, security, or partnership questions."
   }
 ];
 

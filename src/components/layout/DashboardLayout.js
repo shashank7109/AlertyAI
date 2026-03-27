@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 'use client'
 
 import Sidebar from './Sidebar'

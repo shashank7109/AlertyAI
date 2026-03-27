@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 /**
  * useNotificationPreferences Hook
  * Manages user notification preferences

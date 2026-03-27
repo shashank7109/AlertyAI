@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 /**
  * Firebase Configuration for Push Notifications
  * Initialize Firebase with credentials from environment variables

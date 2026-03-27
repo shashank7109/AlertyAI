@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 /**
  * ReminderForm Component
  * Form for creating and editing reminders

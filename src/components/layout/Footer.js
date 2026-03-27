@@ -3,18 +3,14 @@
  * AlertyAI Software License
  */
 
-*/
-
 "use client";
 import React from "react";
 import {
   Mail,
-  Phone,
   MapPin,
   Facebook,
   Instagram,
   Twitter,
-  Dribbble,
   Globe,
 } from "lucide-react";
 import Link from "next/link";
@@ -27,22 +23,18 @@ export default function Footer() {
     {
       title: "Company",
       links: [
-        { label: "About Us", href: "#" },
+        { label: "About Us", href: "/about" },
         { label: "Features", href: "/#features" },
-        { label: "Careers", href: "#" },
+        { label: "Download App", href: "https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" },
       ],
     },
     {
       title: "Helpful Links",
       links: [
         { label: "FAQs", href: "/faqs" },
-        { label: "Support", href: "#" },
+        { label: "Home", href: "/" },
         { label: "Privacy Policy", href: "/privacy" },
-        {
-          label: "Live Chat",
-          href: "#",
-          pulse: true,
-        },
+        { label: "Terms of Service", href: "/terms" },
       ],
     },
   ];

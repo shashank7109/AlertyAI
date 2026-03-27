@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 import { create } from 'zustand'
 
 // User Store

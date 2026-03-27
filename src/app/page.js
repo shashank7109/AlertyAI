@@ -3,8 +3,6 @@
  * AlertyAI Software License
  */
 
-*/
-
 'use client'
 
 import Link from 'next/link'
@@ -37,10 +35,10 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link 
-              href="/register"
+              href="/about"
               className="btn-clay btn-clay-primary px-10 py-5 text-base uppercase tracking-widest transition-colors"
             >
-              Get Started
+              Learn More
             </Link>
             <Link 
               href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" 
