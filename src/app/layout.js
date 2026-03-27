@@ -24,18 +24,18 @@ const montserrat = Montserrat({
 export const metadata = {
   metadataBase: new URL('https://alertyai.com'),
   title: {
-    default: 'AlertyAI - AI Planning for Teams',
+    default: 'AlertyAI (Alerty AI) - AI Planning for Teams',
     template: '%s | AlertyAI'
   },
-  description: 'AlertyAI is an AI-first planning product for founders and teams: capture fast, prioritize clearly, and execute with confidence.',
-  keywords: ['AI planning', 'startup productivity', 'team execution', 'voice capture', 'task management', 'AlertyAI'],
+  description: 'AlertyAI (also searched as Alerty AI) is an AI-first planning product for founders and teams: capture fast, prioritize clearly, and execute with confidence.',
+  keywords: ['AI planning', 'startup productivity', 'team execution', 'voice capture', 'task management', 'AlertyAI', 'Alerty AI', 'alertyai docs', 'alerty ai how to use'],
   authors: [{ name: 'AlertyAI Team' }],
   creator: 'AlertyAI',
   alternates: {
     canonical: 'https://alertyai.com/',
   },
   openGraph: {
-    title: 'AlertyAI - AI Planning for Teams',
+    title: 'AlertyAI (Alerty AI) - AI Planning for Teams',
     description: 'Plan faster and execute better with AlertyAI. Built for startup teams and modern workflows.',
     url: 'https://alertyai.com',
     siteName: 'AlertyAI',
@@ -52,7 +52,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AlertyAI - AI Planning for Teams',
+    title: 'AlertyAI (Alerty AI) - AI Planning for Teams',
     description: 'Plan faster and execute better with AlertyAI. Built for startup teams and modern workflows.',
     images: ['https://alertyai.com/logo.png'],
     creator: '@AlertyAI',
@@ -93,12 +93,14 @@ export default function RootLayout({ children }) {
         '@id': 'https://alertyai.com/#website',
         url: 'https://alertyai.com',
         name: 'AlertyAI',
+        alternateName: ['Alerty AI', 'alertyai'],
         description: 'AI-first planning and execution workspace for teams.',
       },
       {
         '@type': 'Organization',
         '@id': 'https://alertyai.com/#organization',
         name: 'AlertyAI',
+        alternateName: 'Alerty AI',
         url: 'https://alertyai.com',
         logo: {
           '@type': 'ImageObject',

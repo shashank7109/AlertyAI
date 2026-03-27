@@ -12,6 +12,8 @@ import { useTheme } from 'next-themes'
 import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const DOCS_URL = 'https://docs.alertyai.com'
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
@@ -54,6 +56,9 @@ export default function Navbar() {
               <Link href="/terms" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
                 Terms
               </Link>
+              <Link href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
+                Docs
+              </Link>
               <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn-clay btn-clay-primary px-6 py-2.5 text-xs font-bold uppercase tracking-widest">
                 Download App
               </Link>
@@ -93,6 +98,9 @@ export default function Navbar() {
                 </Link>
                 <Link href="/terms" className="block text-lg font-medium text-on-surface" onClick={() => setIsMenuOpen(false)}>
                   Terms
+                </Link>
+                <Link href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="block text-lg font-medium text-on-surface" onClick={() => setIsMenuOpen(false)}>
+                  Docs
                 </Link>
                 <Link href="https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" target="_blank" rel="noopener noreferrer" className="block text-lg font-medium text-primary" onClick={() => setIsMenuOpen(false)}>
                   Download App

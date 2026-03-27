@@ -13,10 +13,14 @@ export default function sitemap() {
     { path: '/faqs', changeFrequency: 'monthly', priority: 0.75 },
     { path: '/privacy', changeFrequency: 'yearly', priority: 0.5 },
     { path: '/terms', changeFrequency: 'yearly', priority: 0.5 },
+    { url: 'https://docs.alertyai.com', changeFrequency: 'weekly', priority: 0.9 },
+    { url: 'https://docs.alertyai.com/quickstart', changeFrequency: 'weekly', priority: 0.8 },
+    { url: 'https://docs.alertyai.com/alertyai/how-to-use', changeFrequency: 'weekly', priority: 0.85 },
+    { url: 'https://docs.alertyai.com/alertyai/features', changeFrequency: 'monthly', priority: 0.75 },
   ]
 
   return routes.map((route) => ({
-    url: `${baseUrl}${route.path}`,
+    url: route.url || `${baseUrl}${route.path}`,
     lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,

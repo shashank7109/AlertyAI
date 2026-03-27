@@ -32,6 +32,7 @@ export default function Footer() {
       title: "Helpful Links",
       links: [
         { label: "FAQs", href: "/faqs" },
+        { label: "Documentation", href: "https://docs.alertyai.com" },
         { label: "Home", href: "/" },
         { label: "Privacy Policy", href: "/privacy" },
         { label: "Terms of Service", href: "/terms" },
