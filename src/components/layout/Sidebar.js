@@ -66,7 +66,7 @@ export default function Sidebar() {
         <div className="p-8">
           <Link href="/dashboard" className="flex items-center gap-2 group">
             <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden dark:bg-white dark:p-1 dark:rounded-lg">
-              <img src="/logo.png" alt="AlertyAI" className="w-full h-full object-contain" />
+              <img src="/logo.png" alt="AlertyAI logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-2xl font-semibold tracking-tight text-on-surface">AlertyAI</span>
           </Link>

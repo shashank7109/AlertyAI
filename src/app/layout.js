@@ -43,7 +43,7 @@ export const metadata = {
     siteName: 'AlertyAI',
     images: [
       {
-        url: 'https://alertyai.com/og-image.png',
+        url: 'https://alertyai.com/logo.png',
         width: 1200,
         height: 630,
         alt: 'AlertyAI Social Preview',
@@ -56,11 +56,11 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'AlertyAI - Your Intelligent Life Assistant',
     description: 'Master your day with AlertyAI. AI-powered task management and seamless team collaboration.',
-    images: ['/og-image.png'],
+    images: ['https://alertyai.com/logo.png'],
     creator: '@AlertyAI',
   },
   icons: {
-    icon: '/logo.png',
+    icon: '/favicon.ico',
     apple: '/logo.png',
   },
   robots: {
@@ -135,6 +135,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:image" content="https://alertyai.com/logo.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
