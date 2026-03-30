@@ -5,9 +5,11 @@
 
 
 import { Ubuntu, Montserrat } from 'next/font/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { Toaster } from 'react-hot-toast'
+import { getGaMeasurementId, getGoogleSiteVerification } from '@/lib/seo/site'
 
 const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
@@ -21,8 +23,11 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 })
 
+const googleVerification = getGoogleSiteVerification()
+
 export const metadata = {
   metadataBase: new URL('https://alertyai.com'),
+  applicationName: 'AlertyAI',
   title: {
     default: 'AlertyAI (Alerty AI) - AI Planning for Teams',
     template: '%s | AlertyAI'
@@ -72,10 +77,13 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'add-your-google-verification-code', // User to update later
-    yandex: 'add-your-yandex-verification-code',
-  },
+  ...(googleVerification
+    ? {
+        verification: {
+          google: googleVerification,
+        },
+      }
+    : {}),
 }
 
 export const viewport = {
@@ -85,6 +93,7 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }) {
+  const gaId = getGaMeasurementId()
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -145,6 +154,7 @@ export default function RootLayout({ children }) {
       <body className={`${ubuntu.variable} ${montserrat.variable} font-sans antialiased text-on-surface`}>
         <ThemeProvider>
           {children}
+          {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
           <Toaster
             position="top-right"
             toastOptions={{

@@ -8,14 +8,11 @@ export default function robots() {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: [
-        '/admin/',
-        '/api/',
-        '/settings/',
-        '/_next/',
-        '/static/',
-      ],
+      disallow: ['/api/'],
     },
-    sitemap: 'https://alertyai.com/sitemap.xml',
+    sitemap: [
+      'https://alertyai.com/sitemap.xml',
+      'https://docs.alertyai.com/sitemap.xml',
+    ],
   }
 }

@@ -10,6 +10,8 @@ export default function sitemap() {
   const routes = [
     { path: '', changeFrequency: 'weekly', priority: 1.0 },
     { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/blogs', changeFrequency: 'weekly', priority: 0.9 },
+    { path: '/changelog', changeFrequency: 'monthly', priority: 0.8 },
     { path: '/faqs', changeFrequency: 'monthly', priority: 0.75 },
     { path: '/privacy', changeFrequency: 'yearly', priority: 0.5 },
     { path: '/terms', changeFrequency: 'yearly', priority: 0.5 },

@@ -25,6 +25,8 @@ export default function Footer() {
       links: [
         { label: "About Us", href: "/about" },
         { label: "Features", href: "/#features" },
+        { label: "Blog", href: "/blogs", pulse: true },
+        { label: "Changelog", href: "/changelog" },
         { label: "Download App", href: "https://drive.google.com/drive/folders/16RRMXxunPGTLXdCM8bse5LbS4GFuX4bS?usp=sharing" },
       ],
     },
