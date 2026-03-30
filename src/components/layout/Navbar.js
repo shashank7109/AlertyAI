@@ -8,15 +8,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useTheme } from 'next-themes'
-import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi'
+import { FiMenu, FiX } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const DOCS_URL = 'https://docs.alertyai.com'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/40 dark:bg-background/40 backdrop-blur-xl border-none">
@@ -25,20 +23,15 @@ export default function Navbar() {
           {/* Logo - Bold & Minimal */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="flex items-center justify-center group-hover:scale-105 transition-transform h-12 md:h-14">
-              <img src="/logo.png?v=2.0" alt="AlertyAI logo" className="h-full w-auto" />
+              <img src="/logo.png?v=3.0" alt="AlertyAI logo" className="h-full w-auto filter invert dark:invert-0" />
             </div>
-            <span className="text-xl md:text-2xl font-heading font-black tracking-tighter text-on-surface uppercase">AlertyAI</span>
+            <div className="h-5 md:h-6 flex items-center">
+              <img src="/text.png?v=3.0" alt="AlertyAI Typography" className="h-full w-auto object-contain filter invert dark:invert-0" />
+            </div>
           </Link>
 
           {/* Actions */}
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface dark:bg-surface shadow-sm border border-border hover:shadow-md transition-all text-text-secondary"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
-            </button>
 
             <div className="hidden md:flex items-center gap-6">
               <Link href="/" className="text-sm font-bold text-text-secondary hover:text-primary transition-colors tracking-widest uppercase">
