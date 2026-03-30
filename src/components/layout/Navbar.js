@@ -23,11 +23,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-5">
         <div className="flex items-center justify-between">
           {/* Logo - Bold & Minimal */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden dark:bg-white dark:p-1 dark:rounded-lg">
-              <img src="/logo.png" alt="AlertyAI logo" className="w-full h-full object-contain" />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="flex items-center justify-center group-hover:scale-105 transition-transform h-12 md:h-14">
+              <img src="/logo.png" alt="AlertyAI logo" className="h-full w-auto" />
             </div>
-            <span className="text-xl font-heading font-semibold tracking-tighter text-on-surface uppercase">AlertyAI</span>
+            <span className="text-xl md:text-2xl font-heading font-black tracking-tighter text-on-surface uppercase">AlertyAI</span>
           </Link>
 
           {/* Actions */}

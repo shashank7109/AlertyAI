@@ -69,11 +69,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
           {/* Brand section */}
           <div className="flex flex-col space-y-4">
-            <div className="flex items-center space-x-2">
-              <span className="text-[#3ca2fa] text-3xl font-extrabold uppercase tracking-tighter italic">
-                A
-              </span>
-              <span className="text-on-surface text-3xl font-bold tracking-tighter uppercase">AlertyAI</span>
+            <div className="flex items-center space-x-3 group">
+              <img src="/logo.png" alt="AlertyAI logo" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform" />
+              <span className="text-on-surface text-3xl md:text-4xl font-black tracking-tighter uppercase">AlertyAI</span>
             </div>
             <p className="text-sm leading-relaxed text-text-secondary font-medium">
               AlertyAI is your minimalist workspace for tasks, reminders, and professional plans. Built to feel as light as air.
