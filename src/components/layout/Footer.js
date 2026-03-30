@@ -70,7 +70,7 @@ export default function Footer() {
           {/* Brand section */}
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-3 group">
-              <img src="/logo.png" alt="AlertyAI logo" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform" />
+              <img src="/logo.png?v=2.0" alt="AlertyAI logo" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform" />
               <span className="text-on-surface text-3xl md:text-4xl font-black tracking-tighter uppercase">AlertyAI</span>
             </div>
             <p className="text-sm leading-relaxed text-text-secondary font-medium">
