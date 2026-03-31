@@ -3,13 +3,15 @@
  * AlertyAI Software License
  */
 
-
 import { Ubuntu, Montserrat } from 'next/font/google'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { ConsentProvider } from '@/context/ConsentContext.jsx'
+import CookieBanner from '@/components/seo/CookieBanner.jsx'
+import AnalyticsLoader from '@/components/seo/AnalyticsLoader.jsx'
+import JsonLd from '@/components/seo/JsonLd.jsx'
 import { Toaster } from 'react-hot-toast'
-import { getGaMeasurementId, getGoogleSiteVerification } from '@/lib/seo/site'
+import { getGoogleSiteVerification } from '@/lib/seo/site'
 
 const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
@@ -29,53 +31,58 @@ export const metadata = {
   metadataBase: new URL('https://alertyai.com'),
   applicationName: 'AlertyAI',
   title: {
-    default: 'AlertyAI (Alerty AI) - AI Planning for Teams',
+    default: 'AlertyAI — Turn Your Thoughts Into Tasks Instantly',
     template: '%s | AlertyAI'
   },
-  description: 'AlertyAI (also searched as Alerty AI) is an AI-first planning product for founders and teams: capture fast, prioritize clearly, and execute with confidence.',
-  keywords: ['AI planning', 'startup productivity', 'team execution', 'voice capture', 'task management', 'AlertyAI', 'Alerty AI', 'alertyai docs', 'alerty ai how to use'],
-  authors: [{ name: 'AlertyAI Team' }],
-  creator: 'AlertyAI',
-  alternates: {
-    canonical: 'https://alertyai.com/',
-  },
+  description: 'AlertyAI uses AI to convert raw thoughts into structured tasks and actionable plans. Smart reminders, team collaboration, zero friction. Free on Android.',
+  keywords: [
+    'ai task manager', 'ai productivity app', 'thought to task ai',
+    'ai to-do list app', 'smart task planner', 'ai reminder app',
+    'task management app android', 'alertyai', 'convert thoughts to tasks',
+    'ai planning app', 'task organiser ai', 'productivity app free'
+  ],
+  authors: [{ name: 'Shashank Bindal', url: 'https://alertyai.com' }],
+  creator: 'Shashank Bindal',
+  publisher: 'AlertyAI',
+  category: 'productivity',
+  classification: 'Business/Productivity',
   openGraph: {
-    title: 'AlertyAI (Alerty AI) - AI Planning for Teams',
-    description: 'Plan faster and execute better with AlertyAI. Built for startup teams and modern workflows.',
+    type: 'website',
+    locale: 'en_US',
     url: 'https://alertyai.com',
     siteName: 'AlertyAI',
-    images: [
-      {
-        url: 'https://alertyai.com/logo.png',
-        width: 1200,
-        height: 630,
-        alt: 'AlertyAI Social Preview',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
+    title: 'AlertyAI — Turn Your Thoughts Into Tasks Instantly',
+    description: 'AI that converts your thoughts into structured tasks and plans. Smart reminders, team features. Free on Android.',
+    images: [{
+      url: 'https://alertyai.com/logo.png',
+      width: 1200,
+      height: 630,
+      alt: 'AlertyAI — AI Task Manager App'
+    }]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AlertyAI (Alerty AI) - AI Planning for Teams',
-    description: 'Plan faster and execute better with AlertyAI. Built for startup teams and modern workflows.',
+    title: 'AlertyAI — AI-Powered Task Manager',
+    description: 'Turn thoughts into tasks instantly. Free on Android.',
     images: ['https://alertyai.com/logo.png'],
-    creator: '@AlertyAI',
-  },
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/logo.png',
+    creator: '@alertyai'
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+      'max-snippet': -1
+    }
+  },
+  alternates: {
+    canonical: 'https://alertyai.com',
+    languages: { 'en-US': 'https://alertyai.com' }
   },
   ...(googleVerification
     ? {
@@ -84,6 +91,22 @@ export const metadata = {
         },
       }
     : {}),
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' }
+    ],
+    apple: [{ url: '/logo.png', sizes: '180x180' }],
+    other: [{ rel: 'mask-icon', url: '/logo.png', color: '#6366f1' }]
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'AlertyAI'
+  },
+  other: {
+    'google-play-app': 'app-id=com.alertyai.app'
+  }
 }
 
 export const viewport = {
@@ -93,93 +116,46 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }) {
-  const gaId = getGaMeasurementId()
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebSite',
-        '@id': 'https://alertyai.com/#website',
-        url: 'https://alertyai.com',
-        name: 'AlertyAI',
-        alternateName: ['Alerty AI', 'alertyai'],
-        description: 'AI-first planning and execution workspace for teams.',
-      },
-      {
-        '@type': 'Organization',
-        '@id': 'https://alertyai.com/#organization',
-        name: 'AlertyAI',
-        alternateName: 'Alerty AI',
-        url: 'https://alertyai.com',
-        logo: {
-          '@type': 'ImageObject',
-          url: 'https://alertyai.com/logo.png',
-          width: 512,
-          height: 512,
-        },
-        sameAs: [
-          'https://play.google.com/store/apps/details?id=com.alertyai.app',
-        ],
-      },
-      {
-        '@type': 'WebApplication',
-        '@id': 'https://alertyai.com/#webapp',
-        name: 'AlertyAI',
-        url: 'https://alertyai.com',
-        applicationCategory: 'ProductivityApplication',
-        operatingSystem: 'Android, Web',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        description: 'AI-powered task management with voice capture, smart reminders, CSV schedule import, and team collaboration.',
-        featureList: [
-          'Voice-powered task capture',
-          'AI prioritization',
-          'Team execution tracking',
-          'Smart reminders',
-          'Mobile-first workflow',
-        ],
-      },
-    ],
-  }
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:image" content="https://alertyai.com/logo.png" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://play.google.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
       <body className={`${ubuntu.variable} ${montserrat.variable} font-sans antialiased text-on-surface`}>
-        <ThemeProvider>
-          {children}
-          {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#10b981',
-                  secondary: '#fff',
+        <ConsentProvider>
+          <ThemeProvider>
+            <CookieBanner />
+            <JsonLd />
+            {children}
+            <AnalyticsLoader />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: '#363636',
+                  color: '#fff',
                 },
-              },
-              error: {
-                iconTheme: {
-                  primary: '#ef4444',
-                  secondary: '#fff',
-                },
-              },
-            }}
-          />
-        </ThemeProvider>
+                success: { iconTheme: { primary: '#10b981', secondary: '#fff' } },
+                error: { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
+              }}
+            />
+          </ThemeProvider>
+        </ConsentProvider>
+        
+        {/* Default Google Consent State */}
+        <script id="consent-default" dangerouslySetInnerHTML={{__html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            wait_for_update: 500
+          });
+        `}} />
       </body>
     </html>
   )
 }
-

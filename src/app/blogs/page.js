@@ -8,11 +8,13 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 
-export const metadata = {
+import { buildMetadata } from '@/lib/seo/metadata'
+
+export const metadata = buildMetadata({
   title: "Blog | AlertyAI",
   description: "Read the latest updates, productivity tips, and announcements from the AlertyAI team.",
-  alternates: { canonical: "https://alertyai.com/blogs" },
-};
+  slug: "blogs"
+})
 
 const DUMMY_POSTS = [
   {

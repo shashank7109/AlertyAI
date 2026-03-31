@@ -6,11 +6,13 @@
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 
-export const metadata = {
-  title: 'Terms of Service',
-  description: 'Read AlertyAI Terms of Service for acceptable use, account responsibilities, and legal terms.',
-  alternates: { canonical: 'https://alertyai.com/terms' },
-}
+import { buildMetadata } from '@/lib/seo/metadata'
+
+export const metadata = buildMetadata({
+  title: "Terms of Service | AlertyAI",
+  description: "Read AlertyAI Terms of Service for acceptable use, account responsibilities, and legal terms.",
+  slug: "terms"
+})
 
 export default function TermsPage() {
   return (

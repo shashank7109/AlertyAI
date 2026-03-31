@@ -6,11 +6,13 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-export const metadata = {
+import { buildMetadata } from '@/lib/seo/metadata'
+
+export const metadata = buildMetadata({
   title: "Changelog | AlertyAI",
   description: "New features, bug fixes, and improvements to the AlertyAI platform.",
-  alternates: { canonical: "https://alertyai.com/changelog" },
-};
+  slug: "changelog"
+})
 
 const LOGS = [
   {
