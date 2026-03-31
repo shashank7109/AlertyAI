@@ -28,13 +28,7 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' }
         ],
       },
-      {
-        // Cache static assets aggressively
-        source: '/(.*)\\.(png|jpg|jpeg|gif|webp|svg|ico|woff|woff2)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=3600, s-maxage=86400' },
-        ],
-      },
+      // Cache controls removed for rapid deployment debugging
     ]
   },
 }
