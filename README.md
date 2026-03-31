@@ -1,202 +1,212 @@
-# Smaran AI Frontend - Next.js 16 + Tailwind CSS v4
+# AlertyAI - Intelligent Task & Team Management
 
-Modern, responsive frontend for Smaran AI productivity platform.
+AlertyAI is a modern, AI-powered productivity platform that helps teams stay organized, collaborate seamlessly, and get more done. This repository contains the web frontend built with React and Next.js.
 
-## 🚀 Tech Stack
+## About AlertyAI
 
-- **Next.js 16** - Latest React framework with App Router
-- **React 19** - Latest React version  
-- **Tailwind CSS v4** - Latest utility-first CSS framework (new syntax!)
-- **TypeScript Ready** - Full TypeScript support
-- **Framer Motion 11** - Smooth animations
-- **Zustand 5** - State management
-- **React Hot Toast** - Beautiful notifications
-- **Axios** - HTTP client
-- **React Icons** - Icon library
-- **date-fns** - Date utilities
+AlertyAI combines task management, team collaboration, and artificial intelligence to create a smarter way to work. Whether you're managing personal tasks, coordinating with your team, or planning sprints, AlertyAI adapts to your workflow.
 
-## 📦 Installation
+**Get Started:**
+- Download on [Google Play Store](https://play.google.com/store/apps/details?id=com.alertyai.app)
+- Visit [com.alertyai.app](https://com.alertyai.app)
+- Check out our [website](https://alertyai.com)
+
+## Key Features
+
+- **Smart Task Management** - Create, organize, and prioritize tasks with AI-powered suggestions
+- **Team Collaboration** - Work together seamlessly with real-time updates and team calendars
+- **AI Assistant** - Get intelligent insights and automatic task categorization
+- **Calendar Integration** - Visualize your schedule and manage deadlines
+- **Cross-platform** - Access your tasks on web, mobile, and desktop
+
+## Tech Stack
+
+This frontend is built with modern technologies for performance and developer experience:
+
+- **Next.js 16** - React framework with server-side rendering and optimization
+- **React 19** - Latest React for building interactive user interfaces
+- **Tailwind CSS v4** - Utility-first CSS for rapid UI development
+- **TypeScript** - Type-safe JavaScript development
+- **Framer Motion** - Smooth animations and transitions
+- **Zustand** - State management for global app state
+- **Axios** - HTTP client for API communication
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+ installed
+- npm or yarn package manager
+
+### Installation
 
 ```bash
 # Install dependencies
 npm install
 
-# Create environment file
+# Copy the environment template
 cp .env.example .env.local
 
-# Edit .env.local
-NEXT_PUBLIC_API_URL=http://localhost:8000
+# Configure your API endpoint
+# Edit .env.local and set:
+# NEXT_PUBLIC_API_URL=http://localhost:8000
 
-# Run development server
+# Start development server
 npm run dev
 ```
 
-## 🎨 Tailwind CSS v4 Changes
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-This project uses **Tailwind CSS v4** which has a NEW syntax:
-
-### Old (v3):
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
-### New (v4):
-```css
-@import "tailwindcss";
-
-@theme {
-  --color-primary-500: #6366f1;
-  /* Custom theme variables */
-}
-```
-
-### Key Differences:
-- ✅ No `tailwind.config.js` needed (optional)
-- ✅ Use `@theme` directive for customization
-- ✅ CSS variables for everything
-- ✅ Built-in PostCSS
-- ✅ Faster build times
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-smranai_frontend/
-├── src/
-│   ├── app/              # Next.js App Router pages
-│   │   ├── dashboard/
-│   │   ├── tasks/
-│   │   ├── teams/
-│   │   ├── calendar/
-│   │   ├── ai-assistant/
-│   │   └── ...
-│   ├── components/       # Reusable components
-│   │   ├── layout/      # Sidebar, Navbar
-│   │   ├── common/      # Buttons, Cards
-│   │   ├── modals/      # Modal dialogs
-│   │   └── providers/   # Context providers
-│   ├── lib/             # Utilities
-│   │   ├── api.js       # API client
-│   │   └── utils.js     # Helper functions
-│   └── store/           # State management
-│       └── useStore.js  # Zustand stores
-├── public/              # Static assets
-└── package.json         # Dependencies
+src/
+├── app/                    # Main application pages
+│   ├── dashboard/          # Main dashboard view
+│   ├── tasks/              # Task management
+│   ├── teams/              # Team collaboration
+│   ├── calendar/           # Calendar and scheduling
+│   ├── ai-assistant/       # AI-powered features
+│   └── layout.tsx          # Root layout
+├── components/             # Reusable UI components
+│   ├── TaskCard.tsx        # Task display component
+│   ├── TeamPanel.tsx       # Team management UI
+│   ├── NavBar.tsx          # Navigation header
+│   └── ...
+├── lib/                    # Utility functions
+│   ├── api.ts              # API client
+│   └── utils.ts            # Helper functions
+└── store/                  # State management
+    └── useStore.ts         # Zustand store
 ```
 
-## 🎯 Available Scripts
+## Available Commands
 
 ```bash
-npm run dev      # Start development server (port 3000)
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
+npm run dev      # Start development server at http://localhost:3000
+npm run build    # Create optimized production build
+npm start        # Run production server
+npm run lint     # Check code quality with ESLint
 ```
 
-## 🎨 Custom Styles
+## Configuration
 
-All custom styles are in `src/app/globals.css`:
+### Environment Setup
 
-```css
-/* Glass morphism */
-.glass-card { ... }
+Create a `.env.local` file in the project root:
 
-/* Neon buttons */
-.btn-neon { ... }
-
-/* Gradient text */
-.gradient-text { ... }
-
-/* Badges */
-.badge-high, .badge-medium, .badge-low { ... }
-```
-
-## 🌙 Dark Mode
-
-Dark mode is handled by `next-themes`:
-
-```jsx
-import { useTheme } from 'next-themes'
-
-const { theme, setTheme } = useTheme()
-setTheme('dark')  // or 'light' or 'system'
-```
-
-## 📱 Responsive Design
-
-- Mobile-first approach
-- Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
-- Touch-friendly UI elements
-- Optimized for all screen sizes
-
-## 🔗 API Integration
-
-API client is in `src/lib/api.js`:
-
-```javascript
-import { taskAPI } from '@/lib/api'
-
-// Get all tasks
-const tasks = await taskAPI.getAll()
-
-// Create task
-await taskAPI.create({ title: 'New task' })
-```
-
-## 🎭 State Management
-
-Using Zustand for global state:
-
-```javascript
-import { useTaskStore } from '@/store/useStore'
-
-const { tasks, setTasks } = useTaskStore()
-```
-
-## 🚢 Deployment
-
-### Vercel (Recommended)
-```bash
-vercel --prod
-```
-
-### Other Platforms
-1. Build: `npm run build`
-2. Start: `npm start`
-3. Set environment variables in platform
-
-## 🔧 Configuration
-
-### Environment Variables (.env.local)
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
-### Path Aliases (jsconfig.json)
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-}
+Make sure this points to your AlertyAI backend API server.
+
+## Styling
+
+We use Tailwind CSS v4 for a modern, responsive design. All custom styles and theme configuration are in the Tailwind config file.
+
+## Dark Mode
+
+The application supports light and dark modes:
+
+```javascript
+import { useTheme } from 'next-themes'
+
+const { theme, setTheme } = useTheme()
+setTheme('dark')  // Switch to dark mode
 ```
 
-## 📚 Learn More
+## API Integration
 
-- [Next.js 16 Documentation](https://nextjs.org/docs)
-- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs/v4-beta)
-- [React 19 Documentation](https://react.dev/)
+The API client handles communication with the backend:
 
-## 🐛 Troubleshooting
+```javascript
+import { taskAPI } from '@/lib/api'
 
-### Module not found errors
+// Fetch all tasks
+const tasks = await taskAPI.getAll()
+
+// Create a new task
+await taskAPI.create({ title: 'New task', description: 'Task details' })
+```
+
+## State Management
+
+We use Zustand for managing application state:
+
+```javascript
+import { useTaskStore } from '@/store/useStore'
+
+const { tasks, setTasks, addTask } = useTaskStore()
+```
+
+## Responsive Design
+
+The interface works smoothly across all devices:
+- Mobile phones (320px and up)
+- Tablets (768px and up)
+- Desktops (1024px and up)
+
+All UI elements are touch-friendly and optimized for both small and large screens.
+
+## Deployment
+
+### Vercel (Recommended)
+
+Vercel is the easiest way to deploy Next.js applications:
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Other Platforms
+
+1. Build the application: `npm run build`
+2. Start the server: `npm start`
+3. Set the `NEXT_PUBLIC_API_URL` environment variable to your backend URL
+
+## Troubleshooting
+
+### Build or Runtime Errors
+
+If you encounter issues, try clearing the cache and reinstalling dependencies:
+
 ```bash
 rm -rf node_modules .next
 npm install
+npm run dev
 ```
+
+### API Connection Issues
+
+Make sure your `.env.local` file has the correct `NEXT_PUBLIC_API_URL` pointing to your backend server.
+
+## Contributing
+
+We welcome contributions to AlertyAI. Please feel free to:
+- Report bugs and issues
+- Suggest new features
+- Submit pull requests with improvements
+
+## Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+## Links
+
+- GitHub Mobile App: [AlertyAI_apk](https://github.com/shashank7109/AlertyAI_apk)
+- Play Store: [com.alertyai.app](https://play.google.com/store/apps/details?id=com.alertyai.app)
+- Website: [AlertyAI](https://alertyai.com)
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+Built with passion for better productivity and teamwork.
 
 ### Tailwind styles not working
 - Check `@import "tailwindcss"` is in globals.css
