@@ -11,16 +11,6 @@ const nextConfig = {
       { protocol: 'https', hostname: 'play.google.com' }
     ]
   },
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.alertyai.com' }],
-        destination: 'https://alertyai.com/:path*',
-        permanent: true,
-      },
-    ]
-  },
   async headers() {
     return [
       {
