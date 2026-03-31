@@ -3,7 +3,7 @@ export function buildMetadata(page) {
   const finalTitle = page.title || defaultTitle
   const finalDescription = page.description || 'AlertyAI uses AI to convert raw thoughts into structured tasks and actionable plans. Smart reminders, team collaboration, zero friction. Free on Android.'
   const url = page.slug ? `https://alertyai.com/${page.slug}` : 'https://alertyai.com'
-  const imageUrl = page.ogImage || 'https://alertyai.com/logo.png'
+  const imageUrl = page.ogImage || 'https://alertyai.com/alerty-icon.png'
 
   const metadata = {
     title: finalTitle,

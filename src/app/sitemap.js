@@ -15,7 +15,7 @@ export default function sitemap() {
     { path: '/faqs', changeFrequency: 'monthly', priority: 0.75 },
     { path: '/privacy', changeFrequency: 'yearly', priority: 0.5 },
     { path: '/terms', changeFrequency: 'yearly', priority: 0.5 },
-    { path: '/favicon.ico', changeFrequency: 'yearly', priority: 0.1 },
+    { path: '/alerty-alerty-favicon.ico', changeFrequency: 'yearly', priority: 0.1 },
     { url: 'https://docs.alertyai.com', changeFrequency: 'weekly', priority: 0.9 },
     { url: 'https://docs.alertyai.com/quickstart', changeFrequency: 'weekly', priority: 0.8 },
     { url: 'https://docs.alertyai.com/alertyai/how-to-use', changeFrequency: 'weekly', priority: 0.85 },

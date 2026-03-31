@@ -37,7 +37,7 @@ export default function JsonLd() {
         "url": "https://alertyai.com",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://alertyai.com/logo.png",
+          "url": "https://alertyai.com/alerty-icon.png",
           "width": 512,
           "height": 512
         },

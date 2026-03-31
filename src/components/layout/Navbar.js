@@ -23,7 +23,7 @@ export default function Navbar() {
           {/* Logo - Bold & Minimal */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="flex items-center justify-center group-hover:scale-105 transition-transform h-12 md:h-14">
-              <img src="/logo.png?v=3.0" alt="AlertyAI logo" className="h-full w-auto filter invert dark:invert-0" />
+              <img src="/alerty-icon.png?v=3.0" alt="AlertyAI logo" className="h-full w-auto filter invert dark:invert-0" />
             </div>
             <div className="h-5 md:h-6 flex items-center">
               <img src="/text.png?v=3.0" alt="AlertyAI Typography" className="h-full w-auto object-contain filter invert dark:invert-0" />
