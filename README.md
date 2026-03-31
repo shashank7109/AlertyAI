@@ -31,13 +31,25 @@ This frontend is built with modern technologies for performance and developer ex
 - **Zustand** - State management for global app state
 - **Axios** - HTTP client for API communication
 
-## Getting Started
+## Getting the App
 
-### Prerequisites
+### For Users
+
+Download AlertyAI directly from the Google Play Store:
+
+- [Download on Google Play Store](https://play.google.com/store/apps/details?id=com.alertyai.app)
+
+No installation needed - just download, install, and start being productive.
+
+### For Developers
+
+If you want to contribute to the frontend or run it locally for development:
+
+**Prerequisites:**
 - Node.js 18+ installed
 - npm or yarn package manager
 
-### Installation
+**Setup:**
 
 ```bash
 # Install dependencies
