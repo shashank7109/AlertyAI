@@ -54,7 +54,7 @@ export const metadata = {
     title: 'AlertyAI — Turn Your Thoughts Into Tasks Instantly',
     description: 'AI that converts your thoughts into structured tasks and plans. Smart reminders, team features. Free on Android.',
     images: [{
-      url: 'https://alertyai.com/alerty-icon.png',
+      url: 'https://alertyai.com/logo.png',
       width: 1200,
       height: 630,
       alt: 'AlertyAI — AI Task Manager App'
@@ -64,7 +64,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'AlertyAI — AI-Powered Task Manager',
     description: 'Turn thoughts into tasks instantly. Free on Android.',
-    images: ['https://alertyai.com/alerty-icon.png'],
+    images: ['https://alertyai.com/logo.png'],
     creator: '@alertyai'
   },
   robots: {
@@ -94,10 +94,10 @@ export const metadata = {
   manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/alerty-alerty-favicon.ico', sizes: '32x32', type: 'image/x-icon' }
+      { url: '/alerty-favicon.ico', sizes: '32x32', type: 'image/x-icon' }
     ],
-    apple: [{ url: '/alerty-icon.png', sizes: '180x180' }],
-    other: [{ rel: 'mask-icon', url: '/alerty-icon.png', color: '#6366f1' }]
+    apple: [{ url: '/logo.png', sizes: '180x180' }],
+    other: [{ rel: 'mask-icon', url: '/logo.png', color: '#6366f1' }]
   },
   appleWebApp: {
     capable: true,

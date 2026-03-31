@@ -70,7 +70,7 @@ export default function Footer() {
           {/* Brand section */}
           <div className="flex flex-col space-y-4">
             <div className="flex items-center space-x-3 group">
-              <img src="/alerty-icon.png?v=3.0" alt="AlertyAI logo" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform filter invert dark:invert-0" />
+              <img src="/logo.png?v=3.0" alt="AlertyAI logo" className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform filter invert dark:invert-0" />
               <div className="h-6 md:h-8 flex items-center pt-2">
                 <img src="/text.png?v=3.0" alt="AlertyAI Typography" className="h-full w-auto object-contain filter invert dark:invert-0" />
               </div>
