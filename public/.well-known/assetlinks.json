@@ -1,0 +1,16 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.alertyai.app",
+      "sha256_cert_fingerprints": [
+        "YOUR_SHA256_FINGERPRINT_HERE",
+        "4A:00:C7:20:59:64:F6:C8:BE:B9:6F:A4:47:F9:25:E1:B4:F4:D0:9B:2B:94:0F:F0:C7:CC:62:B2:B1:F9:FC:8F"
+      ]
+    }
+  }
+]
