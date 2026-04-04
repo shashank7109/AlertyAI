@@ -23,7 +23,7 @@ export default function AnalyticsLoader() {
   if (!shouldLoad) return null
 
   // Failsafe string if env is not loaded instantly
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-QWT4WLKHFH'
 
   return <GoogleAnalytics gaId={gaId} />
 }
